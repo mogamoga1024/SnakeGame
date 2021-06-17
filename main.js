@@ -54,85 +54,104 @@ function draw() {
     ellipse(headX, headY, radius * 2);
 
     // todo 浮動小数点の誤差も考慮すべき ← いらんと思う。
-    if (preHeadX === headX) {
-        throw new Error("体の縦移動未実装");
-    }
+    // if (preHeadX === headX) {
+    //     throw new Error("体の縦移動未実装");
+    // }
 
-    const a = (headY - preHeadY) / (headX - preHeadX);
-    const b = headY - a * headX;
-    const c = headX;
-    const d = headY;
-    const r = radius * 2;
-    const A = pow(a, 2) + 1;
-    const B = a * (b - d) - c;
-    const C = pow(b - d, 2) + pow(c, 2) - pow(r, 2);
+    // const a = (headY - preHeadY) / (headX - preHeadX);
+    // const b = headY - a * headX;
+    // const c = headX;
+    // const d = headY;
+    // const r = radius * 2;
+    // const A = pow(a, 2) + 1;
+    // const B = a * (b - d) - c;
+    // const C = pow(b - d, 2) + pow(c, 2) - pow(r, 2);
 
-    const D = sqrt(pow(B, 2) - A * C);
+    // const D = sqrt(pow(B, 2) - A * C);
 
-    if (Number.isNaN(D)) {
-        return;
-    }
+    // if (Number.isNaN(D)) {
+    //     return;
+    // }
 
-    const tmpBodyX1 = (-B - D) / A;
-    const tmpBodyX2 = (-B + D) / A;
+    // const tmpBodyX1 = (-B - D) / A;
+    // const tmpBodyX2 = (-B + D) / A;
 
-    let bodyX;
-    let minX, maxX;
-    if (preHeadX < headX) {
-        minX = preHeadX;
-        maxX = headX;
-    }
-    else {
-        minX = headX;
-        maxX = preHeadX;
-    }
-    if (minX <= tmpBodyX1 && tmpBodyX1 <= maxX) {
-        bodyX = tmpBodyX1;
-    }
-    else if (minX <= tmpBodyX2 && tmpBodyX2 <= maxX) {
-        bodyX = tmpBodyX2;
-    }
-    else {
-        return;
-    }
-    const bodyY = a * bodyX + b;
+    // let bodyX;
+    // let minX, maxX;
+    // if (preHeadX < headX) {
+    //     minX = preHeadX;
+    //     maxX = headX;
+    // }
+    // else {
+    //     minX = headX;
+    //     maxX = preHeadX;
+    // }
+    // if (minX <= tmpBodyX1 && tmpBodyX1 <= maxX) {
+    //     bodyX = tmpBodyX1;
+    // }
+    // else if (minX <= tmpBodyX2 && tmpBodyX2 <= maxX) {
+    //     bodyX = tmpBodyX2;
+    // }
+    // else {
+    //     return;
+    // }
+    // const bodyY = a * bodyX + b;
 
-    ellipse(bodyX, bodyY, radius * 2);
+    // ellipse(bodyX, bodyY, radius * 2);
 }
 
 function degreeChangeByKey() {
+    let plusRotateConditions, minusRotateConditions;
+
     if (keyCode === UP_ARROW) {
-        if (90 < degree && degree < 270) {
-            degree = (degree + rotationDegree) % 360;
-        }
-        else if (270 < degree || degree < 90) {
-            degree = (degree - rotationDegree + 360) % 360;
-        }
+        plusRotateConditions = isLeftSide;
+        minusRotateConditions = isRightSide;
     }
     else if (keyCode === DOWN_ARROW) {
-        if (90 < degree && degree < 270) {
-            degree = (degree - rotationDegree + 360) % 360;
-        }
-        else if (270 < degree || degree < 90) {
-            degree = (degree + rotationDegree) % 360;
-        }
+        plusRotateConditions = isRightSide;
+        minusRotateConditions = isLeftSide;
     }
     else if (keyCode === RIGHT_ARROW) {
-        if (180 < degree) {
-            degree = (degree + rotationDegree) % 360;
-        }
-        else if (0 < degree && degree < 180) {
-            degree = (degree - rotationDegree + 360) % 360;
-        }
+        plusRotateConditions = isLowerSide;
+        minusRotateConditions = isUpperSide;
     }
     else if (keyCode === LEFT_ARROW) {
-        if (180 < degree) {
-            degree = (degree - rotationDegree + 360) % 360;
-        }
-        else if (0 < degree && degree < 180) {
-            degree = (degree + rotationDegree) % 360;
-        }
+        plusRotateConditions = isUpperSide;
+        minusRotateConditions = isLowerSide;
     }
+    else {
+        return;
+    }
+
+    if (plusRotateConditions(degree)) {
+        degree = plusRotate(degree);
+    }
+    else if (minusRotateConditions(degree)) {
+        degree = minusRotate(degree);
+    }
+}
+
+function isUpperSide(degree) {
+    return 0 < degree && degree < 180;
+}
+
+function isLowerSide(degree) {
+    return 180 < degree;
+}
+
+function isLeftSide(degree) {
+    return 90 < degree && degree < 270;
+}
+
+function isRightSide(degree) {
+    return 270 < degree || degree < 90;
+}
+
+function plusRotate(degree) {
+    return (degree + rotationDegree) % 360;
+}
+function minusRotate(degree) {
+    return (degree - rotationDegree + 360) % 360;
 }
 
 
