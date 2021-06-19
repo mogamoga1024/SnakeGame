@@ -19,7 +19,8 @@ function setup() {
 }
 
 function draw() {
-    clear();
+    //clear();
+    background(128, 128, 128);
 
     if (keyIsPressed) {
         degreeChangeByKey();
@@ -89,6 +90,10 @@ function draw() {
         }
 
         basePosition = backBodyPosition;
+    }
+
+    if (traceQueueIndex > 0) {
+        traceQueue.splice(0, traceQueueIndex - 1);
     }
 }
 
