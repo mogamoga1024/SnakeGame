@@ -80,21 +80,10 @@ function draw() {
 
             ellipse(backBodyPosition.x, backBodyPosition.y, radius * 2);
 
-            // if (bodyCount === 0) {
-            //     console.log("---------------");
-            //     console.log("x0: " + backBodyPosition.x);
-            //     console.log("y0: " + backBodyPosition.y);
-            // }
-            // else if (bodyCount === 1) {
-            //     console.log("---------------");
-            //     console.log("x1: " + backBodyPosition.x);
-            //     console.log("y1: " + backBodyPosition.y);
-            // }
+            // 
         }
         else {
-            if (traceQueue.length > 1) {
-                console.log("bug");
-            }
+            break;
         }
 
         basePosition = backBodyPosition;
