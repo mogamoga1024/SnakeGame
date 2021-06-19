@@ -3,7 +3,7 @@ let headPotision = {x: 100, y: 100};
 const radius = 25;
 let degree = 90;
 let oldDegree = null;
-const speed = 3;
+const speed = 1;
 const rotationDegree = 2;
 const traceQueue = []
 
@@ -51,14 +51,22 @@ function draw() {
     let basePosition = headPotision;
     let traceQueueIndex = traceQueue.length - 1;
 
-    for (let bodyCount = 0; bodyCount < 10; bodyCount++) {
+    for (let bodyCount = 0; bodyCount < 5; bodyCount++) {
 
         let backBodyPosition = null;
         while (traceQueueIndex >= 0) {
-            const locusPoint1 = basePosition;
-            const locusPoint2 = traceQueue[traceQueueIndex];
+            let locusFrontPoint;
+            if (traceQueueIndex === traceQueue.length - 1) {
+                locusFrontPoint = basePosition;
+            }
+            else {
+                locusFrontPoint = traceQueue[traceQueueIndex + 1];
+            }
+            //locusFrontPoint = basePosition;
 
-            backBodyPosition = getBackBodyPosition(basePosition, locusPoint1, locusPoint2);
+            const locusBackPoint = traceQueue[traceQueueIndex];
+
+            backBodyPosition = getBackBodyPosition(basePosition, locusFrontPoint, locusBackPoint);
 
             if (backBodyPosition != null) {
                 break;
@@ -68,7 +76,25 @@ function draw() {
         }
 
         if (backBodyPosition != null) {
+            fill(100, 200 * (1 - bodyCount / 6), 100);
+
             ellipse(backBodyPosition.x, backBodyPosition.y, radius * 2);
+
+            // if (bodyCount === 0) {
+            //     console.log("---------------");
+            //     console.log("x0: " + backBodyPosition.x);
+            //     console.log("y0: " + backBodyPosition.y);
+            // }
+            // else if (bodyCount === 1) {
+            //     console.log("---------------");
+            //     console.log("x1: " + backBodyPosition.x);
+            //     console.log("y1: " + backBodyPosition.y);
+            // }
+        }
+        else {
+            if (traceQueue.length > 1) {
+                console.log("bug");
+            }
         }
 
         basePosition = backBodyPosition;
@@ -129,36 +155,49 @@ function minusRotate(degree) {
     return (degree - rotationDegree + 360) % 360;
 }
 
-function getBackBodyPosition(basePosition, locusPoint1, locusPoint2) {
+function getBackBodyPosition(basePosition, locusFrontPoint, locusBackPoint) {
     let backBodyX, backBodyY;
 
-    if (locusPoint2.x === locusPoint1.x) {
+    if (locusBackPoint.x === locusFrontPoint.x) {
         const tmpBodyY1 = basePosition.y - radius * 2;
         const tmpBodyY2 = basePosition.y + radius * 2;
 
         let minY, maxY;
-        if (locusPoint2.y < locusPoint1.y) {
-            minY = locusPoint2.y;
-            maxY = locusPoint1.y;
+        if (locusBackPoint.y < locusFrontPoint.y) {
+            minY = locusBackPoint.y;
+            maxY = locusFrontPoint.y;
         }
         else {
-            minY = locusPoint1.y;
-            maxY = locusPoint2.y;
+            minY = locusFrontPoint.y;
+            maxY = locusBackPoint.y;
         }
-        if (minY <= tmpBodyY1 && tmpBodyY1 <= maxY) {
+
+        let existsTmpBodyY1InLocus = minY <= tmpBodyY1 && tmpBodyY1 <= maxY;
+        let existsTmpBodyY2InLocus = minY <= tmpBodyY2 && tmpBodyY2 <= maxY;
+
+        if (existsTmpBodyY1InLocus && existsTmpBodyY2InLocus) {
+            if (abs(locusBackPoint.y, tmpBodyY1) < abs(locusBackPoint.y, tmpBodyY2)) {
+                backBodyY = tmpBodyY1;
+            }
+            else {
+                backBodyY = tmpBodyY2;
+            }
+        }
+        else if (existsTmpBodyY1InLocus) {
             backBodyY = tmpBodyY1;
         }
-        else if (minY <= tmpBodyY2 && tmpBodyY2 <= maxY) {
+        else if (existsTmpBodyY2InLocus) {
             backBodyY = tmpBodyY2;
         }
         else {
             return null;
         }
-        backBodyX = locusPoint1.x;
+
+        backBodyX = locusFrontPoint.x;
     }
     else {
-        const a = (locusPoint1.y - locusPoint2.y) / (locusPoint1.x - locusPoint2.x);
-        const b = locusPoint1.y - a * locusPoint1.x;
+        const a = (locusFrontPoint.y - locusBackPoint.y) / (locusFrontPoint.x - locusBackPoint.x);
+        const b = locusFrontPoint.y - a * locusFrontPoint.x;
         const c = basePosition.x;
         const d = basePosition.y;
         const r = radius * 2;
@@ -176,23 +215,36 @@ function getBackBodyPosition(basePosition, locusPoint1, locusPoint2) {
         const tmpBodyX2 = (-B + D) / A;
 
         let minX, maxX;
-        if (locusPoint2.x < locusPoint1.x) {
-            minX = locusPoint2.x;
-            maxX = locusPoint1.x;
+        if (locusBackPoint.x < locusFrontPoint.x) {
+            minX = locusBackPoint.x;
+            maxX = locusFrontPoint.x;
         }
         else {
-            minX = locusPoint1.x;
-            maxX = locusPoint2.x;
+            minX = locusFrontPoint.x;
+            maxX = locusBackPoint.x;
         }
-        if (minX <= tmpBodyX1 && tmpBodyX1 <= maxX) {
+
+        let existsTmpBodyX1InLocus = minX <= tmpBodyX1 && tmpBodyX1 <= maxX;
+        let existsTmpBodyX2InLocus = minX <= tmpBodyX2 && tmpBodyX2 <= maxX;
+
+        if (existsTmpBodyX1InLocus && existsTmpBodyX2InLocus) {
+            if (abs(locusBackPoint.x, tmpBodyX1) < abs(locusBackPoint.x, tmpBodyX2)) {
+                backBodyX = tmpBodyX1;
+            }
+            else {
+                backBodyX = tmpBodyX2;
+            }
+        }
+        else if (existsTmpBodyX1InLocus) {
             backBodyX = tmpBodyX1;
         }
-        else if (minX <= tmpBodyX2 && tmpBodyX2 <= maxX) {
+        else if (existsTmpBodyX2InLocus) {
             backBodyX = tmpBodyX2;
         }
         else {
             return null;
         }
+
         backBodyY = a * backBodyX + b;
     }
 
