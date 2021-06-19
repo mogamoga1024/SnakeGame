@@ -1,12 +1,15 @@
 
-let headPotision = {x: 100, y: 100};
-const radius = 25;
-let bodyCount = 30;
-let degree = 90;
+const headPotision = {x: 100, y: 100};
+const snakePartsRadius = 25;
+let bodyCount = 0;
+let degree = 0;
 let oldDegree = null;
 const speed = 4;
 const rotationDegree = 2;
 const traceQueue = []
+
+const feedPotision = {x: 400, y: 100};
+const feedRadius = Math.floor(snakePartsRadius * 0.8);
 
 function setup() {
     const canvasWidth = windowWidth * 0.9;
@@ -31,7 +34,7 @@ function draw() {
         }
     }
 
-    if (0 < headPotision.x - radius && headPotision.x + radius < width && 0 < headPotision.y - radius && headPotision.y + radius < height) {
+    if (0 < headPotision.x - snakePartsRadius && headPotision.x + snakePartsRadius < width && 0 < headPotision.y - snakePartsRadius && headPotision.y + snakePartsRadius < height) {
         headPotision.x += speed * cos(degree);
         headPotision.y += speed * sin(degree);
     }
@@ -39,16 +42,25 @@ function draw() {
         noLoop();
     }
 
-    push();
-    stroke(255, 0, 0);
-    strokeWeight(radius);
-    for (let i = 0; i < traceQueue.length; i++) {
-        point(traceQueue[i].x, traceQueue[i].y);
+    if (dist(headPotision.x, headPotision.y, feedPotision.x, feedPotision.y) <= snakePartsRadius + feedRadius) {
+        bodyCount++;
+        feedPotision.x = floor(random(width + 1 - feedRadius * 2) + feedRadius);
+        feedPotision.y = floor(random(height + 1 - feedRadius * 2) + feedRadius);
     }
-    pop();
+
+    // push();
+    // stroke(255, 0, 0);
+    // strokeWeight(snakePartsRadius);
+    // for (let i = 0; i < traceQueue.length; i++) {
+    //     point(traceQueue[i].x, traceQueue[i].y);
+    // }
+    // pop();
+
+    fill(103, 43, 67);
+    ellipse(feedPotision.x, feedPotision.y, feedRadius * 2);
 
     fill(0, 200, 0);
-    ellipse(headPotision.x, headPotision.y, radius * 2);
+    ellipse(headPotision.x, headPotision.y, snakePartsRadius * 2);
 
     let basePosition = headPotision;
     let traceQueueIndex = traceQueue.length - 1;
@@ -70,11 +82,11 @@ function draw() {
             backBodyPosition = getBackBodyPosition(basePosition, locusFrontPoint, locusBackPoint);
 
             if (backBodyPosition != null) {
-                if (bodyIndex === bodyCount - 1) { // debug code
-                    if (dist(backBodyPosition.x, backBodyPosition.y, headPotision.x, headPotision.y) < radius * 2 + 0.5) {
-                        throw new Error("bug");
-                    }
-                }
+                // if (bodyIndex === bodyCount - 1) { // debug code
+                //     if (dist(backBodyPosition.x, backBodyPosition.y, headPotision.x, headPotision.y) < snakePartsRadius * 2 + 0.5) {
+                //         throw new Error("bug");
+                //     }
+                // }
                 break;
             }
 
@@ -84,7 +96,7 @@ function draw() {
         if (backBodyPosition != null) {
             fill(100, 200 * (1 - bodyIndex / (bodyCount + 1)), 100);
 
-            ellipse(backBodyPosition.x, backBodyPosition.y, radius * 2);
+            ellipse(backBodyPosition.x, backBodyPosition.y, snakePartsRadius * 2);
         }
         else {
             break;
@@ -155,7 +167,7 @@ function minusRotate(degree) {
 function getBackBodyPosition(basePosition, locusFrontPoint, locusBackPoint) {
     let backBodyX, backBodyY;
 
-    const r = radius * 2;
+    const r = snakePartsRadius * 2;
     const c = basePosition.x;
     const d = basePosition.y;
 
