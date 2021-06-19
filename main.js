@@ -1,11 +1,11 @@
 
 let headPotision = {x: 100, y: 100};
 const radius = 25;
-let bodyCount = 0;
+let bodyCount = 30;
 let degree = 90;
 let oldDegree = null;
-const speed = 4;
-const rotationDegree = 2;
+const speed = 6;
+const rotationDegree = 90;
 const traceQueue = []
 
 function setup() {
@@ -39,13 +39,13 @@ function draw() {
         noLoop();
     }
 
-    // push();
-    // stroke(255, 0, 0);
-    // strokeWeight(radius);
-    // for (let i = 0; i < traceQueue.length; i++) {
-    //     point(traceQueue[i].x, traceQueue[i].y);
-    // }
-    // pop();
+    push();
+    stroke(255, 0, 0);
+    strokeWeight(radius);
+    for (let i = 0; i < traceQueue.length; i++) {
+        point(traceQueue[i].x, traceQueue[i].y);
+    }
+    pop();
 
     fill(0, 200, 0);
     ellipse(headPotision.x, headPotision.y, radius * 2);
@@ -156,8 +156,10 @@ function getBackBodyPosition(basePosition, locusFrontPoint, locusBackPoint) {
     let backBodyX, backBodyY;
 
     if (locusBackPoint.x === locusFrontPoint.x) {
-        const tmpBodyY1 = basePosition.y - radius * 2;
-        const tmpBodyY2 = basePosition.y + radius * 2;
+        // const tmpBodyY1 = basePosition.y - radius * 2;
+        // const tmpBodyY2 = basePosition.y + radius * 2;
+        tmpBodyY1 = basePosition.y - sqrt(pow(radius * 2, 2) - pow(locusFrontPoint.x - basePosition.x, 2));
+        tmpBodyY2 = basePosition.y + sqrt(pow(radius * 2, 2) - pow(locusFrontPoint.x - basePosition.x, 2));
 
         let minY, maxY;
         if (locusBackPoint.y < locusFrontPoint.y) {
@@ -193,23 +195,33 @@ function getBackBodyPosition(basePosition, locusFrontPoint, locusBackPoint) {
         backBodyX = locusFrontPoint.x;
     }
     else {
+        let tmpBodyX1, tmpBodyX2;
         const a = (locusFrontPoint.y - locusBackPoint.y) / (locusFrontPoint.x - locusBackPoint.x);
         const b = locusFrontPoint.y - a * locusFrontPoint.x;
         const c = basePosition.x;
         const d = basePosition.y;
         const r = radius * 2;
-        const A = pow(a, 2) + 1;
-        const B = a * (b - d) - c;
-        const C = pow(b - d, 2) + pow(c, 2) - pow(r, 2);
 
-        const D = sqrt(pow(B, 2) - A * C);
-
-        if (Number.isNaN(D)) {
-            return null;
+        if (a === 0) {
+            // tmpBodyX1 = basePosition.x - radius * 2;
+            // tmpBodyX2 = basePosition.x + radius * 2;
+            tmpBodyX1 = c - sqrt(pow(r, 2) - pow(locusFrontPoint.y - d, 2));
+            tmpBodyX2 = c + sqrt(pow(r, 2) - pow(locusFrontPoint.y - d, 2));
         }
+        else {
+            const A = pow(a, 2) + 1;
+            const B = a * (b - d) - c;
+            const C = pow(b - d, 2) + pow(c, 2) - pow(r, 2);
 
-        const tmpBodyX1 = (-B - D) / A;
-        const tmpBodyX2 = (-B + D) / A;
+            const D = sqrt(pow(B, 2) - A * C);
+
+            if (Number.isNaN(D)) {
+                return null;
+            }
+
+            tmpBodyX1 = (-B - D) / A;
+            tmpBodyX2 = (-B + D) / A;
+        }
 
         let minX, maxX;
         if (locusBackPoint.x < locusFrontPoint.x) {
