@@ -1,9 +1,10 @@
 
 let headPotision = {x: 100, y: 100};
 const radius = 25;
+let bodyCount = 0;
 let degree = 90;
 let oldDegree = null;
-const speed = 3;
+const speed = 4;
 const rotationDegree = 2;
 const traceQueue = []
 
@@ -52,7 +53,7 @@ function draw() {
     let basePosition = headPotision;
     let traceQueueIndex = traceQueue.length - 1;
 
-    for (let bodyCount = 0; bodyCount < 5; bodyCount++) {
+    for (let bodyIndex = 0; bodyIndex < bodyCount; bodyIndex++) {
 
         let backBodyPosition = null;
         while (traceQueueIndex >= 0) {
@@ -69,7 +70,7 @@ function draw() {
             backBodyPosition = getBackBodyPosition(basePosition, locusFrontPoint, locusBackPoint);
 
             if (backBodyPosition != null) {
-                if (bodyCount === 4) { // debug code
+                if (bodyIndex === bodyCount - 1) { // debug code
                     if (dist(backBodyPosition.x, backBodyPosition.y, headPotision.x, headPotision.y) < radius * 2 + 0.5) {
                         throw new Error("bug");
                     }
@@ -81,7 +82,7 @@ function draw() {
         }
 
         if (backBodyPosition != null) {
-            fill(100, 200 * (1 - bodyCount / 6), 100);
+            fill(100, 200 * (1 - bodyIndex / (bodyCount + 1)), 100);
 
             ellipse(backBodyPosition.x, backBodyPosition.y, radius * 2);
         }
