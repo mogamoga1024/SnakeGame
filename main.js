@@ -4,8 +4,8 @@ const radius = 25;
 let bodyCount = 30;
 let degree = 90;
 let oldDegree = null;
-const speed = 6;
-const rotationDegree = 90;
+const speed = 4;
+const rotationDegree = 2;
 const traceQueue = []
 
 function setup() {
@@ -94,7 +94,7 @@ function draw() {
     }
 
     if (traceQueueIndex > 0) {
-        traceQueue.splice(0, traceQueueIndex - 1);
+        traceQueue.splice(0, traceQueueIndex);
     }
 }
 
@@ -155,11 +155,13 @@ function minusRotate(degree) {
 function getBackBodyPosition(basePosition, locusFrontPoint, locusBackPoint) {
     let backBodyX, backBodyY;
 
+    const r = radius * 2;
+    const c = basePosition.x;
+    const d = basePosition.y;
+
     if (locusBackPoint.x === locusFrontPoint.x) {
-        // const tmpBodyY1 = basePosition.y - radius * 2;
-        // const tmpBodyY2 = basePosition.y + radius * 2;
-        tmpBodyY1 = basePosition.y - sqrt(pow(radius * 2, 2) - pow(locusFrontPoint.x - basePosition.x, 2));
-        tmpBodyY2 = basePosition.y + sqrt(pow(radius * 2, 2) - pow(locusFrontPoint.x - basePosition.x, 2));
+        tmpBodyY1 = d - sqrt(pow(r, 2) - pow(locusFrontPoint.x - c, 2));
+        tmpBodyY2 = d + sqrt(pow(r, 2) - pow(locusFrontPoint.x - c, 2));
 
         let minY, maxY;
         if (locusBackPoint.y < locusFrontPoint.y) {
@@ -198,13 +200,8 @@ function getBackBodyPosition(basePosition, locusFrontPoint, locusBackPoint) {
         let tmpBodyX1, tmpBodyX2;
         const a = (locusFrontPoint.y - locusBackPoint.y) / (locusFrontPoint.x - locusBackPoint.x);
         const b = locusFrontPoint.y - a * locusFrontPoint.x;
-        const c = basePosition.x;
-        const d = basePosition.y;
-        const r = radius * 2;
 
         if (a === 0) {
-            // tmpBodyX1 = basePosition.x - radius * 2;
-            // tmpBodyX2 = basePosition.x + radius * 2;
             tmpBodyX1 = c - sqrt(pow(r, 2) - pow(locusFrontPoint.y - d, 2));
             tmpBodyX2 = c + sqrt(pow(r, 2) - pow(locusFrontPoint.y - d, 2));
         }
