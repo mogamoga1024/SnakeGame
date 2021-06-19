@@ -6,7 +6,6 @@ let oldDegree = null;
 const speed = 3;
 const rotationDegree = 2;
 const traceQueue = []
-let preHeadPotision;
 
 function setup() {
     const canvasWidth = windowWidth * 0.9;
@@ -16,9 +15,7 @@ function setup() {
 
     angleMode(DEGREES);
 
-    // traceQueue.push(headPotision);
-
-    preHeadPotision = {x: headPotision.x, y: headPotision.y}
+    traceQueue.push({x: headPotision.x, y: headPotision.y});
 }
 
 function draw() {
@@ -26,10 +23,10 @@ function draw() {
 
     if (keyIsPressed) {
         degreeChangeByKey();
-        // if (oldDegree != degree) {
-        //     oldDegree = degree;
-        //     traceQueue.push(headPotision);
-        // }
+        if (oldDegree != degree) {
+            oldDegree = degree;
+            traceQueue.push({x: headPotision.x, y: headPotision.y});
+        }
     }
 
     if (0 < headPotision.x - radius && headPotision.x + radius < width && 0 < headPotision.y - radius && headPotision.y + radius < height) {
@@ -51,10 +48,30 @@ function draw() {
     fill(0, 200, 0);
     ellipse(headPotision.x, headPotision.y, radius * 2);
 
-    const backBodyPosition = getBackBodyPosition(headPotision, headPotision, preHeadPotision);    
+    let basePosition = headPotision;
+    let traceQueueIndex = traceQueue.length - 1;
 
-    if (backBodyPosition != null) {
-        ellipse(backBodyPosition.x, backBodyPosition.y, radius * 2);
+    for (let bodyCount = 0; bodyCount < 10; bodyCount++) {
+
+        let backBodyPosition = null;
+        while (traceQueueIndex >= 0) {
+            const locusPoint1 = basePosition;
+            const locusPoint2 = traceQueue[traceQueueIndex];
+
+            backBodyPosition = getBackBodyPosition(basePosition, locusPoint1, locusPoint2);
+
+            if (backBodyPosition != null) {
+                break;
+            }
+
+            traceQueueIndex--;
+        }
+
+        if (backBodyPosition != null) {
+            ellipse(backBodyPosition.x, backBodyPosition.y, radius * 2);
+        }
+
+        basePosition = backBodyPosition;
     }
 }
 
