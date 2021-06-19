@@ -176,7 +176,7 @@ function getBackBodyPosition(basePosition, locusFrontPoint, locusBackPoint) {
         let existsTmpBodyY2InLocus = minY <= tmpBodyY2 && tmpBodyY2 <= maxY;
 
         if (existsTmpBodyY1InLocus && existsTmpBodyY2InLocus) {
-            if (abs(locusBackPoint.y, tmpBodyY1) < abs(locusBackPoint.y, tmpBodyY2)) {
+            if (abs(locusBackPoint.y - tmpBodyY1) < abs(locusBackPoint.y - tmpBodyY2)) {
                 backBodyY = tmpBodyY1;
             }
             else {
@@ -228,7 +228,7 @@ function getBackBodyPosition(basePosition, locusFrontPoint, locusBackPoint) {
         let existsTmpBodyX2InLocus = minX <= tmpBodyX2 && tmpBodyX2 <= maxX;
 
         if (existsTmpBodyX1InLocus && existsTmpBodyX2InLocus) {
-            if (abs(locusBackPoint.x, tmpBodyX1) < abs(locusBackPoint.x, tmpBodyX2)) {
+            if (abs(locusBackPoint.x - tmpBodyX1) < abs(locusBackPoint.x - tmpBodyX2)) {
                 backBodyX = tmpBodyX1;
             }
             else {
