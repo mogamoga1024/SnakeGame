@@ -3,7 +3,7 @@ let headPotision = {x: 100, y: 100};
 const radius = 25;
 let degree = 90;
 let oldDegree = null;
-const speed = 1;
+const speed = 3;
 const rotationDegree = 2;
 const traceQueue = []
 
@@ -62,13 +62,17 @@ function draw() {
             else {
                 locusFrontPoint = traceQueue[traceQueueIndex + 1];
             }
-            //locusFrontPoint = basePosition;
 
             const locusBackPoint = traceQueue[traceQueueIndex];
 
             backBodyPosition = getBackBodyPosition(basePosition, locusFrontPoint, locusBackPoint);
 
             if (backBodyPosition != null) {
+                if (bodyCount === 4) { // debug code
+                    if (dist(backBodyPosition.x, backBodyPosition.y, headPotision.x, headPotision.y) < radius * 2 + 0.5) {
+                        throw new Error("bug");
+                    }
+                }
                 break;
             }
 
@@ -79,8 +83,6 @@ function draw() {
             fill(100, 200 * (1 - bodyCount / 6), 100);
 
             ellipse(backBodyPosition.x, backBodyPosition.y, radius * 2);
-
-            // 
         }
         else {
             break;
@@ -235,6 +237,13 @@ function getBackBodyPosition(basePosition, locusFrontPoint, locusBackPoint) {
         }
 
         backBodyY = a * backBodyX + b;
+    }
+
+    const distanceFromLocusBackPointToBasePosition = dist(locusBackPoint.x, locusBackPoint.y, basePosition.x, basePosition.y);
+    const distanceFromLocusBackPointToBackBodyPosition = dist(locusBackPoint.x, locusBackPoint.y, backBodyX, backBodyY);
+
+    if (distanceFromLocusBackPointToBasePosition < distanceFromLocusBackPointToBackBodyPosition) {
+        return null;
     }
 
     return {x: backBodyX, y: backBodyY};
