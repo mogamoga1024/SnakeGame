@@ -2,6 +2,7 @@
 const headPotision = {x: 100, y: 100};
 const snakePartsRadius = 25;
 let bodyCount = 0;
+let bodyPotisionArray = [];
 let degree = 0;
 let oldDegree = null;
 const speed = 4;
@@ -42,6 +43,14 @@ function draw() {
         noLoop();
     }
 
+    for (let i = 0; i < bodyPotisionArray.length; i++) {
+        const bodyPotision = bodyPotisionArray[i];
+        if (dist(headPotision.x, headPotision.y, bodyPotision.x, bodyPotision.y) <= snakePartsRadius * 2) {
+            noLoop();
+            break;
+        }
+    }
+
     if (dist(headPotision.x, headPotision.y, feedPotision.x, feedPotision.y) <= snakePartsRadius + feedRadius) {
         bodyCount++;
         feedPotision.x = floor(random(width + 1 - feedRadius * 2) + feedRadius);
@@ -58,7 +67,7 @@ function draw() {
 
     let basePosition = headPotision;
     let traceQueueIndex = traceQueue.length - 1;
-    const bodyArray = [];
+    bodyPotisionArray = [];
 
     for (let bodyIndex = 0; bodyIndex < bodyCount; bodyIndex++) {
 
@@ -84,7 +93,7 @@ function draw() {
         }
 
         if (backBodyPosition != null) {
-            bodyArray.push({x: backBodyPosition.x, y: backBodyPosition.y});
+            bodyPotisionArray.push({x: backBodyPosition.x, y: backBodyPosition.y});
         }
         else {
             break;
@@ -103,9 +112,9 @@ function draw() {
     fill(0, 200, 0);
     ellipse(headPotision.x, headPotision.y, snakePartsRadius * 2);
 
-    for (let i = 0; i < bodyArray.length; i++) {
-        fill(100, 200 * (1 - i / (bodyArray.length + 1)), 100);
-        ellipse(bodyArray[i].x, bodyArray[i].y, snakePartsRadius * 2);
+    for (let i = 0; i < bodyPotisionArray.length; i++) {
+        fill(100, 200 * (1 - i / (bodyPotisionArray.length + 1)), 100);
+        ellipse(bodyPotisionArray[i].x, bodyPotisionArray[i].y, snakePartsRadius * 2);
     }
 }
 
