@@ -5,7 +5,7 @@ let bodyCount = 0;
 let bodyPotisionArray = [];
 let degree = 0;
 let oldDegree = null;
-const speed = 4;
+let speed = 4;
 const rotationDegree = 3;
 const traceQueue = []
 
@@ -115,6 +115,7 @@ function draw() {
 
     if (dist(headPotision.x, headPotision.y, feedPotision.x, feedPotision.y) <= snakePartsRadius + feedRadius) {
         bodyCount++;
+        speed += 0.2;
         feedPotision = getNewFeedPosition();
     }
 
@@ -133,13 +134,19 @@ function draw() {
     fill(103, 43, 67);
     ellipse(feedPotision.x, feedPotision.y, feedRadius * 2);
 
-    fill(0, 200, 0);
+    push();
+    colorMode(HSB, 360, 100, 100);
+
+    //fill(0, 200, 0);
+    fill(360, 100, 100);
     ellipse(headPotision.x, headPotision.y, snakePartsRadius * 2);
 
     for (let i = 0; i < bodyPotisionArray.length; i++) {
-        fill(100, 200 * (1 - i / (bodyPotisionArray.length + 1)), 100);
+        //fill(100, 200 * (1 - i / (bodyPotisionArray.length + 1)), 100);
+        fill(360 * (1 - (i + 1) / (bodyPotisionArray.length + 1)), 100, 100);
         ellipse(bodyPotisionArray[i].x, bodyPotisionArray[i].y, snakePartsRadius * 2);
     }
+    pop();    
 }
 
 function keyPressed() {
