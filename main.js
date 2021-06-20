@@ -14,6 +14,11 @@ const feedRadius = Math.floor(snakePartsRadius * 0.8);
 
 const SPACE = 32;
 
+let isPressingUpArrow = false;
+let isPressingDownArrow = false;
+let isPressingLeftArrow = false;
+let isPressingRightArrow = false;
+
 function setup() {
     const canvasWidth = windowWidth * 0.9;
     const canvasHeight = windowHeight * 0.9;
@@ -121,34 +126,49 @@ function draw() {
 }
 
 function keyPressed() {
-    if (keyCode === SPACE) {
-        if (isLooping()) {
-            noLoop();
-        }
-        else {
-            loop();
-        }
+    switch (keyCode) {
+        case SPACE:
+            if (isLooping()) {
+                noLoop();
+            }
+            else {
+                loop();
+            }
+            break;
+        case UP_ARROW: isPressingUpArrow = true; break;
+        case DOWN_ARROW: isPressingDownArrow = true; break;
+        case LEFT_ARROW: isPressingLeftArrow = true; break;
+        case RIGHT_ARROW: isPressingRightArrow = true; break;
+    }
+}
+
+function keyReleased() {
+    switch (keyCode) {
+        case UP_ARROW: isPressingUpArrow = false; break;
+        case DOWN_ARROW: isPressingDownArrow = false; break;
+        case LEFT_ARROW: isPressingLeftArrow = false; break;
+        case RIGHT_ARROW: isPressingRightArrow = false; break;
     }
 }
 
 function degreeChangeByKey() {
     let plusRotateConditions, minusRotateConditions;
 
-    if (keyCode === UP_ARROW) {
+    if (isPressingUpArrow) {
         plusRotateConditions = isLeftSide;
         minusRotateConditions = isRightSide;
     }
-    else if (keyCode === DOWN_ARROW) {
+    else if (isPressingDownArrow) {
         plusRotateConditions = isRightSide;
         minusRotateConditions = isLeftSide;
     }
-    else if (keyCode === RIGHT_ARROW) {
-        plusRotateConditions = isLowerSide;
-        minusRotateConditions = isUpperSide;
-    }
-    else if (keyCode === LEFT_ARROW) {
+    else if (isPressingLeftArrow) {
         plusRotateConditions = isUpperSide;
         minusRotateConditions = isLowerSide;
+    }
+    else if (isPressingRightArrow) {
+        plusRotateConditions = isLowerSide;
+        minusRotateConditions = isUpperSide;
     }
     else {
         return;
