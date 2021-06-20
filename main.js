@@ -152,50 +152,64 @@ function keyReleased() {
 }
 
 function degreeChangeByKey() {
-    let plusRotateConditions, minusRotateConditions;
+    let shouldPlusRotate, shouldMinusRotate;
 
     if (isPressingUpArrow) {
-        plusRotateConditions = isLeftSide;
-        minusRotateConditions = isRightSide;
+        shouldPlusRotate = existInAngularRange(degree, 90, 270);
+        shouldMinusRotate = existInAngularRange(degree, 270, 90);
     }
     else if (isPressingDownArrow) {
-        plusRotateConditions = isRightSide;
-        minusRotateConditions = isLeftSide;
+        shouldPlusRotate = existInAngularRange(degree, 270, 90);
+        shouldMinusRotate = existInAngularRange(degree, 90, 270);
     }
     else if (isPressingLeftArrow) {
-        plusRotateConditions = isUpperSide;
-        minusRotateConditions = isLowerSide;
+        shouldPlusRotate = existInAngularRange(degree, 0, 180);
+        shouldMinusRotate = existInAngularRange(degree, 180);
     }
     else if (isPressingRightArrow) {
-        plusRotateConditions = isLowerSide;
-        minusRotateConditions = isUpperSide;
+        shouldPlusRotate = existInAngularRange(degree, 180);
+        shouldMinusRotate = existInAngularRange(degree, 0, 180);
     }
     else {
         return;
     }
 
-    if (plusRotateConditions(degree)) {
+    if (shouldPlusRotate) {
         degree = plusRotate(degree);
     }
-    else if (minusRotateConditions(degree)) {
+    else if (shouldMinusRotate) {
         degree = minusRotate(degree);
     }
 }
 
+/*
 function isUpperSide(degree) {
     return 0 < degree && degree < 180;
 }
-
 function isLowerSide(degree) {
     return 180 < degree;
 }
-
 function isLeftSide(degree) {
     return 90 < degree && degree < 270;
 }
-
 function isRightSide(degree) {
     return 270 < degree || degree < 90;
+}
+*/
+
+/**
+ * startDegree, endDegreまでの角度の範囲にtargetDegreeが含まれているか
+ * ただし、startDegree, endDegreは含まない。
+ */
+function existInAngularRange(targetDegree, startDegree, endDegree) {
+    if (endDegree === undefined) endDegree = 360;
+
+    if (startDegree < endDegree) {
+        return startDegree < targetDegree && targetDegree < endDegree;
+    }
+    else {
+        return startDegree < targetDegree || targetDegree < endDegree;
+    }
 }
 
 function plusRotate(degree) {
