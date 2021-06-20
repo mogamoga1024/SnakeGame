@@ -9,7 +9,7 @@ const speed = 4;
 const rotationDegree = 3;
 const traceQueue = []
 
-const feedPotision = {x: 400, y: 100};
+let feedPotision = {x: 400, y: 100};
 const feedRadius = Math.floor(snakePartsRadius * 0.8);
 
 const SPACE = 32;
@@ -34,6 +34,23 @@ function setup() {
 function draw() {
     //clear();
     background(128, 128, 128);
+
+    // fill(103, 43, 67);
+    // for (let i = 0; i < 1000; i++) {
+    //     feedPotision.x = floor(random(width + 1 - feedRadius * 2) + feedRadius);
+    //     feedPotision.y = floor(random(height + 1 - feedRadius * 2) + feedRadius);
+
+    //     const snakeRotationRadius = speed / sqrt(2 * (1 - cos(rotationDegree))) + snakePartsRadius;
+
+    //     if (feedPotision.y < -feedPotision.x + snakeRotationRadius) continue;
+    //     if (feedPotision.y < feedPotision.x - width + snakeRotationRadius) continue;
+    //     if (feedPotision.y > feedPotision.x + height - snakeRotationRadius) continue;
+    //     if (feedPotision.y > -feedPotision.x + width + height - snakeRotationRadius) continue;
+
+    //     ellipse(feedPotision.x, feedPotision.y, feedRadius * 2);
+    // }
+
+    // return;
 
     if (keyIsPressed) {
         degreeChangeByKey();
@@ -98,8 +115,7 @@ function draw() {
 
     if (dist(headPotision.x, headPotision.y, feedPotision.x, feedPotision.y) <= snakePartsRadius + feedRadius) {
         bodyCount++;
-        feedPotision.x = floor(random(width + 1 - feedRadius * 2) + feedRadius);
-        feedPotision.y = floor(random(height + 1 - feedRadius * 2) + feedRadius);
+        feedPotision = getNewFeedPosition();
     }
 
     // push();
@@ -317,3 +333,19 @@ function getBackBodyPosition(basePosition, locusFrontPoint, locusBackPoint) {
 
     return {x: backBodyX, y: backBodyY};
 }
+
+function getNewFeedPosition() {
+    const x = floor(random(width + 1 - feedRadius * 2) + feedRadius);
+    const y = floor(random(height + 1 - feedRadius * 2) + feedRadius);
+    const snakeRotationRadius = speed / sqrt(2 * (1 - cos(rotationDegree))) + snakePartsRadius;
+
+    if (y < -x + snakeRotationRadius || 
+        y < x - width + snakeRotationRadius ||
+        y > x + height - snakeRotationRadius ||
+        y > -x + width + height - snakeRotationRadius) {
+        return getNewFeedPosition()
+    }
+
+    return {x: x, y: y};
+}
+
