@@ -223,7 +223,7 @@ function getBackBodyPosition(basePosition, locusFrontPoint, locusBackPoint) {
 
             const D = sqrt(pow(B, 2) - A * C);
 
-            if (Number.isNaN(D)) {
+            if (isNaN(D)) {
                 return null;
             }
 
