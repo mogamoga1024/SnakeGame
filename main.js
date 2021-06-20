@@ -6,7 +6,7 @@ let bodyPotisionArray = [];
 let degree = 0;
 let oldDegree = null;
 const speed = 4;
-const rotationDegree = 2;
+const rotationDegree = 3;
 const traceQueue = []
 
 const feedPotision = {x: 400, y: 100};
@@ -50,28 +50,6 @@ function draw() {
         noLoop();
     }
 
-    for (let i = 0; i < bodyPotisionArray.length; i++) {
-        const bodyPotision = bodyPotisionArray[i];
-        if (dist(headPotision.x, headPotision.y, bodyPotision.x, bodyPotision.y) <= snakePartsRadius * 2) {
-            noLoop();
-            break;
-        }
-    }
-
-    if (dist(headPotision.x, headPotision.y, feedPotision.x, feedPotision.y) <= snakePartsRadius + feedRadius) {
-        bodyCount++;
-        feedPotision.x = floor(random(width + 1 - feedRadius * 2) + feedRadius);
-        feedPotision.y = floor(random(height + 1 - feedRadius * 2) + feedRadius);
-    }
-
-    // push();
-    // stroke(255, 0, 0);
-    // strokeWeight(snakePartsRadius);
-    // for (let i = 0; i < traceQueue.length; i++) {
-    //     point(traceQueue[i].x, traceQueue[i].y);
-    // }
-    // pop();
-
     let basePosition = headPotision;
     let traceQueueIndex = traceQueue.length - 1;
     bodyPotisionArray = [];
@@ -108,6 +86,28 @@ function draw() {
 
         basePosition = backBodyPosition;
     }
+
+    for (let i = 1; i < bodyPotisionArray.length; i++) {
+        const bodyPotision = bodyPotisionArray[i];
+        if (dist(headPotision.x, headPotision.y, bodyPotision.x, bodyPotision.y) <= snakePartsRadius * 2) {
+            noLoop();
+            break;
+        }
+    }
+
+    if (dist(headPotision.x, headPotision.y, feedPotision.x, feedPotision.y) <= snakePartsRadius + feedRadius) {
+        bodyCount++;
+        feedPotision.x = floor(random(width + 1 - feedRadius * 2) + feedRadius);
+        feedPotision.y = floor(random(height + 1 - feedRadius * 2) + feedRadius);
+    }
+
+    // push();
+    // stroke(255, 0, 0);
+    // strokeWeight(snakePartsRadius);
+    // for (let i = 0; i < traceQueue.length; i++) {
+    //     point(traceQueue[i].x, traceQueue[i].y);
+    // }
+    // pop();
 
     if (traceQueueIndex > 0) {
         traceQueue.splice(0, traceQueueIndex);
@@ -152,9 +152,26 @@ function keyReleased() {
 }
 
 function degreeChangeByKey() {
-    let shouldPlusRotate, shouldMinusRotate;
+    let shouldPlusRotate = false;
+    let shouldMinusRotate = false;
 
-    if (isPressingUpArrow) {
+    if (isPressingUpArrow && isPressingLeftArrow) {
+        shouldPlusRotate = existInAngularRange(degree, 45, 225);
+        shouldMinusRotate = existInAngularRange(degree, 225, 45);
+    }
+    else if (isPressingDownArrow && isPressingRightArrow) {
+        shouldPlusRotate = existInAngularRange(degree, 225, 45);
+        shouldMinusRotate = existInAngularRange(degree, 45, 225);
+    }
+    else if (isPressingUpArrow && isPressingRightArrow) {
+        shouldPlusRotate = existInAngularRange(degree, 135, 315);
+        shouldMinusRotate = existInAngularRange(degree, 315, 135);
+    }
+    else if (isPressingDownArrow && isPressingLeftArrow) {
+        shouldPlusRotate = existInAngularRange(degree, 315, 135);
+        shouldMinusRotate = existInAngularRange(degree, 135, 315);
+    }
+    else if (isPressingUpArrow) {
         shouldPlusRotate = existInAngularRange(degree, 90, 270);
         shouldMinusRotate = existInAngularRange(degree, 270, 90);
     }
@@ -181,21 +198,6 @@ function degreeChangeByKey() {
         degree = minusRotate(degree);
     }
 }
-
-/*
-function isUpperSide(degree) {
-    return 0 < degree && degree < 180;
-}
-function isLowerSide(degree) {
-    return 180 < degree;
-}
-function isLeftSide(degree) {
-    return 90 < degree && degree < 270;
-}
-function isRightSide(degree) {
-    return 270 < degree || degree < 90;
-}
-*/
 
 /**
  * startDegree, endDegreまでの角度の範囲にtargetDegreeが含まれているか
