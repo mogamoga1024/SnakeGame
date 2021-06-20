@@ -307,8 +307,8 @@ function getBackBodyPosition(basePosition, locusFrontPoint, locusBackPoint) {
             maxX = locusBackPoint.x;
         }
 
-        let existsTmpBodyX1InLocus = minX <= tmpBodyX1 && tmpBodyX1 <= maxX;
-        let existsTmpBodyX2InLocus = minX <= tmpBodyX2 && tmpBodyX2 <= maxX;
+        const existsTmpBodyX1InLocus = minX <= tmpBodyX1 && tmpBodyX1 <= maxX;
+        const existsTmpBodyX2InLocus = minX <= tmpBodyX2 && tmpBodyX2 <= maxX;
 
         if (existsTmpBodyX1InLocus && existsTmpBodyX2InLocus) {
             if (abs(locusBackPoint.x - tmpBodyX1) < abs(locusBackPoint.x - tmpBodyX2)) {
