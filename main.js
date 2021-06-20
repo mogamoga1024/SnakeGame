@@ -12,6 +12,8 @@ const traceQueue = []
 const feedPotision = {x: 400, y: 100};
 const feedRadius = Math.floor(snakePartsRadius * 0.8);
 
+const SPACE = 32;
+
 function setup() {
     const canvasWidth = windowWidth * 0.9;
     const canvasHeight = windowHeight * 0.9;
@@ -115,6 +117,17 @@ function draw() {
     for (let i = 0; i < bodyPotisionArray.length; i++) {
         fill(100, 200 * (1 - i / (bodyPotisionArray.length + 1)), 100);
         ellipse(bodyPotisionArray[i].x, bodyPotisionArray[i].y, snakePartsRadius * 2);
+    }
+}
+
+function keyPressed() {
+    if (keyCode === SPACE) {
+        if (isLooping()) {
+            noLoop();
+        }
+        else {
+            loop();
+        }
     }
 }
 
