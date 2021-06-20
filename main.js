@@ -56,14 +56,9 @@ function draw() {
     // }
     // pop();
 
-    fill(103, 43, 67);
-    ellipse(feedPotision.x, feedPotision.y, feedRadius * 2);
-
-    fill(0, 200, 0);
-    ellipse(headPotision.x, headPotision.y, snakePartsRadius * 2);
-
     let basePosition = headPotision;
     let traceQueueIndex = traceQueue.length - 1;
+    const bodyArray = [];
 
     for (let bodyIndex = 0; bodyIndex < bodyCount; bodyIndex++) {
 
@@ -82,11 +77,6 @@ function draw() {
             backBodyPosition = getBackBodyPosition(basePosition, locusFrontPoint, locusBackPoint);
 
             if (backBodyPosition != null) {
-                // if (bodyIndex === bodyCount - 1) { // debug code
-                //     if (dist(backBodyPosition.x, backBodyPosition.y, headPotision.x, headPotision.y) < snakePartsRadius * 2 + 0.5) {
-                //         throw new Error("bug");
-                //     }
-                // }
                 break;
             }
 
@@ -94,9 +84,7 @@ function draw() {
         }
 
         if (backBodyPosition != null) {
-            fill(100, 200 * (1 - bodyIndex / (bodyCount + 1)), 100);
-
-            ellipse(backBodyPosition.x, backBodyPosition.y, snakePartsRadius * 2);
+            bodyArray.push({x: backBodyPosition.x, y: backBodyPosition.y});
         }
         else {
             break;
@@ -107,6 +95,17 @@ function draw() {
 
     if (traceQueueIndex > 0) {
         traceQueue.splice(0, traceQueueIndex);
+    }
+
+    fill(103, 43, 67);
+    ellipse(feedPotision.x, feedPotision.y, feedRadius * 2);
+
+    fill(0, 200, 0);
+    ellipse(headPotision.x, headPotision.y, snakePartsRadius * 2);
+
+    for (let i = 0; i < bodyArray.length; i++) {
+        fill(100, 200 * (1 - i / (bodyArray.length + 1)), 100);
+        ellipse(bodyArray[i].x, bodyArray[i].y, snakePartsRadius * 2);
     }
 }
 
