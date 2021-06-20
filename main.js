@@ -6,7 +6,7 @@ let bodyPotisionArray = [];
 let degree = 0;
 let oldDegree = null;
 const speed = 4;
-const rotationDegree = 3; // 45の約数でないと斜め移動がスムーズにならないことを留意
+const rotationDegree = 3;
 const traceQueue = []
 
 const feedPotision = {x: 400, y: 100};
@@ -14,6 +14,7 @@ const feedRadius = Math.floor(snakePartsRadius * 0.8);
 
 const SPACE = 32;
 
+let latestKeyCode = null;
 let isPressingUpArrow = false;
 let isPressingDownArrow = false;
 let isPressingLeftArrow = false;
@@ -135,19 +136,19 @@ function keyPressed() {
                 loop();
             }
             break;
-        case UP_ARROW: isPressingUpArrow = true; break;
-        case DOWN_ARROW: isPressingDownArrow = true; break;
-        case LEFT_ARROW: isPressingLeftArrow = true; break;
-        case RIGHT_ARROW: isPressingRightArrow = true; break;
+        case UP_ARROW   : isPressingUpArrow    = true; latestKeyCode = keyCode; break;
+        case DOWN_ARROW : isPressingDownArrow  = true; latestKeyCode = keyCode; break;
+        case LEFT_ARROW : isPressingLeftArrow  = true; latestKeyCode = keyCode; break;
+        case RIGHT_ARROW: isPressingRightArrow = true; latestKeyCode = keyCode; break;
     }
 }
 
 function keyReleased() {
     switch (keyCode) {
-        case UP_ARROW: isPressingUpArrow = false; break;
-        case DOWN_ARROW: isPressingDownArrow = false; break;
-        case LEFT_ARROW: isPressingLeftArrow = false; break;
-        case RIGHT_ARROW: isPressingRightArrow = false; break;
+        case UP_ARROW   : isPressingUpArrow    = false; latestKeyCode = null; break;
+        case DOWN_ARROW : isPressingDownArrow  = false; latestKeyCode = null; break;
+        case LEFT_ARROW : isPressingLeftArrow  = false; latestKeyCode = null; break;
+        case RIGHT_ARROW: isPressingRightArrow = false; latestKeyCode = null; break;
     }
 }
 
@@ -155,35 +156,19 @@ function degreeChangeByKey() {
     let shouldPlusRotate = false;
     let shouldMinusRotate = false;
 
-    if (isPressingUpArrow && isPressingLeftArrow) {
-        shouldPlusRotate = existInAngularRange(degree, 45, 225);
-        shouldMinusRotate = existInAngularRange(degree, 225, 45);
-    }
-    else if (isPressingDownArrow && isPressingRightArrow) {
-        shouldPlusRotate = existInAngularRange(degree, 225, 45);
-        shouldMinusRotate = existInAngularRange(degree, 45, 225);
-    }
-    else if (isPressingUpArrow && isPressingRightArrow) {
-        shouldPlusRotate = existInAngularRange(degree, 135, 315);
-        shouldMinusRotate = existInAngularRange(degree, 315, 135);
-    }
-    else if (isPressingDownArrow && isPressingLeftArrow) {
-        shouldPlusRotate = existInAngularRange(degree, 315, 135);
-        shouldMinusRotate = existInAngularRange(degree, 135, 315);
-    }
-    else if (isPressingUpArrow) {
+    if (latestKeyCode === UP_ARROW || latestKeyCode === null && isPressingUpArrow) {
         shouldPlusRotate = existInAngularRange(degree, 90, 270);
         shouldMinusRotate = existInAngularRange(degree, 270, 90);
     }
-    else if (isPressingDownArrow) {
+    else if (latestKeyCode === DOWN_ARROW || latestKeyCode === null && isPressingDownArrow) {
         shouldPlusRotate = existInAngularRange(degree, 270, 90);
         shouldMinusRotate = existInAngularRange(degree, 90, 270);
     }
-    else if (isPressingLeftArrow) {
+    else if (latestKeyCode === LEFT_ARROW || latestKeyCode === null && isPressingLeftArrow) {
         shouldPlusRotate = existInAngularRange(degree, 0, 180);
         shouldMinusRotate = existInAngularRange(degree, 180);
     }
-    else if (isPressingRightArrow) {
+    else if (latestKeyCode === RIGHT_ARROW || latestKeyCode === null && isPressingRightArrow) {
         shouldPlusRotate = existInAngularRange(degree, 180);
         shouldMinusRotate = existInAngularRange(degree, 0, 180);
     }
