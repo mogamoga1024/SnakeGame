@@ -6,7 +6,7 @@ let bodyPotisionArray = [];
 let degree = 0;
 let oldDegree = null;
 const speed = 4;
-const rotationDegree = 3;
+const rotationDegree = 3; // 45の約数でないと斜め移動がスムーズにならないことを留意
 const traceQueue = []
 
 const feedPotision = {x: 400, y: 100};
