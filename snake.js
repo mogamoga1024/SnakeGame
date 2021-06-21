@@ -145,8 +145,8 @@ Snake.prototype.getBackBodyPosition = function(basePosition, locusFrontPoint, lo
     const d = basePosition.y;
 
     if (locusBackPoint.x === locusFrontPoint.x) {
-        tmpBodyY1 = d - sqrt(pow(r, 2) - pow(locusFrontPoint.x - c, 2));
-        tmpBodyY2 = d + sqrt(pow(r, 2) - pow(locusFrontPoint.x - c, 2));
+        const tmpBodyY1 = d - sqrt(pow(r, 2) - pow(locusFrontPoint.x - c, 2));
+        const tmpBodyY2 = d + sqrt(pow(r, 2) - pow(locusFrontPoint.x - c, 2));
 
         let minY, maxY;
         if (locusBackPoint.y < locusFrontPoint.y) {

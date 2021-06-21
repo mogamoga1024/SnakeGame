@@ -1,3 +1,4 @@
+
 const snake = new Snake();
 const feedManager = new FeedManager();
 let feed = feedManager.firstSowFeed();
