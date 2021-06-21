@@ -78,26 +78,3 @@ function keyReleased() {
         case RIGHT_ARROW: isPressingRightArrow = false; latestKeyCode = null; break;
     }
 }
-
-/**
- * startDegree, endDegreまでの角度の範囲にtargetDegreeが含まれているか
- * ただし、startDegree, endDegreは含まない。
- */
-function existInAngularRange(targetDegree, startDegree, endDegree) {
-    if (endDegree === undefined) endDegree = 360;
-
-    if (startDegree < endDegree) {
-        return startDegree < targetDegree && targetDegree < endDegree;
-    }
-    else {
-        return startDegree < targetDegree || targetDegree < endDegree;
-    }
-}
-
-function plusRotate(degree1, degree2) {
-    return (degree1 + degree2) % 360;
-}
-function minusRotate(degree1, degree2) {
-    return (degree1 - degree2 + 360) % 360;
-}
-

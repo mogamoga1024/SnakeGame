@@ -32,30 +32,30 @@ Snake.prototype.degreeChangeByKey = function() {
     let shouldMinusRotate = false;
 
     if (latestKeyCode === UP_ARROW || latestKeyCode === null && isPressingUpArrow) {
-        shouldPlusRotate = existInAngularRange(this.degree, 90, 270);
-        shouldMinusRotate = existInAngularRange(this.degree, 270, 90);
+        shouldPlusRotate = DegreeUtils.existInAngularRange(this.degree, 90, 270);
+        shouldMinusRotate = DegreeUtils.existInAngularRange(this.degree, 270, 90);
     }
     else if (latestKeyCode === DOWN_ARROW || latestKeyCode === null && isPressingDownArrow) {
-        shouldPlusRotate = existInAngularRange(this.degree, 270, 90);
-        shouldMinusRotate = existInAngularRange(this.degree, 90, 270);
+        shouldPlusRotate = DegreeUtils.existInAngularRange(this.degree, 270, 90);
+        shouldMinusRotate = DegreeUtils.existInAngularRange(this.degree, 90, 270);
     }
     else if (latestKeyCode === LEFT_ARROW || latestKeyCode === null && isPressingLeftArrow) {
-        shouldPlusRotate = existInAngularRange(this.degree, 0, 180);
-        shouldMinusRotate = existInAngularRange(this.degree, 180);
+        shouldPlusRotate = DegreeUtils.existInAngularRange(this.degree, 0, 180);
+        shouldMinusRotate = DegreeUtils.existInAngularRange(this.degree, 180);
     }
     else if (latestKeyCode === RIGHT_ARROW || latestKeyCode === null && isPressingRightArrow) {
-        shouldPlusRotate = existInAngularRange(this.degree, 180);
-        shouldMinusRotate = existInAngularRange(this.degree, 0, 180);
+        shouldPlusRotate = DegreeUtils.existInAngularRange(this.degree, 180);
+        shouldMinusRotate = DegreeUtils.existInAngularRange(this.degree, 0, 180);
     }
     else {
         return;
     }
 
     if (shouldPlusRotate) {
-        this.degree = plusRotate(this.degree, this.rotationDegree);
+        this.degree = DegreeUtils.plusRotate(this.degree, this.rotationDegree);
     }
     else if (shouldMinusRotate) {
-        this.degree = minusRotate(this.degree, this.rotationDegree);
+        this.degree = DegreeUtils.minusRotate(this.degree, this.rotationDegree);
     }
 
     if (this.oldDegree != this.degree) {
