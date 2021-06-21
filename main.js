@@ -1,6 +1,6 @@
 
 const SPACE = 32;
-let scene = new GmaeStartScene();
+let scene;
 
 function setup() {
     const canvasWidth = windowWidth * 0.9;
@@ -9,6 +9,8 @@ function setup() {
     canvas.position((windowWidth - canvasWidth) / 2, (windowHeight - canvasHeight) / 2);
 
     angleMode(DEGREES);
+
+    scene = new GmaeStartScene();
 }
 
 function draw() {

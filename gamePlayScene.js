@@ -9,6 +9,8 @@ function GamePlayScene() {
     this.isPressingDownArrow = false;
     this.isPressingLeftArrow = false;
     this.isPressingRightArrow = false;
+
+    loop();
 };
 
 GamePlayScene.prototype = Object.create(Scene.prototype);

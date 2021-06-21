@@ -1,5 +1,7 @@
 
-function GmaeStartScene() {};
+function GmaeStartScene() {
+    noLoop();
+};
 
 GmaeStartScene.prototype = Object.create(Scene.prototype);
 GmaeStartScene.prototype.constructor = Scene;
