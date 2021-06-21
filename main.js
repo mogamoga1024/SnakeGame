@@ -43,9 +43,9 @@ function draw() {
 
     // push();
     // stroke(255, 0, 0);
-    // strokeWeight(partsRadius);
-    // for (let i = 0; i < traceQueue.length; i++) {
-    //     point(traceQueue[i].x, traceQueue[i].y);
+    // strokeWeight(snake.partsRadius);
+    // for (let i = 0; i < snake.traceQueue.length; i++) {
+    //     point(snake.traceQueue[i].x, snake.traceQueue[i].y);
     // }
     // pop();
 
