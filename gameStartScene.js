@@ -16,7 +16,7 @@ GmaeStartScene.prototype.draw = function() {
     text("ゲーミングスネークゲーム", width / 2, height * 2 / 5);
 
     textSize(30);
-    text("press any key", width / 2, height * 3 / 4);
+    text("press any key", width / 2, height * 3 / 5);
 };
 
 GmaeStartScene.prototype.keyPressed = function() {

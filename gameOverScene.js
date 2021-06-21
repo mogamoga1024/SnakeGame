@@ -19,6 +19,9 @@ GmaeOverScene.prototype.draw = function() {
     textAlign(CENTER, CENTER);
     textSize(50);
     text("ゲームオーバー", width / 2, height * 2 / 5);
+
+    textSize(30);
+    text("スコア：" + this.prevScene.snake.bodyCount, width / 2, height * 3 / 5);
 };
 
 GmaeOverScene.prototype.keyPressed = function() {
