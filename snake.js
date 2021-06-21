@@ -7,7 +7,7 @@ function Snake() {
     this.headDegree = 0;
     this.oldHeadDegree = null;
     this.speed = 4;
-    this.rotationDegree = 3;
+    this.rotationDegree = 3; // 90の約数であること
     this.traceQueue = []
 
     this.traceQueue.push(new Position(this.headPotision.x, this.headPotision.y));
