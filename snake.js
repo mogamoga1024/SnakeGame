@@ -1,6 +1,6 @@
 
 function Snake() {
-    this.headPotision = {x: 100, y: 100};
+    this.headPotision = new Position(100, 100);
     this.partsRadius = 25;
     this.bodyCount = 0;
     this.bodyPotisionArray = [];
@@ -10,7 +10,7 @@ function Snake() {
     this.rotationDegree = 3;
     this.traceQueue = []
 
-    this.traceQueue.push({x: this.headPotision.x, y: this.headPotision.y});
+    this.traceQueue.push(new Position(this.headPotision.x, this.headPotision.y));
 }
 
 Snake.prototype.draw = function() {
@@ -60,7 +60,7 @@ Snake.prototype.headDegreeChangeByKey = function() {
 
     if (this.oldHeadDegree != this.headDegree) {
         this.oldHeadDegree = this.headDegree;
-        this.traceQueue.push({x: this.headPotision.x, y: this.headPotision.y});
+        this.traceQueue.push(this.headPotision.clone());
     }
 };
 
@@ -118,7 +118,7 @@ Snake.prototype.move = function() {
         }
 
         if (backBodyPosition != null) {
-            this.bodyPotisionArray.push({x: backBodyPosition.x, y: backBodyPosition.y});
+            this.bodyPotisionArray.push(backBodyPosition.clone());
         }
         else {
             break;
@@ -246,6 +246,6 @@ Snake.prototype.getBackBodyPosition = function(basePosition, locusFrontPoint, lo
         return null;
     }
 
-    return {x: backBodyX, y: backBodyY};
+    return new Position(backBodyX, backBodyY);
 };
 
