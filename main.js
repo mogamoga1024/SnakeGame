@@ -25,14 +25,10 @@ function draw() {
     if (keyIsPressed) {
         snake.degreeChangeByKey();
     }
-
-    if (snake.isHittingWall()) {
-        noLoop();
-    }
     
     snake.move();
 
-    if (snake.isHittingBody()) {
+    if (snake.isHittingWall() || snake.isHittingBody()) {
         noLoop();
     }
 
