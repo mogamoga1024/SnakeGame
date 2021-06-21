@@ -4,8 +4,8 @@ function Snake() {
     this.partsRadius = 25;
     this.bodyCount = 0;
     this.bodyPotisionArray = [];
-    this.degree = 0;
-    this.oldDegree = null;
+    this.headDegree = 0;
+    this.oldHeadDegree = null;
     this.speed = 4;
     this.rotationDegree = 3;
     this.traceQueue = []
@@ -27,39 +27,39 @@ Snake.prototype.draw = function() {
     pop();
 };
 
-Snake.prototype.degreeChangeByKey = function() {
+Snake.prototype.headDegreeChangeByKey = function() {
     let shouldPlusRotate = false;
     let shouldMinusRotate = false;
 
     if (latestKeyCode === UP_ARROW || latestKeyCode === null && isPressingUpArrow) {
-        shouldPlusRotate = DegreeUtils.existInAngularRange(this.degree, 90, 270);
-        shouldMinusRotate = DegreeUtils.existInAngularRange(this.degree, 270, 90);
+        shouldPlusRotate = DegreeUtils.existInAngularRange(this.headDegree, 90, 270);
+        shouldMinusRotate = DegreeUtils.existInAngularRange(this.headDegree, 270, 90);
     }
     else if (latestKeyCode === DOWN_ARROW || latestKeyCode === null && isPressingDownArrow) {
-        shouldPlusRotate = DegreeUtils.existInAngularRange(this.degree, 270, 90);
-        shouldMinusRotate = DegreeUtils.existInAngularRange(this.degree, 90, 270);
+        shouldPlusRotate = DegreeUtils.existInAngularRange(this.headDegree, 270, 90);
+        shouldMinusRotate = DegreeUtils.existInAngularRange(this.headDegree, 90, 270);
     }
     else if (latestKeyCode === LEFT_ARROW || latestKeyCode === null && isPressingLeftArrow) {
-        shouldPlusRotate = DegreeUtils.existInAngularRange(this.degree, 0, 180);
-        shouldMinusRotate = DegreeUtils.existInAngularRange(this.degree, 180);
+        shouldPlusRotate = DegreeUtils.existInAngularRange(this.headDegree, 0, 180);
+        shouldMinusRotate = DegreeUtils.existInAngularRange(this.headDegree, 180);
     }
     else if (latestKeyCode === RIGHT_ARROW || latestKeyCode === null && isPressingRightArrow) {
-        shouldPlusRotate = DegreeUtils.existInAngularRange(this.degree, 180);
-        shouldMinusRotate = DegreeUtils.existInAngularRange(this.degree, 0, 180);
+        shouldPlusRotate = DegreeUtils.existInAngularRange(this.headDegree, 180);
+        shouldMinusRotate = DegreeUtils.existInAngularRange(this.headDegree, 0, 180);
     }
     else {
         return;
     }
 
     if (shouldPlusRotate) {
-        this.degree = DegreeUtils.plusRotate(this.degree, this.rotationDegree);
+        this.headDegree = DegreeUtils.plusRotate(this.headDegree, this.rotationDegree);
     }
     else if (shouldMinusRotate) {
-        this.degree = DegreeUtils.minusRotate(this.degree, this.rotationDegree);
+        this.headDegree = DegreeUtils.minusRotate(this.headDegree, this.rotationDegree);
     }
 
-    if (this.oldDegree != this.degree) {
-        this.oldDegree = this.degree;
+    if (this.oldHeadDegree != this.headDegree) {
+        this.oldHeadDegree = this.headDegree;
         this.traceQueue.push({x: this.headPotision.x, y: this.headPotision.y});
     }
 };
@@ -87,8 +87,8 @@ Snake.prototype.canEatFeed = function(feed) {
 };
 
 Snake.prototype.move = function() {
-    this.headPotision.x += this.speed * cos(this.degree);
-    this.headPotision.y += this.speed * sin(this.degree);
+    this.headPotision.x += this.speed * cos(this.headDegree);
+    this.headPotision.y += this.speed * sin(this.headDegree);
 
     let basePosition = this.headPotision;
     let traceQueueIndex = this.traceQueue.length - 1;

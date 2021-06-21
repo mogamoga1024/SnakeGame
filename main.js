@@ -23,7 +23,7 @@ function draw() {
     background(128, 128, 128);
 
     if (keyIsPressed) {
-        snake.degreeChangeByKey();
+        snake.headDegreeChangeByKey();
     }
     
     snake.move();
