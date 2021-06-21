@@ -1,6 +1,6 @@
 
 const SPACE = 32;
-let scene = new GamePlayScene();
+let scene = new GmaeStartScene();
 
 function setup() {
     const canvasWidth = windowWidth * 0.9;

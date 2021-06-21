@@ -11,8 +11,11 @@ function GamePlayScene() {
     this.isPressingRightArrow = false;
 };
 
+GamePlayScene.prototype = Object.create(Scene.prototype);
+GamePlayScene.prototype.constructor = Scene;
+
 GamePlayScene.prototype.draw = function() {
-    background(128, 128, 128);
+    background(128);
 
     if (keyIsPressed) {
         this.snake.headDegreeChangeByKey(this);
