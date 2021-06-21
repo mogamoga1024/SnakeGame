@@ -1,6 +1,7 @@
 
 function GmaeStartScene() {
     noLoop();
+    this.draw();
 };
 
 GmaeStartScene.prototype = Object.create(Scene.prototype);
@@ -18,7 +19,7 @@ GmaeStartScene.prototype.draw = function() {
     text("press any key", width / 2, height * 3 / 4);
 };
 
-Scene.prototype.keyPressed = function() {
+GmaeStartScene.prototype.keyPressed = function() {
     scene = new GamePlayScene();
 };
 

@@ -26,7 +26,8 @@ GamePlayScene.prototype.draw = function() {
     this.snake.move();
 
     if (this.snake.isHittingWall() || this.snake.isHittingBody()) {
-        noLoop();
+        scene = new GmaeOverScene(this);
+        return;
     }
 
     if (this.snake.canEatFeed(this.feed)) {
