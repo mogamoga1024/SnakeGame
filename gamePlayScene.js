@@ -18,7 +18,6 @@ function GamePlayScene(isVerticalMode) {
 };
 
 GamePlayScene.prototype = Object.create(Scene.prototype);
-GamePlayScene.prototype.constructor = Scene;
 
 GamePlayScene.prototype.draw = function() {
     background(128);

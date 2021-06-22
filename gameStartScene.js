@@ -5,7 +5,6 @@ function GmaeStartScene() {
 };
 
 GmaeStartScene.prototype = Object.create(Scene.prototype);
-GmaeStartScene.prototype.constructor = Scene;
 
 GmaeStartScene.prototype.draw = function() {
     background(128);

@@ -8,7 +8,6 @@ function GmaeOverScene(prevScene) {
 };
 
 GmaeOverScene.prototype = Object.create(Scene.prototype);
-GmaeOverScene.prototype.constructor = Scene;
 
 GmaeOverScene.prototype.draw = function() {
     background(128);
