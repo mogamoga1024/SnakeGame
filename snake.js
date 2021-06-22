@@ -10,7 +10,7 @@ function Snake() {
     this.rotationDegree = 3; // 90の約数であること
     this.traceQueue = []
 
-    this.traceQueue.push(new Position(this.headPotision.x, this.headPotision.y));
+    this.traceQueue.push(this.headPotision.clone());
 }
 
 Snake.prototype.draw = function() {
