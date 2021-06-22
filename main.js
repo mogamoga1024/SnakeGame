@@ -1,5 +1,9 @@
 
-const SPACE = 32;
+const KEY_CODE = {
+    SPACE: 32,
+    V: 86
+};
+
 let scene;
 
 function setup() {

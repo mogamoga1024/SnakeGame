@@ -1,5 +1,5 @@
 
-function GamePlayScene() {
+function GamePlayScene(isVerticalMode) {
     this.snake = new Snake();
     this.feedManager = new FeedManager();
     this.feed = this.feedManager.firstSowFeed();
@@ -9,6 +9,10 @@ function GamePlayScene() {
     this.isPressingDownArrow = false;
     this.isPressingLeftArrow = false;
     this.isPressingRightArrow = false;
+
+    if (isVerticalMode) {
+        this.snake.rotationDegree = 90;
+    }
 
     loop();
 };
@@ -41,7 +45,7 @@ GamePlayScene.prototype.draw = function() {
 
 GamePlayScene.prototype.keyPressed = function() {
     switch (keyCode) {
-        case SPACE:
+        case KEY_CODE.SPACE:
             if (isLooping()) {
                 noLoop();
             }

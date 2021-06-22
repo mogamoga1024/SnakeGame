@@ -20,6 +20,6 @@ GmaeStartScene.prototype.draw = function() {
 };
 
 GmaeStartScene.prototype.keyPressed = function() {
-    scene = new GamePlayScene();
+    scene = new GamePlayScene(keyCode === KEY_CODE.V);
 };
 
