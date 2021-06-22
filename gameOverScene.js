@@ -1,6 +1,7 @@
 
 function GmaeOverScene(prevScene) {
     this.prevScene = prevScene;
+    this.canPressKey = false;
 
     noLoop();
     this.draw();
@@ -22,8 +23,15 @@ GmaeOverScene.prototype.draw = function() {
 
     textSize(30);
     text("スコア：" + this.prevScene.snake.bodyCount, width / 2, height * 3 / 5);
+
+    const self = this;
+    setTimeout(function() {
+        self.canPressKey = true;
+    }, 250);
 };
 
 GmaeOverScene.prototype.keyPressed = function() {
-    scene = new GmaeStartScene();
+    if (this.canPressKey) {
+        scene = new GmaeStartScene();
+    }
 };
