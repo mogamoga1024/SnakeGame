@@ -5,7 +5,6 @@ function Snake() {
     this.bodyCount = 0;
     this.bodyPotisionArray = [];
     this.headDegree = 0;
-    this.oldHeadDegree = null;
     this.speed = 4;
     this.rotationDegree = 3; // 90の約数であること
     this.traceQueue = []
@@ -51,6 +50,7 @@ Snake.prototype.headDegreeChangeByKey = function(scene) {
         return;
     }
 
+    let oldHeadDegree = this.headDegree;
     if (shouldPlusRotate) {
         this.headDegree = DegreeUtils.plusRotate(this.headDegree, this.rotationDegree);
     }
@@ -58,8 +58,7 @@ Snake.prototype.headDegreeChangeByKey = function(scene) {
         this.headDegree = DegreeUtils.minusRotate(this.headDegree, this.rotationDegree);
     }
 
-    if (this.oldHeadDegree != this.headDegree) {
-        this.oldHeadDegree = this.headDegree;
+    if (oldHeadDegree != this.headDegree) {
         this.traceQueue.push(this.headPotision.clone());
     }
 };
