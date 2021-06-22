@@ -182,28 +182,20 @@ Snake.prototype.getBackBodyPosition = function(basePosition, locusFrontPoint, lo
         backBodyX = locusFrontPoint.x;
     }
     else {
-        let tmpBodyX1, tmpBodyX2;
         const a = (locusFrontPoint.y - locusBackPoint.y) / (locusFrontPoint.x - locusBackPoint.x);
         const b = locusFrontPoint.y - a * locusFrontPoint.x;
 
-        if (a === 0) {
-            tmpBodyX1 = c - sqrt(pow(r, 2) - pow(locusFrontPoint.y - d, 2));
-            tmpBodyX2 = c + sqrt(pow(r, 2) - pow(locusFrontPoint.y - d, 2));
+        const A = pow(a, 2) + 1;
+        const B = a * (b - d) - c;
+        const C = pow(b - d, 2) + pow(c, 2) - pow(r, 2);
+        const D = sqrt(pow(B, 2) - A * C);
+
+        if (isNaN(D)) {
+            return null;
         }
-        else {
-            const A = pow(a, 2) + 1;
-            const B = a * (b - d) - c;
-            const C = pow(b - d, 2) + pow(c, 2) - pow(r, 2);
 
-            const D = sqrt(pow(B, 2) - A * C);
-
-            if (isNaN(D)) {
-                return null;
-            }
-
-            tmpBodyX1 = (-B - D) / A;
-            tmpBodyX2 = (-B + D) / A;
-        }
+        const tmpBodyX1 = (-B - D) / A;
+        const tmpBodyX2 = (-B + D) / A;
 
         let minX, maxX;
         if (locusBackPoint.x < locusFrontPoint.x) {
