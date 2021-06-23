@@ -5,10 +5,6 @@ Scene.prototype.draw = function() {}
 Scene.prototype.keyPressed = function() {}
 Scene.prototype.keyReleased = function() {}
 
-Scene.prototype.start = function() {
-    scene = this;
-};
-
 const SceneManager = {
     start: function(scene) {
         draw = function() {
