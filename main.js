@@ -4,8 +4,6 @@ const KEY_CODE = {
     V: 86
 };
 
-let scene;
-
 function setup() {
     const canvasWidth = windowWidth * 0.9;
     const canvasHeight = windowHeight * 0.9;
