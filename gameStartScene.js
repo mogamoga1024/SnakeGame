@@ -1,11 +1,13 @@
 
-function GmaeStartScene() {
-    noLoop();
-    this.draw();
-};
+function GmaeStartScene() {};
 
 GmaeStartScene.prototype = Object.create(Scene.prototype);
 GmaeStartScene.prototype.constructor = GmaeStartScene;
+
+GmaeStartScene.prototype.start = function() {
+    noLoop();
+    this.draw();
+};
 
 GmaeStartScene.prototype.draw = function() {
     background(128);

@@ -13,12 +13,14 @@ function GamePlayScene(isVerticalMode) {
     if (isVerticalMode) {
         this.snake.rotationDegree = 90;
     }
-
-    loop();
 };
 
 GamePlayScene.prototype = Object.create(Scene.prototype);
 GamePlayScene.prototype.constructor = GamePlayScene;
+
+GamePlayScene.prototype.start = function() {
+    loop();
+};
 
 GamePlayScene.prototype.draw = function() {
     background(128);

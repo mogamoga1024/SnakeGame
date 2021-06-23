@@ -2,13 +2,15 @@
 function GmaeOverScene(prevScene) {
     this.prevScene = prevScene;
     this.canPressKey = false;
-
-    noLoop();
-    this.draw();
 };
 
 GmaeOverScene.prototype = Object.create(Scene.prototype);
 GmaeOverScene.prototype.constructor = GmaeOverScene;
+
+GmaeOverScene.prototype.start = function() {
+    noLoop();
+    this.draw();
+};
 
 GmaeOverScene.prototype.draw = function() {
     background(128);
