@@ -5,7 +5,7 @@ function Snake() {
     this.bodyCount = 0;
     this.bodyPotisionArray = [];
     this.headDegree = 0;
-    this.speed = 4;
+    this.speed = 5;
     this.rotationDegree = 3; // 90の約数であること
     this.traceQueue = []
 
