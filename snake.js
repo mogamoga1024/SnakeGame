@@ -50,7 +50,7 @@ Snake.prototype.headDegreeChangeByKey = function(scene) {
         return;
     }
 
-    let oldHeadDegree = this.headDegree;
+    const oldHeadDegree = this.headDegree;
     if (shouldPlusRotate) {
         this.headDegree = DegreeUtils.plusRotate(this.headDegree, this.rotationDegree);
     }
