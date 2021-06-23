@@ -5,6 +5,7 @@ function GmaeStartScene() {
 };
 
 GmaeStartScene.prototype = Object.create(Scene.prototype);
+GmaeStartScene.prototype.constructor = GmaeStartScene;
 
 GmaeStartScene.prototype.draw = function() {
     background(128);
@@ -19,6 +20,6 @@ GmaeStartScene.prototype.draw = function() {
 };
 
 GmaeStartScene.prototype.keyPressed = function() {
-    scene = new GamePlayScene(keyCode === KEY_CODE.V);
+    SceneManager.start(new GamePlayScene(keyCode === KEY_CODE.V));
 };
 

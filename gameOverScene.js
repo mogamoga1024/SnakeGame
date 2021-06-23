@@ -8,6 +8,7 @@ function GmaeOverScene(prevScene) {
 };
 
 GmaeOverScene.prototype = Object.create(Scene.prototype);
+GmaeOverScene.prototype.constructor = GmaeOverScene;
 
 GmaeOverScene.prototype.draw = function() {
     background(128);
@@ -31,6 +32,6 @@ GmaeOverScene.prototype.draw = function() {
 
 GmaeOverScene.prototype.keyPressed = function() {
     if (this.canPressKey) {
-        scene = new GmaeStartScene();
+        SceneManager.start(new GmaeStartScene());
     }
 };

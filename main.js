@@ -14,17 +14,5 @@ function setup() {
 
     angleMode(DEGREES);
 
-    scene = new GmaeStartScene();
-}
-
-function draw() {
-    scene.draw();
-}
-
-function keyPressed() {
-    scene.keyPressed();
-}
-
-function keyReleased() {
-    scene.keyReleased();
+    SceneManager.start(new GmaeStartScene());
 }

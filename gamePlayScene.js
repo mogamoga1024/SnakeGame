@@ -18,6 +18,7 @@ function GamePlayScene(isVerticalMode) {
 };
 
 GamePlayScene.prototype = Object.create(Scene.prototype);
+GamePlayScene.prototype.constructor = GamePlayScene;
 
 GamePlayScene.prototype.draw = function() {
     background(128);
@@ -29,7 +30,7 @@ GamePlayScene.prototype.draw = function() {
     this.snake.move();
 
     if (this.snake.isHittingWall() || this.snake.isHittingBody()) {
-        scene = new GmaeOverScene(this);
+        SceneManager.start(new GmaeOverScene(this));
         return;
     }
 
