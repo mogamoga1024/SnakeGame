@@ -10,9 +10,10 @@ const DegreeUtils = {
         if (startDegree < endDegree) {
             return startDegree < targetDegree && targetDegree < endDegree;
         }
-        else {
+        else if (startDegree > endDegree) {
             return startDegree < targetDegree || targetDegree < endDegree;
         }
+        return false;
     },
 
     plusRotate: function(degree1, degree2) {
