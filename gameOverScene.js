@@ -9,10 +9,10 @@ GmaeOverScene.prototype.constructor = GmaeOverScene;
 
 GmaeOverScene.prototype.start = function() {
     noLoop();
-    this.draw();
+    this.update();
 };
 
-GmaeOverScene.prototype.draw = function() {
+GmaeOverScene.prototype.update = function() {
     background(128);
 
     this.prevScene.feed.draw();

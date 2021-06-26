@@ -22,7 +22,7 @@ GamePlayScene.prototype.start = function() {
     loop();
 };
 
-GamePlayScene.prototype.draw = function() {
+GamePlayScene.prototype.update = function() {
     background(128);
 
     if (keyIsPressed) {

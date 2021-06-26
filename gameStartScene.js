@@ -6,10 +6,10 @@ GmaeStartScene.prototype.constructor = GmaeStartScene;
 
 GmaeStartScene.prototype.start = function() {
     noLoop();
-    this.draw();
+    this.update();
 };
 
-GmaeStartScene.prototype.draw = function() {
+GmaeStartScene.prototype.update = function() {
     background(128);
 
     fill(255);
