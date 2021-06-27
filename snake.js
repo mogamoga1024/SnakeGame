@@ -30,19 +30,19 @@ Snake.prototype.headDegreeChangeByKey = function(scene) {
     let shouldPlusRotate = false;
     let shouldMinusRotate = false;
 
-    if (scene.latestKeyCode === UP_ARROW || scene.latestKeyCode === null && scene.isPressingUpArrow) {
+    if (scene.firstKeyCode === UP_ARROW) {
         shouldPlusRotate = DegreeUtils.existInAngularRange(this.headDegree, 90, 270);
         shouldMinusRotate = DegreeUtils.existInAngularRange(this.headDegree, 270, 90);
     }
-    else if (scene.latestKeyCode === DOWN_ARROW || scene.latestKeyCode === null && scene.isPressingDownArrow) {
+    else if (scene.firstKeyCode === DOWN_ARROW) {
         shouldPlusRotate = DegreeUtils.existInAngularRange(this.headDegree, 270, 90);
         shouldMinusRotate = DegreeUtils.existInAngularRange(this.headDegree, 90, 270);
     }
-    else if (scene.latestKeyCode === LEFT_ARROW || scene.latestKeyCode === null && scene.isPressingLeftArrow) {
+    else if (scene.firstKeyCode === LEFT_ARROW) {
         shouldPlusRotate = DegreeUtils.existInAngularRange(this.headDegree, 0, 180);
         shouldMinusRotate = DegreeUtils.existInAngularRange(this.headDegree, 180);
     }
-    else if (scene.latestKeyCode === RIGHT_ARROW || scene.latestKeyCode === null && scene.isPressingRightArrow) {
+    else if (scene.firstKeyCode === RIGHT_ARROW) {
         shouldPlusRotate = DegreeUtils.existInAngularRange(this.headDegree, 180);
         shouldMinusRotate = DegreeUtils.existInAngularRange(this.headDegree, 0, 180);
     }

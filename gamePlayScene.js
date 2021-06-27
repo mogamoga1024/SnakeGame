@@ -4,11 +4,8 @@ function GamePlayScene(isVerticalMode) {
     this.feedManager = new FeedManager();
     this.feed = this.feedManager.firstSowFeed();
 
-    this.latestKeyCode = null;
-    this.isPressingUpArrow = false;
-    this.isPressingDownArrow = false;
-    this.isPressingLeftArrow = false;
-    this.isPressingRightArrow = false;
+    this.firstKeyCode = null;
+    this.secondeKeyCode = null;
 
     if (isVerticalMode) {
         this.snake.rotationDegree = 90;
@@ -46,27 +43,26 @@ GamePlayScene.prototype.update = function() {
 };
 
 GamePlayScene.prototype.keyPressed = function() {
-    switch (keyCode) {
-        case KEY_CODE.SPACE:
-            if (isLooping()) {
-                noLoop();
-            }
-            else {
-                loop();
-            }
-            break;
-        case UP_ARROW   : this.isPressingUpArrow    = true; this.latestKeyCode = keyCode; break;
-        case DOWN_ARROW : this.isPressingDownArrow  = true; this.latestKeyCode = keyCode; break;
-        case LEFT_ARROW : this.isPressingLeftArrow  = true; this.latestKeyCode = keyCode; break;
-        case RIGHT_ARROW: this.isPressingRightArrow = true; this.latestKeyCode = keyCode; break;
+    if (keyCode === KEY_CODE.SPACE) {
+        if (isLooping()) {
+            noLoop();
+        }
+        else {
+            loop();
+        }
     }
+    else if (this.firstKeyCode != null) {
+        this.secondeKeyCode = this.firstKeyCode;
+    }
+    this.firstKeyCode = keyCode;
 };
 
 GamePlayScene.prototype.keyReleased = function() {
-    switch (keyCode) {
-        case UP_ARROW   : this.isPressingUpArrow    = false; this.latestKeyCode = null; break;
-        case DOWN_ARROW : this.isPressingDownArrow  = false; this.latestKeyCode = null; break;
-        case LEFT_ARROW : this.isPressingLeftArrow  = false; this.latestKeyCode = null; break;
-        case RIGHT_ARROW: this.isPressingRightArrow = false; this.latestKeyCode = null; break;
+    if (keyCode === this.firstKeyCode) {
+        this.firstKeyCode = this.secondeKeyCode;
+        this.secondeKeyCode = null;
+    }
+    else if (keyCode === this.secondeKeyCode) {
+        this.secondeKeyCode = null;
     }
 };
