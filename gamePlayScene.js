@@ -50,14 +50,18 @@ GamePlayScene.prototype.keyPressed = function() {
         else {
             loop();
         }
+        return;
     }
-    else if (this.firstKeyCode != null) {
+    
+    if (this.firstKeyCode != null) {
         this.secondeKeyCode = this.firstKeyCode;
     }
     this.firstKeyCode = keyCode;
 };
 
 GamePlayScene.prototype.keyReleased = function() {
+    if (keyCode === KEY_CODE.SPACE) return;
+
     if (keyCode === this.firstKeyCode) {
         this.firstKeyCode = this.secondeKeyCode;
         this.secondeKeyCode = null;
