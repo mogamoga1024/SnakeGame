@@ -27,40 +27,38 @@ Snake.prototype.draw = function() {
 };
 
 Snake.prototype.headDegreeChangeByKey = function(scene) {
-    let shouldPlusRotate = false;
-    let shouldMinusRotate = false;
+    let rotationDirection = 0;
 
     if (scene.firstKeyCode === UP_ARROW) {
-        shouldPlusRotate = DegreeUtils.existInAngularRange(this.headDegree, 90, 270);
-        shouldMinusRotate = DegreeUtils.existInAngularRange(this.headDegree, 270, 90);
+        rotationDirection = this.findRotationDirection(this.headDegree, 90, 270);
     }
     else if (scene.firstKeyCode === DOWN_ARROW) {
-        shouldPlusRotate = DegreeUtils.existInAngularRange(this.headDegree, 270, 90);
-        shouldMinusRotate = DegreeUtils.existInAngularRange(this.headDegree, 90, 270);
+        rotationDirection = this.findRotationDirection(this.headDegree, 270, 90);
     }
     else if (scene.firstKeyCode === LEFT_ARROW) {
-        shouldPlusRotate = DegreeUtils.existInAngularRange(this.headDegree, 0, 180);
-        shouldMinusRotate = DegreeUtils.existInAngularRange(this.headDegree, 180);
+        rotationDirection = this.findRotationDirection(this.headDegree, 0, 180);
     }
     else if (scene.firstKeyCode === RIGHT_ARROW) {
-        shouldPlusRotate = DegreeUtils.existInAngularRange(this.headDegree, 180);
-        shouldMinusRotate = DegreeUtils.existInAngularRange(this.headDegree, 0, 180);
+        rotationDirection = this.findRotationDirection(this.headDegree, 180, 0);
     }
     else {
         return;
     }
 
-    const oldHeadDegree = this.headDegree;
-    if (shouldPlusRotate) {
-        this.headDegree = DegreeUtils.plusRotate(this.headDegree, this.rotationDegree);
-    }
-    else if (shouldMinusRotate) {
-        this.headDegree = DegreeUtils.minusRotate(this.headDegree, this.rotationDegree);
-    }
-
-    if (oldHeadDegree !== this.headDegree) {
+    if (rotationDirection !== 0) {
+        this.headDegree = DegreeUtils.add(this.headDegree, rotationDirection * this.rotationDegree);
         this.traceQueue.push(this.headPotision.clone());
     }
+};
+
+Snake.prototype.findRotationDirection = function(targetDegree, startDegree, endDegree) {
+    if (targetDegree === startDegree || targetDegree === endDegree) {
+        return 0;
+    }
+    if (DegreeUtils.existInAngularRange(targetDegree, startDegree, endDegree)) {
+        return 1;
+    }
+    return -1;
 };
 
 Snake.prototype.isHittingWall = function() {

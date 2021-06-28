@@ -5,7 +5,9 @@ const DegreeUtils = {
      * ただし、startDegree, endDegreは含まない。
      */
     existInAngularRange: function(targetDegree, startDegree, endDegree) {
-        if (endDegree === undefined) endDegree = 360;
+        targetDegree = DegreeUtils.normalization(targetDegree);
+        startDegree = DegreeUtils.normalization(startDegree);
+        endDegree = DegreeUtils.normalization(endDegree);
 
         if (startDegree < endDegree) {
             return startDegree < targetDegree && targetDegree < endDegree;
@@ -16,11 +18,19 @@ const DegreeUtils = {
         return false;
     },
 
-    plusRotate: function(degree1, degree2) {
-        return (degree1 + degree2) % 360;
+    add: function(degree1, degree2) {
+        return DegreeUtils.normalization(degree1 + degree2);
     },
 
-    minusRotate: function(degree1, degree2) {
-        return (degree1 - degree2 + 360) % 360;
-    }    
+    normalization: function(degree) {
+        if (degree >= 360) {
+            return degree % 360;
+        }
+        else if (degree < 0) {
+            return 360 - (-degree % 360);
+        }
+        else {
+            return degree;
+        }
+    }
 };
