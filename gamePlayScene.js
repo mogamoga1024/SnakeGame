@@ -53,7 +53,7 @@ GamePlayScene.prototype.keyPressed = function() {
         return;
     }
     
-    if (this.firstKeyCode != null) {
+    if (this.firstKeyCode !== null) {
         this.secondeKeyCode = this.firstKeyCode;
     }
     this.firstKeyCode = keyCode;

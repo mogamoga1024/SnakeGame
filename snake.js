@@ -58,7 +58,7 @@ Snake.prototype.headDegreeChangeByKey = function(scene) {
         this.headDegree = DegreeUtils.minusRotate(this.headDegree, this.rotationDegree);
     }
 
-    if (oldHeadDegree != this.headDegree) {
+    if (oldHeadDegree !== this.headDegree) {
         this.traceQueue.push(this.headPotision.clone());
     }
 };
@@ -109,14 +109,14 @@ Snake.prototype.move = function() {
 
             backBodyPosition = this.getBackBodyPosition(basePosition, locusFrontPoint, locusBackPoint);
 
-            if (backBodyPosition != null) {
+            if (backBodyPosition !== null) {
                 break;
             }
 
             traceQueueIndex--;
         }
 
-        if (backBodyPosition != null) {
+        if (backBodyPosition !== null) {
             this.bodyPotisionArray.push(backBodyPosition.clone());
         }
         else {
