@@ -95,17 +95,17 @@ Snake.prototype.move = function() {
 
         let backBodyPosition = null;
         while (traceQueueIndex >= 0) {
-            let locusFrontPoint;
+            let traceFrontPoint;
             if (traceQueueIndex === this.traceQueue.length - 1) {
-                locusFrontPoint = basePosition;
+                traceFrontPoint = basePosition;
             }
             else {
-                locusFrontPoint = this.traceQueue[traceQueueIndex + 1];
+                traceFrontPoint = this.traceQueue[traceQueueIndex + 1];
             }
 
-            const locusBackPoint = this.traceQueue[traceQueueIndex];
+            const traceBackPoint = this.traceQueue[traceQueueIndex];
 
-            backBodyPosition = this.getBackBodyPosition(basePosition, locusFrontPoint, locusBackPoint);
+            backBodyPosition = this.getBackBodyPosition(basePosition, traceFrontPoint, traceBackPoint);
 
             if (backBodyPosition !== null) {
                 break;
@@ -134,53 +134,53 @@ Snake.prototype.eatFeed = function() {
     this.speed += 0.2;
 };
 
-Snake.prototype.getBackBodyPosition = function(basePosition, locusFrontPoint, locusBackPoint) {
+Snake.prototype.getBackBodyPosition = function(basePosition, traceFrontPoint, traceBackPoint) {
     let backBodyX, backBodyY;
 
     const r = this.partsRadius * 2;
     const c = basePosition.x;
     const d = basePosition.y;
 
-    if (locusBackPoint.x === locusFrontPoint.x) {
-        const tmpBodyY1 = d - sqrt(pow(r, 2) - pow(locusFrontPoint.x - c, 2));
-        const tmpBodyY2 = d + sqrt(pow(r, 2) - pow(locusFrontPoint.x - c, 2));
+    if (traceBackPoint.x === traceFrontPoint.x) {
+        const tmpBodyY1 = d - sqrt(pow(r, 2) - pow(traceFrontPoint.x - c, 2));
+        const tmpBodyY2 = d + sqrt(pow(r, 2) - pow(traceFrontPoint.x - c, 2));
 
         let minY, maxY;
-        if (locusBackPoint.y < locusFrontPoint.y) {
-            minY = locusBackPoint.y;
-            maxY = locusFrontPoint.y;
+        if (traceBackPoint.y < traceFrontPoint.y) {
+            minY = traceBackPoint.y;
+            maxY = traceFrontPoint.y;
         }
         else {
-            minY = locusFrontPoint.y;
-            maxY = locusBackPoint.y;
+            minY = traceFrontPoint.y;
+            maxY = traceBackPoint.y;
         }
 
-        let existsTmpBodyY1InLocus = minY <= tmpBodyY1 && tmpBodyY1 <= maxY;
-        let existsTmpBodyY2InLocus = minY <= tmpBodyY2 && tmpBodyY2 <= maxY;
+        let existsTmpBodyY1InTrace = minY <= tmpBodyY1 && tmpBodyY1 <= maxY;
+        let existsTmpBodyY2InTrace = minY <= tmpBodyY2 && tmpBodyY2 <= maxY;
 
-        if (existsTmpBodyY1InLocus && existsTmpBodyY2InLocus) {
-            if (abs(locusBackPoint.y - tmpBodyY1) < abs(locusBackPoint.y - tmpBodyY2)) {
+        if (existsTmpBodyY1InTrace && existsTmpBodyY2InTrace) {
+            if (abs(traceBackPoint.y - tmpBodyY1) < abs(traceBackPoint.y - tmpBodyY2)) {
                 backBodyY = tmpBodyY1;
             }
             else {
                 backBodyY = tmpBodyY2;
             }
         }
-        else if (existsTmpBodyY1InLocus) {
+        else if (existsTmpBodyY1InTrace) {
             backBodyY = tmpBodyY1;
         }
-        else if (existsTmpBodyY2InLocus) {
+        else if (existsTmpBodyY2InTrace) {
             backBodyY = tmpBodyY2;
         }
         else {
             return null;
         }
 
-        backBodyX = locusFrontPoint.x;
+        backBodyX = traceFrontPoint.x;
     }
     else {
-        const a = (locusFrontPoint.y - locusBackPoint.y) / (locusFrontPoint.x - locusBackPoint.x);
-        const b = locusFrontPoint.y - a * locusFrontPoint.x;
+        const a = (traceFrontPoint.y - traceBackPoint.y) / (traceFrontPoint.x - traceBackPoint.x);
+        const b = traceFrontPoint.y - a * traceFrontPoint.x;
 
         const A = pow(a, 2) + 1;
         const B = a * (b - d) - c;
@@ -195,30 +195,30 @@ Snake.prototype.getBackBodyPosition = function(basePosition, locusFrontPoint, lo
         const tmpBodyX2 = (-B + D) / A;
 
         let minX, maxX;
-        if (locusBackPoint.x < locusFrontPoint.x) {
-            minX = locusBackPoint.x;
-            maxX = locusFrontPoint.x;
+        if (traceBackPoint.x < traceFrontPoint.x) {
+            minX = traceBackPoint.x;
+            maxX = traceFrontPoint.x;
         }
         else {
-            minX = locusFrontPoint.x;
-            maxX = locusBackPoint.x;
+            minX = traceFrontPoint.x;
+            maxX = traceBackPoint.x;
         }
 
-        const existsTmpBodyX1InLocus = minX <= tmpBodyX1 && tmpBodyX1 <= maxX;
-        const existsTmpBodyX2InLocus = minX <= tmpBodyX2 && tmpBodyX2 <= maxX;
+        const existsTmpBodyX1InTrace = minX <= tmpBodyX1 && tmpBodyX1 <= maxX;
+        const existsTmpBodyX2InTrace = minX <= tmpBodyX2 && tmpBodyX2 <= maxX;
 
-        if (existsTmpBodyX1InLocus && existsTmpBodyX2InLocus) {
-            if (abs(locusBackPoint.x - tmpBodyX1) < abs(locusBackPoint.x - tmpBodyX2)) {
+        if (existsTmpBodyX1InTrace && existsTmpBodyX2InTrace) {
+            if (abs(traceBackPoint.x - tmpBodyX1) < abs(traceBackPoint.x - tmpBodyX2)) {
                 backBodyX = tmpBodyX1;
             }
             else {
                 backBodyX = tmpBodyX2;
             }
         }
-        else if (existsTmpBodyX1InLocus) {
+        else if (existsTmpBodyX1InTrace) {
             backBodyX = tmpBodyX1;
         }
-        else if (existsTmpBodyX2InLocus) {
+        else if (existsTmpBodyX2InTrace) {
             backBodyX = tmpBodyX2;
         }
         else {
@@ -228,10 +228,10 @@ Snake.prototype.getBackBodyPosition = function(basePosition, locusFrontPoint, lo
         backBodyY = a * backBodyX + b;
     }
 
-    const distanceFromLocusBackPointToBasePosition = dist(locusBackPoint.x, locusBackPoint.y, basePosition.x, basePosition.y);
-    const distanceFromLocusBackPointToBackBodyPosition = dist(locusBackPoint.x, locusBackPoint.y, backBodyX, backBodyY);
+    const distanceFromTraceBackPointToBasePosition = dist(traceBackPoint.x, traceBackPoint.y, basePosition.x, basePosition.y);
+    const distanceFromTraceBackPointToBackBodyPosition = dist(traceBackPoint.x, traceBackPoint.y, backBodyX, backBodyY);
 
-    if (distanceFromLocusBackPointToBasePosition < distanceFromLocusBackPointToBackBodyPosition) {
+    if (distanceFromTraceBackPointToBasePosition < distanceFromTraceBackPointToBackBodyPosition) {
         return null;
     }
 
