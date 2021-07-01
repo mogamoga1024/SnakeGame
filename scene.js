@@ -1,10 +1,10 @@
 
 function Scene() {}
 
-Scene.prototype.start = function() {}
-Scene.prototype.update = function() {}
-Scene.prototype.keyPressed = function() {}
-Scene.prototype.keyReleased = function() {}
+Scene.prototype.start = function() {};
+Scene.prototype.update = function() {};
+Scene.prototype.keyPressed = function() {};
+Scene.prototype.keyReleased = function() {};
 
 const SceneManager = (function() {
     let currentScene = new Scene();
