@@ -1,11 +1,11 @@
 
-function FeedManager(_keyCode) {
-    this.keyCode = _keyCode;
+function FeedManager(feedType) {
+    this.feedType = feedType;
     this.feedRadius = 20;
 }
 
 FeedManager.prototype.firstSowFeed = function() {
-    return FeedFactory.create(this.keyCode, 400, 100, this.feedRadius);
+    return FeedFactory.create(this.feedType, 400, 100, this.feedRadius);
 };
 
 FeedManager.prototype.sowFeed = function(snake) {
@@ -20,6 +20,6 @@ FeedManager.prototype.sowFeed = function(snake) {
         return this.sowFeed(snake);
     }
 
-    return FeedFactory.create(this.keyCode, x, y, this.feedRadius);
+    return FeedFactory.create(this.feedType, x, y, this.feedRadius);
 };
 
