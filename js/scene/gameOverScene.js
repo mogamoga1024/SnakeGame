@@ -33,6 +33,8 @@ GmaeOverScene.prototype.update = function() {
 };
 
 GmaeOverScene.prototype.keyPressed = function() {
+    if (keyCode === KEY_CODE.F12) return;
+
     if (this.canPressKey) {
         SceneManager.start(new GmaeStartScene());
     }
