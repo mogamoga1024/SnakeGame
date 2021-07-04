@@ -22,6 +22,7 @@ GmaeStartScene.prototype.update = function() {
 };
 
 GmaeStartScene.prototype.keyPressed = function() {
-    SceneManager.start(new GamePlayScene(keyCode === KEY_CODE.V));
+    const gameMode = GameMode.findByKeyCode(keyCode);
+    SceneManager.start(new GamePlayScene(gameMode));
 };
 

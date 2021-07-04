@@ -1,15 +1,11 @@
 
-function GamePlayScene(isVerticalMode) {
-    this.snake = new Snake();
-    this.feedManager = new FeedManager();
+function GamePlayScene(gameMode) {
+    this.snake = SnakeFactory.create(gameMode.snakeType);
+    this.feedManager = new FeedManager(gameMode.feedType);
     this.feed = this.feedManager.firstSowFeed();
 
     this.firstKeyCode = null;
     this.secondeKeyCode = null;
-
-    if (isVerticalMode) {
-        this.snake.rotationDegree = 90;
-    }
 };
 
 GamePlayScene.prototype = Object.create(Scene.prototype);

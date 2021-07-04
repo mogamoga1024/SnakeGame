@@ -1,9 +1,4 @@
 
-const KEY_CODE = {
-    SPACE: 32,
-    V: 86
-};
-
 function setup() {
     const canvasWidth = windowWidth * 0.9;
     const canvasHeight = windowHeight * 0.9;

@@ -7,7 +7,7 @@ function Snake() {
     this.headDegree = 0;
     this.speed = 5;
     this.rotationDegree = 3; // 90の約数であること
-    this.traceQueue = []
+    this.traceQueue = [];
 
     this.traceQueue.push(this.headPotision.clone());
 }
@@ -89,6 +89,7 @@ Snake.prototype.move = function() {
 
     let basePosition = this.headPotision;
     let traceQueueIndex = this.traceQueue.length - 1;
+    let basePositionExistsInTrace = true;
     this.bodyPotisionArray = [];
 
     for (let bodyIndex = 0; bodyIndex < this.bodyCount; bodyIndex++) {
@@ -105,11 +106,13 @@ Snake.prototype.move = function() {
 
             const traceBackPoint = this.traceQueue[traceQueueIndex];
 
-            backBodyPosition = this.getBackBodyPosition(basePosition, traceFrontPoint, traceBackPoint);
+            backBodyPosition = this.getBackBodyPosition(basePosition, traceFrontPoint, traceBackPoint, basePositionExistsInTrace);
 
             if (backBodyPosition !== null) {
+                basePositionExistsInTrace = true;
                 break;
             }
+            basePositionExistsInTrace = false;
 
             traceQueueIndex--;
         }
@@ -134,10 +137,15 @@ Snake.prototype.eatFeed = function() {
     this.speed += 0.2;
 };
 
-Snake.prototype.getBackBodyPosition = function(basePosition, traceFrontPoint, traceBackPoint) {
+Snake.prototype.getBackBodyPosition = function(basePosition, traceFrontPoint, traceBackPoint, basePositionExistsInTrace) {
+    const r = this.partsRadius * 2;
+
+    if (basePosition.distance(traceFrontPoint) < r && basePosition.distance(traceBackPoint) < r) {
+        return null;
+    }
+
     let backBodyX, backBodyY;
 
-    const r = this.partsRadius * 2;
     const c = basePosition.x;
     const d = basePosition.y;
 
@@ -185,14 +193,14 @@ Snake.prototype.getBackBodyPosition = function(basePosition, traceFrontPoint, tr
         const A = pow(a, 2) + 1;
         const B = a * (b - d) - c;
         const C = pow(b - d, 2) + pow(c, 2) - pow(r, 2);
-        const D = sqrt(pow(B, 2) - A * C);
+        const D = pow(B, 2) - A * C;
 
-        if (isNaN(D)) {
+        if (D < 0) {
             return null;
         }
 
-        const tmpBodyX1 = (-B - D) / A;
-        const tmpBodyX2 = (-B + D) / A;
+        const tmpBodyX1 = (-B - sqrt(D)) / A;
+        const tmpBodyX2 = (-B + sqrt(D)) / A;
 
         let minX, maxX;
         if (traceBackPoint.x < traceFrontPoint.x) {
@@ -209,10 +217,10 @@ Snake.prototype.getBackBodyPosition = function(basePosition, traceFrontPoint, tr
 
         if (existsTmpBodyX1InTrace && existsTmpBodyX2InTrace) {
             if (abs(traceBackPoint.x - tmpBodyX1) < abs(traceBackPoint.x - tmpBodyX2)) {
-                backBodyX = tmpBodyX1;
+                backBodyX = basePositionExistsInTrace ? tmpBodyX1 : tmpBodyX2;
             }
             else {
-                backBodyX = tmpBodyX2;
+                backBodyX = basePositionExistsInTrace ? tmpBodyX2 : tmpBodyX1;
             }
         }
         else if (existsTmpBodyX1InTrace) {
@@ -228,13 +236,12 @@ Snake.prototype.getBackBodyPosition = function(basePosition, traceFrontPoint, tr
         backBodyY = a * backBodyX + b;
     }
 
-    const distanceFromTraceBackPointToBasePosition = dist(traceBackPoint.x, traceBackPoint.y, basePosition.x, basePosition.y);
-    const distanceFromTraceBackPointToBackBodyPosition = dist(traceBackPoint.x, traceBackPoint.y, backBodyX, backBodyY);
+    const backBodyPosition = new Position(backBodyX, backBodyY);
 
-    if (distanceFromTraceBackPointToBasePosition < distanceFromTraceBackPointToBackBodyPosition) {
+    if (basePositionExistsInTrace && traceBackPoint.distance(basePosition) < traceBackPoint.distance(backBodyPosition)) {
         return null;
     }
 
-    return new Position(backBodyX, backBodyY);
+    return backBodyPosition;
 };
 
