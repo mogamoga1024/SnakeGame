@@ -168,10 +168,10 @@ Snake.prototype.getBackBodyPosition = function(basePosition, traceFrontPoint, tr
 
         if (existsTmpBodyY1InTrace && existsTmpBodyY2InTrace) {
             if (abs(traceBackPoint.y - tmpBodyY1) < abs(traceBackPoint.y - tmpBodyY2)) {
-                backBodyY = tmpBodyY1;
+                backBodyY = basePositionExistsInTrace ? tmpBodyY1 : tmpBodyY2;
             }
             else {
-                backBodyY = tmpBodyY2;
+                backBodyY = basePositionExistsInTrace ? tmpBodyY2 : tmpBodyY1;
             }
         }
         else if (existsTmpBodyY1InTrace) {
