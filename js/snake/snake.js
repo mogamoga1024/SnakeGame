@@ -72,7 +72,7 @@ Snake.prototype.isHittingWall = function() {
 Snake.prototype.isHittingBody = function() {
     for (let i = 1; i < this.bodyPotisionArray.length; i++) {
         const bodyPotision = this.bodyPotisionArray[i];
-        if (dist(this.headPotision.x, this.headPotision.y, bodyPotision.x, bodyPotision.y) <= this.partsRadius * 2) {
+        if (this.headPotision.distance(bodyPotision) <= this.partsRadius * 2) {
             return true;
         }
     }
@@ -80,7 +80,7 @@ Snake.prototype.isHittingBody = function() {
 };
 
 Snake.prototype.canEatFeed = function(feed) {
-    return dist(this.headPotision.x, this.headPotision.y, feed.x, feed.y) <= this.partsRadius + feed.radius;
+    return this.headPotision.distance(feed.position) <= this.partsRadius + feed.radius;
 };
 
 Snake.prototype.move = function() {
