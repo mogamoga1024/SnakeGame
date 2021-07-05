@@ -87,7 +87,7 @@ Snake.prototype.move = function() {
     this.headPotision.x += this.speed * cos(this.headDegree);
     this.headPotision.y += this.speed * sin(this.headDegree);
 
-    let basePosition = this.headPotision;
+    let frontBodyPosition = this.headPotision;
     let traceQueueIndex = this.traceQueue.length - 1;
     this.bodyPotisionArray = [];
 
@@ -97,7 +97,7 @@ Snake.prototype.move = function() {
         while (traceQueueIndex >= 0) {
             let traceFrontPosition;
             if (traceQueueIndex === this.traceQueue.length - 1) {
-                traceFrontPosition = basePosition;
+                traceFrontPosition = frontBodyPosition;
             }
             else {
                 traceFrontPosition = this.traceQueue[traceQueueIndex + 1];
@@ -105,7 +105,7 @@ Snake.prototype.move = function() {
 
             const traceBackPosition = this.traceQueue[traceQueueIndex];
 
-            backBodyPosition = this.getBackBodyPosition(basePosition, traceFrontPosition, traceBackPosition);
+            backBodyPosition = this.getBackBodyPosition(frontBodyPosition, traceFrontPosition, traceBackPosition);
 
             if (backBodyPosition !== null) {
                 break;
@@ -121,7 +121,7 @@ Snake.prototype.move = function() {
             break;
         }
 
-        basePosition = backBodyPosition;
+        frontBodyPosition = backBodyPosition;
     }
 
     if (traceQueueIndex > 0) {
@@ -134,17 +134,17 @@ Snake.prototype.eatFeed = function() {
     this.speed += 0.2;
 };
 
-Snake.prototype.getBackBodyPosition = function(basePosition, traceFrontPosition, traceBackPosition) {
+Snake.prototype.getBackBodyPosition = function(frontBodyPosition, traceFrontPosition, traceBackPosition) {
     const r = this.partsRadius * 2;
 
-    if (basePosition.distance(traceBackPosition) < r) {
+    if (frontBodyPosition.distance(traceBackPosition) < r) {
         return null;
     }
 
     let backBodyX, backBodyY;
 
-    const c = basePosition.x;
-    const d = basePosition.y;
+    const c = frontBodyPosition.x;
+    const d = frontBodyPosition.y;
 
     if (traceBackPosition.x === traceFrontPosition.x) {
         const tmpBodyY1 = d - sqrt(pow(r, 2) - pow(traceFrontPosition.x - c, 2));
