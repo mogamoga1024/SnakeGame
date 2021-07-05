@@ -27,7 +27,7 @@ Snake.prototype.draw = function() {
 };
 
 Snake.prototype.headDegreeChangeByKey = function(scene) {
-    let rotationDirection = 0;
+    let rotationDirection;
 
     if (scene.firstKeyCode === UP_ARROW) {
         rotationDirection = this.findRotationDirection(this.headDegree, 90, 270);
