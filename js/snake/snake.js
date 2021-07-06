@@ -62,10 +62,14 @@ Snake.prototype.findRotationDirection = function(targetDegree, startDegree, endD
 };
 
 Snake.prototype.isHittingWall = function() {
-    if (this.headPotision.x - this.partsRadius <= 0) return true;
-    if (this.headPotision.y - this.partsRadius <= 0) return true;
-    if (this.headPotision.x + this.partsRadius >= width) return true;
-    if (this.headPotision.y + this.partsRadius >= height) return true;
+    if (
+        this.headPotision.x - this.partsRadius <= 0     ||
+        this.headPotision.y - this.partsRadius <= 0     ||
+        this.headPotision.x + this.partsRadius >= width ||
+        this.headPotision.y + this.partsRadius >= height
+    ) {
+        return true;
+    }
     return false;
 };
 
