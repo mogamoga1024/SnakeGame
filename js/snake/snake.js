@@ -129,9 +129,8 @@ Snake.prototype.move = function() {
     }
 };
 
-Snake.prototype.eatFeed = function() {
-    this.bodyCount++;
-    this.speed += 0.2;
+Snake.prototype.eatFeed = function(feed) {
+    feed.nourish(this);
 };
 
 Snake.prototype.getBackBodyPosition = function(frontBodyPosition, traceFrontPosition, traceBackPosition) {

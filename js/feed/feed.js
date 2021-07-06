@@ -10,3 +10,8 @@ Feed.prototype.draw = function() {
     ellipse(this.position.x, this.position.y, this.radius * 2);
     pop();
 };
+
+Feed.prototype.nourish = function(snake) {
+    snake.bodyCount++;
+    snake.speed += 0.3;
+};

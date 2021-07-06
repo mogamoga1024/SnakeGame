@@ -30,7 +30,7 @@ GamePlayScene.prototype.update = function() {
     }
 
     if (this.snake.canEatFeed(this.feed)) {
-        this.snake.eatFeed();
+        this.snake.eatFeed(this.feed);
         this.feed = this.feedManager.sowFeed(this.snake);
     }
 
