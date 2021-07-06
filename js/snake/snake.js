@@ -91,41 +91,31 @@ Snake.prototype.move = function() {
     this.headPotision.x += this.speed * cos(this.headDegree);
     this.headPotision.y += this.speed * sin(this.headDegree);
 
-    let frontBodyPosition = this.headPotision;
-    let traceQueueIndex = this.traceQueue.length - 1;
     this.bodyPotisionArray = [];
+
+    let traceQueueIndex     = this.traceQueue.length - 1;
+    let currentBodyPosition = this.headPotision;
+    let traceFrontPosition  = this.headPotision;
 
     for (let bodyIndex = 0; bodyIndex < this.bodyCount; bodyIndex++) {
 
-        let backBodyPosition = null;
         while (traceQueueIndex >= 0) {
-            let traceFrontPosition;
-            if (traceQueueIndex === this.traceQueue.length - 1) {
-                traceFrontPosition = frontBodyPosition;
-            }
-            else {
-                traceFrontPosition = this.traceQueue[traceQueueIndex + 1];
-            }
-
             const traceBackPosition = this.traceQueue[traceQueueIndex];
-
-            backBodyPosition = this.getBackBodyPosition(frontBodyPosition, traceFrontPosition, traceBackPosition);
+            const backBodyPosition = this.getBackBodyPosition(currentBodyPosition, traceFrontPosition, traceBackPosition);
 
             if (backBodyPosition !== null) {
+                currentBodyPosition = backBodyPosition;
+                this.bodyPotisionArray.push(currentBodyPosition.clone());
                 break;
             }
 
+            traceFrontPosition = traceBackPosition;
             traceQueueIndex--;
         }
 
-        if (backBodyPosition !== null) {
-            this.bodyPotisionArray.push(backBodyPosition.clone());
-        }
-        else {
+        if (traceQueueIndex < 0) {
             break;
         }
-
-        frontBodyPosition = backBodyPosition;
     }
 
     if (traceQueueIndex > 0) {
