@@ -97,25 +97,18 @@ Snake.prototype.move = function() {
     let currentBodyPosition = this.headPotision;
     let traceFrontPosition  = this.headPotision;
 
-    for (let bodyIndex = 0; bodyIndex < this.bodyCount; bodyIndex++) {
+    while (this.bodyPotisionArray.length < this.bodyCount && traceQueueIndex >= 0) {
+        const traceBackPosition = this.traceQueue[traceQueueIndex];
+        const backBodyPosition = this.getBackBodyPosition(currentBodyPosition, traceFrontPosition, traceBackPosition);
 
-        while (traceQueueIndex >= 0) {
-            const traceBackPosition = this.traceQueue[traceQueueIndex];
-            const backBodyPosition = this.getBackBodyPosition(currentBodyPosition, traceFrontPosition, traceBackPosition);
-
-            if (backBodyPosition !== null) {
-                currentBodyPosition = backBodyPosition;
-                this.bodyPotisionArray.push(currentBodyPosition.clone());
-                break;
-            }
-
-            traceFrontPosition = traceBackPosition;
-            traceQueueIndex--;
+        if (backBodyPosition !== null) {
+            currentBodyPosition = backBodyPosition;
+            this.bodyPotisionArray.push(currentBodyPosition.clone());
+            continue;
         }
 
-        if (traceQueueIndex < 0) {
-            break;
-        }
+        traceFrontPosition = traceBackPosition;
+        traceQueueIndex--;
     }
 
     if (traceQueueIndex > 0) {
