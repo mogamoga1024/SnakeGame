@@ -13,10 +13,12 @@ FeedManager.prototype.sowFeed = function(snake) {
     const y = floor(random(height + 1 - this.feedRadius * 2) + this.feedRadius);
     const snakeRotationRadius = snake.speed / sqrt(2 * (1 - cos(snake.rotationDegree))) + snake.partsRadius;
 
-    if (y < -x + snakeRotationRadius || 
-        y < x - width + snakeRotationRadius ||
-        y > x + height - snakeRotationRadius ||
-        y > -x + width + height - snakeRotationRadius) {
+    if (
+        y < -x + snakeRotationRadius          || 
+        y <  x - width  + snakeRotationRadius ||
+        y >  x + height - snakeRotationRadius ||
+        y > -x + width  + height - snakeRotationRadius
+    ) {
         return this.sowFeed(snake);
     }
 

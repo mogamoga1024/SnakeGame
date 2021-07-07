@@ -19,7 +19,7 @@ GamePlayScene.prototype.update = function() {
     background(128);
 
     if (keyIsPressed) {
-        this.snake.headDegreeChangeByKey(this);
+        this.snake.headDegreeChangeByKeyCode(this);
     }
     
     this.snake.move();
