@@ -10,7 +10,7 @@ const FeedFactory = {
             case FeedFactory.NO_STROKE:
                 feed.drawer = NoStrokeFeedDrawer;
                 break;
-            case FeedFactory.NO_STROKE:
+            case FeedFactory.NORMAL:
             default:
         }
 
