@@ -6,22 +6,20 @@ const SnakeFactory = {
     YOKOMUKUNDAYO90DO: 3,
 
     create: function(type) {
-        let snake;
+        const snake = new Snake();
 
         switch (type) {
             case SnakeFactory.DEBUG:
-                snake = new DebugSnake();
+                snake.drawer = DebugSnakeDrawer;
                 break;
             case SnakeFactory.SMOOTH:
-                snake = new SmoothSnake();
+                snake.drawer = SmoothSnakeDrawer;
                 break;
             case SnakeFactory.YOKOMUKUNDAYO90DO:
-                snake = new Snake();
                 snake.rotationDegree = 90;
                 break;
             case SnakeFactory.NORMAL:
             default:
-                snake =  new Snake();
         }
 
         return snake;

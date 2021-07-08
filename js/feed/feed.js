@@ -2,13 +2,11 @@
 function Feed(x, y, radius) {
     this.position = new Position(x, y);
     this.radius = radius;
+    this.drawer = FeedDrawer;
 }
 
 Feed.prototype.draw = function() {
-    push();
-    fill(103, 43, 67);
-    ellipse(this.position.x, this.position.y, this.radius * 2);
-    pop();
+    this.drawer.draw(this);
 };
 
 Feed.prototype.nourish = function(snake) {

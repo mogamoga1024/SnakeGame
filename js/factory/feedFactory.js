@@ -4,15 +4,14 @@ const FeedFactory = {
     NO_STROKE: 1,
 
     create: function(type, x, y, radius) {
-        let feed;
+        const feed = new Feed(x, y, radius);
 
         switch (type) {
             case FeedFactory.NO_STROKE:
-                feed = new NoStrokeFeed(x, y, radius);
+                feed.drawer = NoStrokeFeedDrawer;
                 break;
             case FeedFactory.NO_STROKE:
             default:
-                feed = new Feed(x, y, radius);
         }
 
         return feed;

@@ -7,23 +7,14 @@ function Snake() {
     this.headDegree = 0;
     this.speed = 5;
     this.rotationDegree = 3; // 90の約数であること
+    this.drawer = SnakeDrawer;
     this.traceQueue = [];
 
     this.traceQueue.push(this.headPotision.clone());
 }
 
 Snake.prototype.draw = function() {
-    push();
-    colorMode(HSB, 360, 100, 100);
-
-    fill(360, 100, 100);
-    ellipse(this.headPotision.x, this.headPotision.y, this.partsRadius * 2);
-
-    for (let i = 0; i < this.bodyPotisionArray.length; i++) {
-        fill(360 * (1 - (i + 1) / (this.bodyPotisionArray.length + 1)), 100, 100);
-        ellipse(this.bodyPotisionArray[i].x, this.bodyPotisionArray[i].y, this.partsRadius * 2);
-    }
-    pop();
+    this.drawer.draw(this);
 };
 
 Snake.prototype.headDegreeChangeByKeyCode = function(scene) {
