@@ -4,9 +4,8 @@ function Snake() {
     this.partsRadius = 25;
     this.bodyCount = 0;
     this.bodyPotisionArray = [];
-    this.headDegree = 0;
+    this.headAngle = new Regular4nPolygonAngle(20 * 4);
     this.speed = 5;
-    this.rotationDegree = 3; // 90の約数であること
     this.drawer = SnakeDrawer;
     this.traceQueue = [];
 
@@ -21,32 +20,44 @@ Snake.prototype.headDegreeChangeByKeyCode = function(scene) {
     let rotationDirection;
 
     if (scene.firstKeyCode === UP_ARROW) {
-        rotationDirection = this.findRotationDirection(this.headDegree, 90, 270);
+        rotationDirection = this.findRotationDirection(
+            this.headAngle.DEGREE_90,
+            this.headAngle.DEGREE_270
+        );
     }
     else if (scene.firstKeyCode === DOWN_ARROW) {
-        rotationDirection = this.findRotationDirection(this.headDegree, 270, 90);
+        rotationDirection = this.findRotationDirection(
+            this.headAngle.DEGREE_270,
+            this.headAngle.DEGREE_90
+        );
     }
     else if (scene.firstKeyCode === LEFT_ARROW) {
-        rotationDirection = this.findRotationDirection(this.headDegree, 0, 180);
+        rotationDirection = this.findRotationDirection(
+            this.headAngle.DEGREE_0,
+            this.headAngle.DEGREE_180
+        );
     }
     else if (scene.firstKeyCode === RIGHT_ARROW) {
-        rotationDirection = this.findRotationDirection(this.headDegree, 180, 0);
+        rotationDirection = this.findRotationDirection(
+            this.headAngle.DEGREE_180,
+            this.headAngle.DEGREE_0
+        );
     }
     else {
         return;
     }
 
     if (rotationDirection !== 0) {
-        this.headDegree = DegreeUtils.add(this.headDegree, rotationDirection * this.rotationDegree);
+        this.headAngle.shift(rotationDirection);
         this.traceQueue.push(this.headPotision.clone());
     }
 };
 
-Snake.prototype.findRotationDirection = function(targetDegree, startDegree, endDegree) {
-    if (targetDegree === startDegree || targetDegree === endDegree) {
+Snake.prototype.findRotationDirection = function(startDegree, endDegree) {
+    if (this.headAngle.equals90nDegree(startDegree) || this.headAngle.equals90nDegree(endDegree)) {
         return 0;
     }
-    if (DegreeUtils.existInAngularRange(targetDegree, startDegree, endDegree)) {
+    if (this.headAngle.existIn90nDegreeRange(startDegree, endDegree)) {
         return 1;
     }
     return -1;
@@ -79,8 +90,8 @@ Snake.prototype.canEatFeed = function(feed) {
 };
 
 Snake.prototype.move = function() {
-    this.headPotision.x += this.speed * cos(this.headDegree);
-    this.headPotision.y += this.speed * sin(this.headDegree);
+    this.headPotision.x += this.speed * cos(this.headAngle.toRadian());
+    this.headPotision.y += this.speed * sin(this.headAngle.toRadian());
 
     this.bodyPotisionArray = [];
 
