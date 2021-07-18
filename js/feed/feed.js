@@ -11,5 +11,14 @@ Feed.prototype.draw = function() {
 
 Feed.prototype.nourish = function(snake) {
     snake.bodyCount++;
-    snake.speed += 0.3;
+    if (snake.speed < 10) {
+        snake.speed += 0.25;
+        if (snake.bodyCount % 4 === 0 && snake.headAngle.N > 4) {
+            snake.headAngle.convertRegular4nPolygon(snake.headAngle.N - 4);
+        }
+    }
+    if (snake.partsRadius > 18) {
+        snake.partsRadius *= 0.99;
+        this.radius *= 0.99;
+    }
 };

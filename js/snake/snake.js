@@ -1,7 +1,7 @@
 
 function Snake() {
     this.headPotision = new Position(100, 100);
-    this.partsRadius = 15;
+    this.partsRadius = 25;
     this.bodyCount = 0;
     this.bodyPotisionArray = [];
     this.headAngle = new Regular4nPolygon(25 * 4);
