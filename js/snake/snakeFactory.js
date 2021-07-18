@@ -16,7 +16,7 @@ const SnakeFactory = {
                 snake.drawer = SmoothSnakeDrawer;
                 break;
             case SnakeFactory.YOKOMUKUNDAYO90DO:
-                snake.rotationDegree = 90;
+                snake.headAngle = new Regular4nPolygon(4);
                 break;
             case SnakeFactory.NORMAL:
             default:

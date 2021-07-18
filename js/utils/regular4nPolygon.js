@@ -1,5 +1,5 @@
 
-function Regular4nPolygonAngle(n) {
+function Regular4nPolygon(n) {
     if (n % 4 !== 0) {
         throw new Error("引数のnは4の倍数であること。");
     }
@@ -11,9 +11,10 @@ function Regular4nPolygonAngle(n) {
 
     this.N = n;
     this.index = 0;
+    this.centralAngle = 2 * PI / n;
 }
 
-Regular4nPolygonAngle.prototype.shift = function(direction) {
+Regular4nPolygon.prototype.shift = function(direction) {
     if (direction > 0) {
         this.index = (this.index + 1) % this.N;
     }
@@ -22,7 +23,7 @@ Regular4nPolygonAngle.prototype.shift = function(direction) {
     }
 };
 
-Regular4nPolygonAngle.prototype.equals90nDegree = function(degree) {
+Regular4nPolygon.prototype.equals90nDegree = function(degree) {
     if (
         degree !== this.DEGREE_0   && degree !== this.DEGREE_90  &&
         degree !== this.DEGREE_180 && degree !== this.DEGREE_270
@@ -33,7 +34,7 @@ Regular4nPolygonAngle.prototype.equals90nDegree = function(degree) {
     return this.index === degree;
 };
 
-Regular4nPolygonAngle.prototype.existIn90nDegreeRange = function(startDegree, endDegree) {
+Regular4nPolygon.prototype.existIn90nDegreeRange = function(startDegree, endDegree) {
     if (
         startDegree !== this.DEGREE_0   && startDegree !== this.DEGREE_90  &&
         startDegree !== this.DEGREE_180 && startDegree !== this.DEGREE_270 &&
@@ -52,7 +53,7 @@ Regular4nPolygonAngle.prototype.existIn90nDegreeRange = function(startDegree, en
     return false;
 };
 
-Regular4nPolygonAngle.prototype.toRadian = function() {
+Regular4nPolygon.prototype.toRadian = function() {
     return this.index * 2 * PI / this.N;
 };
 

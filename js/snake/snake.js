@@ -1,10 +1,10 @@
 
 function Snake() {
     this.headPotision = new Position(100, 100);
-    this.partsRadius = 25;
+    this.partsRadius = 15;
     this.bodyCount = 0;
     this.bodyPotisionArray = [];
-    this.headAngle = new Regular4nPolygonAngle(20 * 4);
+    this.headAngle = new Regular4nPolygon(25 * 4);
     this.speed = 5;
     this.drawer = SnakeDrawer;
     this.traceQueue = [];
