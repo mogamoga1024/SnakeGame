@@ -24,7 +24,7 @@ GmaeStartScene.prototype.update = function() {
 GmaeStartScene.prototype.keyPressed = function() {
     if (keyCode === KEY_CODE.F12) return;
 
-    const gameMode = GameMode.findByKeyCode(keyCode);
+    const gameMode = GameConfig.findByKeyCode(keyCode);
     SceneManager.start(new GamePlayScene(gameMode));
 };
 
