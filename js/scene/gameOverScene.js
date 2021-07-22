@@ -15,7 +15,10 @@ GmaeOverScene.prototype.start = function() {
 GmaeOverScene.prototype.update = function() {
     background(128);
 
-    this.prevScene.feed.draw();
+    const feedList = this.prevScene.feedList;
+    for (let i = 0; i < feedList.length; i++) {
+        feedList[i].draw();
+    }
     this.prevScene.snake.draw();
 
     fill(255);

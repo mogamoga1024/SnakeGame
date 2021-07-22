@@ -2,7 +2,8 @@
 function GamePlayScene(gameMode) {
     this.snake = SnakeFactory.create(gameMode.snakeType);
     this.feedManager = new FeedManager(gameMode.feedType);
-    this.feed = this.feedManager.firstSowFeed();
+    this.feedMaxCount = Feed.UNTIL_NOURISH_COUNT;
+    this.feedList = [];
 
     this.firstKeyCode = null;
     this.secondeKeyCode = null;
@@ -29,12 +30,23 @@ GamePlayScene.prototype.update = function() {
         return;
     }
 
-    if (this.snake.canEatFeed(this.feed)) {
-        this.snake.eatFeed(this.feed);
-        this.feed = this.feedManager.sowFeed(this.snake);
+    if (this.feedList.length === 0) {
+        for (let i = 0; i < this.feedMaxCount; i++) {
+            this.feedList.push(this.feedManager.sowFeed(this.snake));
+        }
     }
 
-    this.feed.draw();
+    for (let i = this.feedList.length - 1; i >= 0; i--) {
+        const feed = this.feedList[i];
+        if (this.snake.canEatFeed(feed)) {
+            this.snake.eatFeed(feed);
+            this.feedList.splice(i, 1);
+        }
+    }
+
+    for (let i = 0; i < this.feedList.length; i++) {
+        this.feedList[i].draw();
+    }
     this.snake.draw();
 };
 
