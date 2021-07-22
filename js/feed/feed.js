@@ -1,7 +1,7 @@
 
-function Feed(x, y, radius) {
-    this.position = new Position(x, y);
-    this.radius = radius;
+function Feed() {
+    this.position = null;
+    this.radius = 20;
     this.drawer = FeedDrawer;
 }
 

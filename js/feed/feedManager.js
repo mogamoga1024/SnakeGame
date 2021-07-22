@@ -9,19 +9,23 @@ FeedManager.prototype.firstSowFeed = function() {
 };
 
 FeedManager.prototype.sowFeed = function(snake) {
-    const x = floor(random(width + 1 - this.feedRadius * 2) + this.feedRadius);
-    const y = floor(random(height + 1 - this.feedRadius * 2) + this.feedRadius);
-    const snakeRotationRadius = snake.speed / sqrt(2 * (1 - cos(snake.headAngle.centralAngle))) + snake.partsRadius;
+    const feed = FeedFactory.create(this.feedType);
+    let x, y, snakeRotationRadius;
 
-    if (
+    do {
+        x = floor(random(width + 1 - feed.radius * 2) + feed.radius);
+        y = floor(random(height + 1 - feed.radius * 2) + feed.radius);
+        snakeRotationRadius = snake.speed / sqrt(2 * (1 - cos(snake.headAngle.centralAngle))) + snake.partsRadius;
+    }
+    while (
         y < -x + snakeRotationRadius          || 
         y <  x - width  + snakeRotationRadius ||
         y >  x + height - snakeRotationRadius ||
         y > -x + width  + height - snakeRotationRadius
-    ) {
-        return this.sowFeed(snake);
-    }
+    );
 
-    return FeedFactory.create(this.feedType, x, y, this.feedRadius);
+    feed.position = new Position(x, y);
+
+    return feed;
 };
 
