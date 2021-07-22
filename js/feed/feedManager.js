@@ -1,12 +1,7 @@
 
 function FeedManager(feedType) {
     this.feedType = feedType;
-    this.feedRadius = 20;
 }
-
-FeedManager.prototype.firstSowFeed = function() {
-    return FeedFactory.create(this.feedType, 400, 100, this.feedRadius);
-};
 
 FeedManager.prototype.sowFeed = function(snake) {
     const feed = FeedFactory.create(this.feedType);
