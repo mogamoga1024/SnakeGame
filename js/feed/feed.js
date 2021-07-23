@@ -16,7 +16,7 @@ Feed.prototype.nourish = function(snake) {
 
     if (snake.bodyCount % Feed.UNTIL_NOURISH_COUNT === 0) {
         if (snake.speed < 10) {
-            snake.speed += 2;
+            snake.speed += 1;
             if (snake.headAngle.N > 12) {
                 snake.headAngle.convertRegular4nPolygon(snake.headAngle.N - 12);
             }
