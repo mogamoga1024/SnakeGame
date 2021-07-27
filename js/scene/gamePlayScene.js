@@ -14,6 +14,9 @@ GamePlayScene.prototype.constructor = GamePlayScene;
 
 GamePlayScene.prototype.start = function() {
     loop();
+    /*for (let i = 0; i < 300; i++) {
+        this.snake.eatFeed(new Feed());
+    }*/
 };
 
 GamePlayScene.prototype.update = function() {
@@ -48,6 +51,11 @@ GamePlayScene.prototype.update = function() {
         this.feedList[i].draw();
     }
     this.snake.draw();
+
+    const fps = frameRate();
+    fill(255);
+    stroke(0);
+    text("FPS: " + fps.toFixed(2), 10, height - 10);
 };
 
 GamePlayScene.prototype.keyPressed = function() {

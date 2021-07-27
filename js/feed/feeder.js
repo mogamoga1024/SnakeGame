@@ -10,7 +10,7 @@ FeedManager.prototype.sowFeed = function(snake) {
     do {
         x = floor(random(width + 1 - feed.radius * 2) + feed.radius);
         y = floor(random(height + 1 - feed.radius * 2) + feed.radius);
-        snakeRotationRadius = snake.speed / sqrt(2 * (1 - cos(snake.headAngle.centralAngle))) + snake.partsRadius;
+        snakeRotationRadius = snake.speed / sqrt(2 * (1 - cos(snake.headAngle.centralAngle))) + snake.radius;
     }
     while (
         y < -x + snakeRotationRadius          || 

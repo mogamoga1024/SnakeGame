@@ -1,19 +1,62 @@
 
 function Snake() {
-    this.headPotision = new Position(100, 100);
-    this.partsRadius = 25;
+    this.headPosition = new Position(100, 100);
+    this.tailPosition = this.headPosition.clone();
+    this.radius = 25;
     this.bodyCount = 0;
-    this.bodyPotisionArray = [];
     this.headAngle = new Regular4nPolygon(25 * 4);
     this.speed = 5;
     this.drawer = SnakeDrawer;
-    this.traceQueue = [];
+    this.trace = [];
 
-    this.traceQueue.push(this.headPotision.clone());
+    this.trace.push(this.headPosition.clone());
 }
 
 Snake.prototype.draw = function() {
-    this.drawer.draw(this);
+    //this.drawer.draw(this);
+
+    push();
+    /*
+    if (this.bodyCount === 0) {
+        noStroke();
+        fill(127 , 255, 127);
+        ellipse(this.headPosition.x, this.headPosition.y, this.radius * 2);
+    }
+    else {
+        strokeWeight(this.radius * 2);
+        stroke(127 , 255, 127);
+        line(this.headPosition.x, this.headPosition.y, this.trace[0].x, this.trace[0].y);
+        const lastTraceIndex = this.trace.length - 1;
+        for (let i = 0; i < lastTraceIndex; i++) {
+            const position1 = this.trace[i];
+            let position2;
+            if (lastTraceIndex === 0 || i === lastTraceIndex - 1) {
+                position2 = this.tailPosition;
+            }
+            else {
+                position2 = this.trace[i + 1];
+            }
+            line(position1.x, position1.y, position2.x, position2.y);
+        }
+    }
+    */
+
+    noStroke();
+    fill(127 , 127, 255);
+    ellipse(this.headPosition.x, this.headPosition.y, this.radius * 2);
+    fill(127 , 255, 127);
+    ellipse(this.tailPosition.x, this.tailPosition.y, this.radius * 2);
+
+    // debug start
+    stroke(255, 0, 0);
+    strokeWeight(4);
+    line(this.headPosition.x, this.headPosition.y, this.trace[0].x, this.trace[0].y);
+    for (let i = 0; i < this.trace.length - 1; i++) {
+        line(this.trace[i].x, this.trace[i].y, this.trace[i + 1].x, this.trace[i + 1].y);
+    }
+    // debug end
+
+    pop();
 };
 
 Snake.prototype.headDegreeChangeByKeyCode = function(scene) {
@@ -49,7 +92,7 @@ Snake.prototype.headDegreeChangeByKeyCode = function(scene) {
 
     if (rotationDirection !== 0) {
         this.headAngle.shift(rotationDirection);
-        this.traceQueue.push(this.headPotision.clone());
+        this.trace.unshift(this.headPosition.clone());
     }
 };
 
@@ -65,10 +108,10 @@ Snake.prototype.findRotationDirection = function(startDegree, endDegree) {
 
 Snake.prototype.isHittingWall = function() {
     if (
-        this.headPotision.x - this.partsRadius <= 0     ||
-        this.headPotision.y - this.partsRadius <= 0     ||
-        this.headPotision.x + this.partsRadius >= width ||
-        this.headPotision.y + this.partsRadius >= height
+        this.headPosition.x - this.radius <= 0     ||
+        this.headPosition.y - this.radius <= 0     ||
+        this.headPosition.x + this.radius >= width ||
+        this.headPosition.y + this.radius >= height
     ) {
         return true;
     }
@@ -76,99 +119,80 @@ Snake.prototype.isHittingWall = function() {
 };
 
 Snake.prototype.isHittingBody = function() {
-    for (let i = 1; i < this.bodyPotisionArray.length; i++) {
+    /*for (let i = 1; i < this.bodyPotisionArray.length; i++) {
         const bodyPotision = this.bodyPotisionArray[i];
-        if (this.headPotision.distance(bodyPotision) <= this.partsRadius * 2) {
+        if (this.headPosition.distance(bodyPotision) <= this.radius * 2) {
             return true;
         }
     }
+    */
     return false;
 };
 
 Snake.prototype.canEatFeed = function(feed) {
-    return this.headPotision.distance(feed.position) <= this.partsRadius + feed.radius;
+    return this.headPosition.distance(feed.position) <= this.radius + feed.radius;
 };
 
 Snake.prototype.move = function() {
-    this.headPotision.x += this.speed * cos(this.headAngle.toRadian());
-    this.headPotision.y += this.speed * sin(this.headAngle.toRadian());
+    this.headPosition.x += this.speed * cos(this.headAngle.toRadian());
+    this.headPosition.y += this.speed * sin(this.headAngle.toRadian());
 
-    this.bodyPotisionArray = [];
+    this.updateTailPosition();
+};
 
-    let traceQueueIndex     = this.traceQueue.length - 1;
-    let currentBodyPosition = this.headPotision;
-    let traceFrontPosition  = this.headPotision;
+Snake.prototype.updateTailPosition = function() {
+    if (this.bodyCount === 0) return;
 
-    while (this.bodyPotisionArray.length < this.bodyCount && traceQueueIndex >= 0) {
-        const traceBackPosition = this.traceQueue[traceQueueIndex];
-        const backBodyPosition = this.getBackBodyPosition(currentBodyPosition, traceFrontPosition, traceBackPosition);
+    const snakeLength = 2 * this.radius * this.bodyCount;
+    let prevSpineLength = 0;
+    let spineLength =  0;
+    let joint = this.headPosition;
+    let index = 0;
+    while (true) {
+        const nextJoint = this.trace[index];
+        prevSpineLength = spineLength;
+        spineLength += joint.distance(nextJoint);
+        if (spineLength === snakeLength) {
+            break;
+        }
+        else if (spineLength > snakeLength) {
+            const remainingSnakeLenght = snakeLength - prevSpineLength;
 
-        if (backBodyPosition !== null) {
-            currentBodyPosition = backBodyPosition;
-            this.bodyPotisionArray.push(currentBodyPosition.clone());
-            continue;
+            if (joint.x === nextJoint.x) {
+                this.tailPosition.x = joint.x;
+                if (joint.y < nextJoint.y) {
+                    this.tailPosition.y = joint.y + remainingSnakeLenght;
+                }
+                else {
+                    this.tailPosition.y = joint.y - remainingSnakeLenght;
+                }
+            }
+            else {
+                const absC = nextJoint.distance(joint);
+                const a = nextJoint.x - joint.x;
+                const b = nextJoint.y - joint.y;
+
+                this.tailPosition.x = joint.x + (a / absC) * remainingSnakeLenght;
+                this.tailPosition.y = joint.y + (b / absC) * remainingSnakeLenght;
+            }
+            break;
         }
 
-        traceFrontPosition = traceBackPosition;
-        traceQueueIndex--;
+        if (index === this.trace.length - 1) {
+            break;
+        }
+
+        joint = nextJoint;
+        index++;
     }
 
-    if (traceQueueIndex > 0) {
-        this.traceQueue.splice(0, traceQueueIndex);
+    if (index < this.trace.length - 1) {
+        this.trace.splice(index + 1);
+        console.log(index + 1);
+        console.log(this.trace.concat());
     }
 };
 
 Snake.prototype.eatFeed = function(feed) {
     feed.nourish(this);
 };
-
-Snake.prototype.getBackBodyPosition = function(frontBodyPosition, traceFrontPosition, traceBackPosition) {
-    const r = this.partsRadius * 2;
-
-    if (frontBodyPosition.distance(traceBackPosition) < r) {
-        return null;
-    }
-
-    let backBodyX, backBodyY;
-
-    const c = frontBodyPosition.x;
-    const d = frontBodyPosition.y;
-
-    if (traceBackPosition.x === traceFrontPosition.x) {
-        const tmpBodyY1 = d - sqrt(pow(r, 2) - pow(traceFrontPosition.x - c, 2));
-        const tmpBodyY2 = d + sqrt(pow(r, 2) - pow(traceFrontPosition.x - c, 2));
-
-        if (abs(traceBackPosition.y - tmpBodyY1) < abs(traceBackPosition.y - tmpBodyY2)) {
-            backBodyY = tmpBodyY1;
-        }
-        else {
-            backBodyY = tmpBodyY2;
-        }
-
-        backBodyX = traceFrontPosition.x;
-    }
-    else {
-        const a = (traceFrontPosition.y - traceBackPosition.y) / (traceFrontPosition.x - traceBackPosition.x);
-        const b = traceFrontPosition.y - a * traceFrontPosition.x;
-
-        const A = pow(a, 2) + 1;
-        const B = a * (b - d) - c;
-        const C = pow(b - d, 2) + pow(c, 2) - pow(r, 2);
-        const D = pow(B, 2) - A * C;
-
-        const tmpBodyX1 = (-B - sqrt(D)) / A;
-        const tmpBodyX2 = (-B + sqrt(D)) / A;
-
-        if (abs(traceBackPosition.x - tmpBodyX1) < abs(traceBackPosition.x - tmpBodyX2)) {
-            backBodyX = tmpBodyX1;
-        }
-        else {
-            backBodyX = tmpBodyX2;
-        }
-
-        backBodyY = a * backBodyX + b;
-    }
-
-    return new Position(backBodyX, backBodyY);
-};
-
