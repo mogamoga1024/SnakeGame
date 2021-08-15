@@ -6,4 +6,6 @@ function setup() {
     canvas.position((windowWidth - canvasWidth) / 2, (windowHeight - canvasHeight) / 2);
     
     SceneManager.start(new GmaeStartScene());
+
+    frameRate(60);
 }

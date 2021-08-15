@@ -42,13 +42,13 @@ GamePlayScene.prototype.update = function() {
     for (let i = this.feedList.length - 1; i >= 0; i--) {
         const feed = this.feedList[i];
         if (this.snake.canEatFeed(feed)) {
-            this.snake.eatFeed(feed);
+            //this.snake.eatFeed(feed);
             this.feedList.splice(i, 1);
         }
     }
 
     for (let i = 0; i < this.feedList.length; i++) {
-        this.feedList[i].draw();
+        //this.feedList[i].draw();
     }
     this.snake.draw();
 

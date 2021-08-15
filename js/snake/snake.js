@@ -3,10 +3,11 @@ function Snake() {
     this.headPosition = new Position(100, 100);
     this.tailPosition = this.headPosition.clone();
     this.radius = 25;
-    this.bodyCount = 0;
-    this.headAngle = new Regular4nPolygon(25 * 4);
+    this.bodyCount = 5;
+    //this.headAngle = new Regular4nPolygon(25 * 4);
+    this.headAngle = new Regular4nPolygon(30 * 4);
     this.speed = 5;
-    this.drawer = SnakeDrawer;
+    //this.drawer = SnakeDrawer;
     this.trace = [];
 
     this.trace.push(this.headPosition.clone());
@@ -41,12 +42,14 @@ Snake.prototype.draw = function() {
     }
     */
 
+    //*
     noStroke();
     fill(127 , 127, 255);
     ellipse(this.headPosition.x, this.headPosition.y, this.radius * 2);
     fill(127 , 255, 127);
     ellipse(this.tailPosition.x, this.tailPosition.y, this.radius * 2);
 
+    /*
     // debug start
     stroke(255, 0, 0);
     strokeWeight(4);
@@ -55,6 +58,7 @@ Snake.prototype.draw = function() {
         line(this.trace[i].x, this.trace[i].y, this.trace[i + 1].x, this.trace[i + 1].y);
     }
     // debug end
+    */
 
     pop();
 };
@@ -140,23 +144,32 @@ Snake.prototype.move = function() {
     this.updateTailPosition();
 };
 
+let hoge = 0;
+
 Snake.prototype.updateTailPosition = function() {
     if (this.bodyCount === 0) return;
 
     const snakeLength = 2 * this.radius * this.bodyCount;
-    let prevSpineLength = 0;
-    let spineLength =  0;
+    let tmpSnakeLength =  0;
     let joint = this.headPosition;
     let index = 0;
     while (true) {
         const nextJoint = this.trace[index];
-        prevSpineLength = spineLength;
-        spineLength += joint.distance(nextJoint);
-        if (spineLength === snakeLength) {
+        const preTmpSnakeLength = tmpSnakeLength;
+        tmpSnakeLength += joint.distance(nextJoint);
+        if (tmpSnakeLength === snakeLength) {
+            console.log(hoge++ + " a: " + tmpSnakeLength);
+            this.tailPosition.x = nextJoint.x;
+            this.tailPosition.y = nextJoint.y;
             break;
         }
-        else if (spineLength > snakeLength) {
-            const remainingSnakeLenght = snakeLength - prevSpineLength;
+        else if (tmpSnakeLength > snakeLength) {
+            const remainingSnakeLenght = snakeLength - preTmpSnakeLength;
+            console.log(
+                hoge++ + " b: " + (remainingSnakeLenght + preTmpSnakeLength),
+                "remain: " + remainingSnakeLenght,
+                "pre: " + preTmpSnakeLength
+            );
 
             if (joint.x === nextJoint.x) {
                 this.tailPosition.x = joint.x;
@@ -179,6 +192,7 @@ Snake.prototype.updateTailPosition = function() {
         }
 
         if (index === this.trace.length - 1) {
+            console.log(hoge++ + " c");
             break;
         }
 
@@ -188,8 +202,8 @@ Snake.prototype.updateTailPosition = function() {
 
     if (index < this.trace.length - 1) {
         this.trace.splice(index + 1);
-        console.log(index + 1);
-        console.log(this.trace.concat());
+        //console.log(index + 1);
+        //console.log(this.trace.concat());
     }
 };
 
