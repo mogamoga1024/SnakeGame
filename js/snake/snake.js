@@ -2,6 +2,7 @@
 function Snake() {
     this.headPosition = new Position(100, 100);
     this.tailPosition = this.headPosition.clone();
+    this.tailTraceIndex = -1;
     this.radius = 25;
     this.bodyCount = 5;
     //this.headAngle = new Regular4nPolygon(25 * 4);
@@ -17,7 +18,7 @@ Snake.prototype.draw = function() {
     //this.drawer.draw(this);
 
     push();
-    /*
+    //*
     if (this.bodyCount === 0) {
         noStroke();
         fill(127 , 255, 127);
@@ -26,23 +27,29 @@ Snake.prototype.draw = function() {
     else {
         strokeWeight(this.radius * 2);
         stroke(127 , 255, 127);
-        line(this.headPosition.x, this.headPosition.y, this.trace[0].x, this.trace[0].y);
         const lastTraceIndex = this.trace.length - 1;
+        if (lastTraceIndex <= 0) {
+            line(this.headPosition.x, this.headPosition.y, this.tailPosition.x, this.tailPosition.y);
+        }
+        else {
+            line(this.headPosition.x, this.headPosition.y, this.trace[0].x, this.trace[0].y);
+        }
         for (let i = 0; i < lastTraceIndex; i++) {
             const position1 = this.trace[i];
-            let position2;
-            if (lastTraceIndex === 0 || i === lastTraceIndex - 1) {
-                position2 = this.tailPosition;
+
+            if (i === this.tailTraceIndex/* || i === lastTraceIndex - 1*/) {
+                line(position1.x, position1.y, this.tailPosition.x, this.tailPosition.y);
+                break;
             }
             else {
-                position2 = this.trace[i + 1];
+                const position2 = this.trace[i + 1];
+                line(position1.x, position1.y, position2.x, position2.y);
             }
-            line(position1.x, position1.y, position2.x, position2.y);
         }
     }
-    */
+    //*/
 
-    //*
+    /*
     noStroke();
     fill(127 , 127, 255);
     ellipse(this.headPosition.x, this.headPosition.y, this.radius * 2);
@@ -205,6 +212,8 @@ Snake.prototype.updateTailPosition = function() {
         //console.log(index + 1);
         //console.log(this.trace.concat());
     }
+
+    this.tailTraceIndex = index - 1;
 };
 
 Snake.prototype.eatFeed = function(feed) {
