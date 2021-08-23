@@ -4,7 +4,7 @@ function Snake() {
     this.tailPosition = this.headPosition.clone();
     this.tailTraceIndex = -1;
     this.radius = 25;
-    this.bodyCount = 5;
+    this.bodyCount = 200;
     //this.headAngle = new Regular4nPolygon(25 * 4);
     this.headAngle = new Regular4nPolygon(30 * 4);
     this.speed = 5;
@@ -15,35 +15,41 @@ function Snake() {
 }
 
 Snake.prototype.draw = function() {
+    this.updateTailPosition();
+
     //this.drawer.draw(this);
 
-    push();
+    snakeCanvas.push();
     //*
     if (this.bodyCount === 0) {
-        noStroke();
-        fill(127 , 255, 127);
-        ellipse(this.headPosition.x, this.headPosition.y, this.radius * 2);
+        snakeCanvas.noStroke();
+        snakeCanvas.fill(127 , 255, 127);
+        snakeCanvas.ellipse(this.headPosition.x, this.headPosition.y, this.radius * 2);
     }
     else {
-        strokeWeight(this.radius * 2);
-        stroke(127 , 255, 127);
+        snakeCanvas.strokeWeight(this.radius * 2);
+        snakeCanvas.stroke(127 , 255, 127);
+        //stroke(128);
         const lastTraceIndex = this.trace.length - 1;
-        if (lastTraceIndex <= 0) {
-            line(this.headPosition.x, this.headPosition.y, this.tailPosition.x, this.tailPosition.y);
+        if (this.tailTraceIndex === -1) {
+            snakeCanvas.line(this.headPosition.x, this.headPosition.y, this.tailPosition.x, this.tailPosition.y);
         }
         else {
-            line(this.headPosition.x, this.headPosition.y, this.trace[0].x, this.trace[0].y);
+            snakeCanvas.line(this.headPosition.x, this.headPosition.y, this.trace[0].x, this.trace[0].y);
         }
         for (let i = 0; i < lastTraceIndex; i++) {
             const position1 = this.trace[i];
 
-            if (i === this.tailTraceIndex/* || i === lastTraceIndex - 1*/) {
-                line(position1.x, position1.y, this.tailPosition.x, this.tailPosition.y);
+            if (i === this.tailTraceIndex) {
+                snakeCanvas.line(position1.x, position1.y, this.tailPosition.x, this.tailPosition.y);
                 break;
             }
             else {
                 const position2 = this.trace[i + 1];
-                line(position1.x, position1.y, position2.x, position2.y);
+                if (position2.isDrawn === false) {
+                    snakeCanvas.line(position1.x, position1.y, position2.x, position2.y);
+                    //position2.isDrawn = true;
+                }
             }
         }
     }
@@ -67,7 +73,9 @@ Snake.prototype.draw = function() {
     // debug end
     */
 
-    pop();
+    snakeCanvas.pop();
+
+    return this.tailTraceIndex; // debug
 };
 
 Snake.prototype.headDegreeChangeByKeyCode = function(scene) {
@@ -118,6 +126,8 @@ Snake.prototype.findRotationDirection = function(startDegree, endDegree) {
 };
 
 Snake.prototype.isHittingWall = function() {
+    return false;
+
     if (
         this.headPosition.x - this.radius <= 0     ||
         this.headPosition.y - this.radius <= 0     ||
@@ -141,14 +151,13 @@ Snake.prototype.isHittingBody = function() {
 };
 
 Snake.prototype.canEatFeed = function(feed) {
+    return false;
     return this.headPosition.distance(feed.position) <= this.radius + feed.radius;
 };
 
 Snake.prototype.move = function() {
     this.headPosition.x += this.speed * cos(this.headAngle.toRadian());
     this.headPosition.y += this.speed * sin(this.headAngle.toRadian());
-
-    this.updateTailPosition();
 };
 
 let hoge = 0;
@@ -165,18 +174,18 @@ Snake.prototype.updateTailPosition = function() {
         const preTmpSnakeLength = tmpSnakeLength;
         tmpSnakeLength += joint.distance(nextJoint);
         if (tmpSnakeLength === snakeLength) {
-            console.log(hoge++ + " a: " + tmpSnakeLength);
+            //console.log(hoge++ + " a: " + tmpSnakeLength);
             this.tailPosition.x = nextJoint.x;
             this.tailPosition.y = nextJoint.y;
             break;
         }
         else if (tmpSnakeLength > snakeLength) {
             const remainingSnakeLenght = snakeLength - preTmpSnakeLength;
-            console.log(
+            /*console.log(
                 hoge++ + " b: " + (remainingSnakeLenght + preTmpSnakeLength),
                 "remain: " + remainingSnakeLenght,
                 "pre: " + preTmpSnakeLength
-            );
+            );*/
 
             if (joint.x === nextJoint.x) {
                 this.tailPosition.x = joint.x;
@@ -199,7 +208,7 @@ Snake.prototype.updateTailPosition = function() {
         }
 
         if (index === this.trace.length - 1) {
-            console.log(hoge++ + " c");
+            //console.log(hoge++ + " c");
             break;
         }
 
@@ -214,6 +223,12 @@ Snake.prototype.updateTailPosition = function() {
     }
 
     this.tailTraceIndex = index - 1;
+
+    /*
+    if (this.tailTraceIndex >= 0) {
+        this.trace[this.tailTraceIndex] = this.tailPosition.clone();
+    }
+    */
 };
 
 Snake.prototype.eatFeed = function(feed) {

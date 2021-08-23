@@ -17,10 +17,13 @@ GamePlayScene.prototype.start = function() {
     /*for (let i = 0; i < 300; i++) {
         this.snake.eatFeed(new Feed());
     }*/
+    background(128);
 };
 
 GamePlayScene.prototype.update = function() {
-    background(128);
+    //background(128);
+    feedCanvas.background(128);
+    //feedCanvas.clear();
 
     if (keyIsPressed) {
         this.snake.headDegreeChangeByKeyCode(this);
@@ -42,20 +45,29 @@ GamePlayScene.prototype.update = function() {
     for (let i = this.feedList.length - 1; i >= 0; i--) {
         const feed = this.feedList[i];
         if (this.snake.canEatFeed(feed)) {
-            //this.snake.eatFeed(feed);
+            this.snake.eatFeed(feed);
             this.feedList.splice(i, 1);
         }
     }
 
     for (let i = 0; i < this.feedList.length; i++) {
-        //this.feedList[i].draw();
+        this.feedList[i].draw();
     }
-    this.snake.draw();
+    const hoge = this.snake.draw();
+
+    image(feedCanvas, 0, 0, canvasWidth, canvasHeight);
+    image(snakeCanvas, 0, 0, canvasWidth, canvasHeight);
 
     const fps = frameRate();
-    fill(255);
+    /*fill(255);
     stroke(0);
-    text("FPS: " + fps.toFixed(2), 10, height - 10);
+    text("FPS: " + fps.toFixed(2), 10, height - 10);*/
+    if (fps < 40) {
+        console.error(fps, hoge);
+    }
+    else {
+        console.log(fps, hoge);
+    }
 };
 
 GamePlayScene.prototype.keyPressed = function() {
