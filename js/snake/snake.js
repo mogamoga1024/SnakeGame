@@ -14,10 +14,21 @@ function Snake() {
     this.trace = [];
 
     this.trace.push(this.headPosition.clone());
+
+    const debug = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+    $svg.append(debug);
+    this.$debug = $(debug);
+    this.$debug.attr("cx", this.headPosition.x);
+    this.$debug.attr("cy", this.headPosition.y);
+    this.$debug.attr("r", this.radius);
+    this.$debug.attr("fill", "green");
 }
 
 Snake.prototype.draw = function() {
     this.updateTailPosition();
+
+    this.$debug.attr("cx", this.headPosition.x);
+    this.$debug.attr("cy", this.headPosition.y);
 
     //this.drawer.draw(this);
 
@@ -162,7 +173,7 @@ Snake.prototype.move = function() {
     this.headPosition.y += this.speed * Math.sin(this.headAngle.toRadian());
 };
 
-let hoge = 0;
+//let hoge = 0;
 
 Snake.prototype.updateTailPosition = function() {
     if (this.bodyCount === 0) return;
