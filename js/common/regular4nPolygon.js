@@ -11,7 +11,7 @@ function Regular4nPolygon(n) {
 
     this.N = n;
     this.index = 0;
-    this.centralAngle = 2 * PI / n;
+    this.centralAngle = 2 * Math.PI / n;
 }
 
 Regular4nPolygon.prototype.shift = function(direction) {
@@ -54,7 +54,7 @@ Regular4nPolygon.prototype.existIn90nDegreeRange = function(startDegree, endDegr
 };
 
 Regular4nPolygon.prototype.toRadian = function() {
-    return this.index * 2 * PI / this.N;
+    return this.index * 2 * Math.PI / this.N;
 };
 
 Regular4nPolygon.prototype.convertRegular4nPolygon = function(n) {

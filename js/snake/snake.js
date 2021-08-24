@@ -9,6 +9,8 @@ function Snake() {
     this.headAngle = new Regular4nPolygon(30 * 4);
     this.speed = 5;
     //this.drawer = SnakeDrawer;
+    this.canvasWidth = $svg.width();
+    this.canvasHeight = $svg.height();
     this.trace = [];
 
     this.trace.push(this.headPosition.clone());
@@ -19,8 +21,8 @@ Snake.prototype.draw = function() {
 
     //this.drawer.draw(this);
 
-    snakeCanvas.push();
-    //*
+    //snakeCanvas.push();
+    /*
     if (this.bodyCount === 0) {
         snakeCanvas.noStroke();
         snakeCanvas.fill(127 , 255, 127);
@@ -53,7 +55,7 @@ Snake.prototype.draw = function() {
             }
         }
     }
-    //*/
+    */
 
     /*
     noStroke();
@@ -73,9 +75,9 @@ Snake.prototype.draw = function() {
     // debug end
     */
 
-    snakeCanvas.pop();
+    //snakeCanvas.pop();
 
-    return this.tailTraceIndex; // debug
+    //return this.tailTraceIndex; // debug
 };
 
 Snake.prototype.headDegreeChangeByKeyCode = function(scene) {
@@ -129,10 +131,10 @@ Snake.prototype.isHittingWall = function() {
     return false;
 
     if (
-        this.headPosition.x - this.radius <= 0     ||
-        this.headPosition.y - this.radius <= 0     ||
-        this.headPosition.x + this.radius >= width ||
-        this.headPosition.y + this.radius >= height
+        this.headPosition.x - this.radius <= 0 ||
+        this.headPosition.y - this.radius <= 0 ||
+        this.headPosition.x + this.radius >= this.canvasWidth ||
+        this.headPosition.y + this.radius >= this.canvasHeight
     ) {
         return true;
     }
@@ -156,8 +158,8 @@ Snake.prototype.canEatFeed = function(feed) {
 };
 
 Snake.prototype.move = function() {
-    this.headPosition.x += this.speed * cos(this.headAngle.toRadian());
-    this.headPosition.y += this.speed * sin(this.headAngle.toRadian());
+    this.headPosition.x += this.speed * Math.cos(this.headAngle.toRadian());
+    this.headPosition.y += this.speed * Math.sin(this.headAngle.toRadian());
 };
 
 let hoge = 0;

@@ -1,16 +1,16 @@
 
-function FeedManager(feedType) {
-    this.feedType = feedType;
-}
+function FeedManager() {}
 
 FeedManager.prototype.sowFeed = function(snake) {
-    const feed = FeedFactory.create(this.feedType);
+    const feedRadius = 20;
     let x, y, snakeRotationRadius;
+    const width = $svg.width();
+    const height = $svg.height();
 
     do {
-        x = floor(random(width + 1 - feed.radius * 2) + feed.radius);
-        y = floor(random(height + 1 - feed.radius * 2) + feed.radius);
-        snakeRotationRadius = snake.speed / sqrt(2 * (1 - cos(snake.headAngle.centralAngle))) + snake.radius;
+        x = Math.floor(Math.randomInt(width + 1 - feedRadius * 2) + feedRadius);
+        y = Math.floor(Math.randomInt(height + 1 - feedRadius * 2) + feedRadius);
+        snakeRotationRadius = snake.speed / Math.sqrt(2 * (1 - Math.cos(snake.headAngle.centralAngle))) + snake.radius;
     }
     while (
         y < -x + snakeRotationRadius          || 
@@ -19,8 +19,6 @@ FeedManager.prototype.sowFeed = function(snake) {
         y > -x + width  + height - snakeRotationRadius
     );
 
-    feed.position = new Position(x, y);
-
-    return feed;
+    return new Feed(feedRadius, x, y);
 };
 

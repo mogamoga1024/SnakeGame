@@ -1,7 +1,7 @@
 
-function GamePlayScene(gameMode) {
-    this.snake = SnakeFactory.create(gameMode.snakeType);
-    this.feedManager = new FeedManager(gameMode.feedType);
+function GamePlayScene() {
+    this.snake = new Snake();
+    this.feedManager = new FeedManager();
     this.feedMaxCount = Feed.UNTIL_NOURISH_COUNT;
     this.feedList = [];
 
@@ -13,19 +13,13 @@ GamePlayScene.prototype = Object.create(Scene.prototype);
 GamePlayScene.prototype.constructor = GamePlayScene;
 
 GamePlayScene.prototype.start = function() {
-    loop();
     /*for (let i = 0; i < 300; i++) {
         this.snake.eatFeed(new Feed());
     }*/
-    background(128);
 };
 
 GamePlayScene.prototype.update = function() {
-    //background(128);
-    feedCanvas.background(128);
-    //feedCanvas.clear();
-
-    if (keyIsPressed) {
+    if (this.firstKeyCode !== null) {
         this.snake.headDegreeChangeByKeyCode(this);
     }
     
@@ -53,21 +47,7 @@ GamePlayScene.prototype.update = function() {
     for (let i = 0; i < this.feedList.length; i++) {
         this.feedList[i].draw();
     }
-    const hoge = this.snake.draw();
-
-    image(feedCanvas, 0, 0, canvasWidth, canvasHeight);
-    image(snakeCanvas, 0, 0, canvasWidth, canvasHeight);
-
-    const fps = frameRate();
-    /*fill(255);
-    stroke(0);
-    text("FPS: " + fps.toFixed(2), 10, height - 10);*/
-    if (fps < 40) {
-        console.error(fps, hoge);
-    }
-    else {
-        console.log(fps, hoge);
-    }
+    this.snake.draw();
 };
 
 GamePlayScene.prototype.keyPressed = function(keyCode) {

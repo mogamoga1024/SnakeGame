@@ -10,7 +10,9 @@ Position.prototype.equals = function(position) {
 };
 
 Position.prototype.distance = function(position) {
-    return dist(this.x, this.y, position.x, position.y);
+    const dx = this.x - position.x;
+    const dy = this.y - position.y;
+    return Math.sqrt(dx * dx + dy * dy);
 };
 
 Position.prototype.clone = function() {
