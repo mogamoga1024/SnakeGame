@@ -70,7 +70,7 @@ GamePlayScene.prototype.update = function() {
     }
 };
 
-GamePlayScene.prototype.keyPressed = function() {
+GamePlayScene.prototype.keyPressed = function(keyCode) {
     if (keyCode === KEY_CODE.SPACE) {
         if (isLooping()) {
             noLoop();
@@ -87,7 +87,7 @@ GamePlayScene.prototype.keyPressed = function() {
     this.firstKeyCode = keyCode;
 };
 
-GamePlayScene.prototype.keyReleased = function() {
+GamePlayScene.prototype.keyReleased = function(keyCode) {
     if (keyCode === KEY_CODE.SPACE) return;
 
     if (keyCode === this.firstKeyCode) {

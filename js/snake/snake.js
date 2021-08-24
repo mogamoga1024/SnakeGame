@@ -81,25 +81,25 @@ Snake.prototype.draw = function() {
 Snake.prototype.headDegreeChangeByKeyCode = function(scene) {
     let rotationDirection;
 
-    if (scene.firstKeyCode === UP_ARROW) {
+    if (scene.firstKeyCode === KEY_CODE.UP_ARROW) {
         rotationDirection = this.findRotationDirection(
             this.headAngle.DEGREE_90,
             this.headAngle.DEGREE_270
         );
     }
-    else if (scene.firstKeyCode === DOWN_ARROW) {
+    else if (scene.firstKeyCode === KEY_CODE.DOWN_ARROW) {
         rotationDirection = this.findRotationDirection(
             this.headAngle.DEGREE_270,
             this.headAngle.DEGREE_90
         );
     }
-    else if (scene.firstKeyCode === LEFT_ARROW) {
+    else if (scene.firstKeyCode === KEY_CODE.LEFT_ARROW) {
         rotationDirection = this.findRotationDirection(
             this.headAngle.DEGREE_0,
             this.headAngle.DEGREE_180
         );
     }
-    else if (scene.firstKeyCode === RIGHT_ARROW) {
+    else if (scene.firstKeyCode === KEY_CODE.RIGHT_ARROW) {
         rotationDirection = this.findRotationDirection(
             this.headAngle.DEGREE_180,
             this.headAngle.DEGREE_0

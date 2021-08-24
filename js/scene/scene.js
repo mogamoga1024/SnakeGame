@@ -3,7 +3,7 @@ function Scene() {}
 
 Scene.prototype.start = function() {};
 Scene.prototype.update = function() {};
-Scene.prototype.keyPressed = function() {};
-Scene.prototype.keyReleased = function() {};
+Scene.prototype.keyPressed = function(keyCode) {};
+Scene.prototype.keyReleased = function(keyCode) {};
 
 

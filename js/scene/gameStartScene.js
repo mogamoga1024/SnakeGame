@@ -21,7 +21,7 @@ GmaeStartScene.prototype.update = function() {
     text("press any key", width / 2, height * 3 / 5);
 };
 
-GmaeStartScene.prototype.keyPressed = function() {
+GmaeStartScene.prototype.keyPressed = function(keyCode) {
     if (keyCode === KEY_CODE.F12) return;
 
     const gameMode = GameConfig.findByKeyCode(keyCode);

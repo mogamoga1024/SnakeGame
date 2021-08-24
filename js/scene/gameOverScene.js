@@ -35,7 +35,7 @@ GmaeOverScene.prototype.update = function() {
     }, 250);
 };
 
-GmaeOverScene.prototype.keyPressed = function() {
+GmaeOverScene.prototype.keyPressed = function(keyCode) {
     if (keyCode === KEY_CODE.F12) return;
 
     if (this.canPressKey) {
