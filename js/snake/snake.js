@@ -7,7 +7,7 @@ function Snake() {
     this.bodyCount = 200;
     //this.headAngle = new Regular4nPolygon(25 * 4);
     this.headAngle = new Regular4nPolygon(30 * 4);
-    this.speed = 5;
+    this.speed = 3;
     //this.drawer = SnakeDrawer;
     this.canvasWidth = $svg.width();
     this.canvasHeight = $svg.height();
@@ -22,6 +22,7 @@ function Snake() {
     this.$debug.attr("cy", this.headPosition.y);
     this.$debug.attr("r", this.radius);
     this.$debug.attr("fill", "green");
+    //this.$debug.attr("fill-opacity", 0.1);
 }
 
 Snake.prototype.draw = function() {

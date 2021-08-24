@@ -51,7 +51,7 @@ GamePlayScene.prototype.update = function() {
 };
 
 GamePlayScene.prototype.keyPressed = function(keyCode) {
-    if (keyCode === KEY_CODE.SPACE) {
+    /*if (keyCode === KEY_CODE.SPACE) {
         if (isLooping()) {
             noLoop();
         }
@@ -59,9 +59,9 @@ GamePlayScene.prototype.keyPressed = function(keyCode) {
             loop();
         }
         return;
-    }
+    }*/
     
-    if (this.firstKeyCode !== null) {
+    if (keyCode !== this.firstKeyCode) {
         this.secondeKeyCode = this.firstKeyCode;
     }
     this.firstKeyCode = keyCode;
