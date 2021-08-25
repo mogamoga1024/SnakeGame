@@ -4,7 +4,7 @@ function Snake() {
     this.tailPosition = this.headPosition.clone();
     this.tailTraceIndex = -1;
     this.radius = 25;
-    this.bodyCount = 200;
+    this.bodyCount = 10;
     //this.headAngle = new Regular4nPolygon(25 * 4);
     this.headAngle = new Regular4nPolygon(30 * 4);
     this.speed = 3;
@@ -15,81 +15,47 @@ function Snake() {
 
     this.trace.push(this.headPosition.clone());
 
-    const debug = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-    $svg.append(debug);
-    this.$debug = $(debug);
-    this.$debug.attr("cx", this.headPosition.x);
-    this.$debug.attr("cy", this.headPosition.y);
-    this.$debug.attr("r", this.radius);
-    this.$debug.attr("fill", "green");
-    //this.$debug.attr("fill-opacity", 0.1);
+    // const debug = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+    // $svg.append(debug);
+    // this.$debug = $(debug);
+    // this.$debug.attr("cx", this.headPosition.x + 10);
+    // this.$debug.attr("cy", this.headPosition.y);
+    // this.$debug.attr("r", this.radius);
+    // this.$debug.attr("fill", "blue");
+    // this.$debug.attr("fill-opacity", 0.1);
+    
+    this.$snake = $("#snake");
+    //this.$snake.attr("stroke", "green");
+    this.$snake.attr("stroke-width", this.radius * 2);
+    //this.$snake.attr("stroke-opacity", 0.1);
 }
 
 Snake.prototype.draw = function() {
     this.updateTailPosition();
 
-    this.$debug.attr("cx", this.headPosition.x);
-    this.$debug.attr("cy", this.headPosition.y);
-
-    //this.drawer.draw(this);
-
-    //snakeCanvas.push();
-    /*
+    let d = "M" + this.headPosition.x + "," + this.headPosition.y;
     if (this.bodyCount === 0) {
-        snakeCanvas.noStroke();
-        snakeCanvas.fill(127 , 255, 127);
-        snakeCanvas.ellipse(this.headPosition.x, this.headPosition.y, this.radius * 2);
+        d += "L" + this.headPosition.x + "," + this.headPosition.y;
     }
     else {
-        snakeCanvas.strokeWeight(this.radius * 2);
-        snakeCanvas.stroke(127 , 255, 127);
-        //stroke(128);
         const lastTraceIndex = this.trace.length - 1;
         if (this.tailTraceIndex === -1) {
-            snakeCanvas.line(this.headPosition.x, this.headPosition.y, this.tailPosition.x, this.tailPosition.y);
+            d += "L" + this.tailPosition.x + "," + this.tailPosition.y;
         }
         else {
-            snakeCanvas.line(this.headPosition.x, this.headPosition.y, this.trace[0].x, this.trace[0].y);
+            d += "L" + this.trace[0].x + "," + this.trace[0].y;
         }
         for (let i = 0; i < lastTraceIndex; i++) {
-            const position1 = this.trace[i];
-
             if (i === this.tailTraceIndex) {
-                snakeCanvas.line(position1.x, position1.y, this.tailPosition.x, this.tailPosition.y);
+                d += "L" + this.tailPosition.x + "," + this.tailPosition.y;
                 break;
             }
             else {
-                const position2 = this.trace[i + 1];
-                if (position2.isDrawn === false) {
-                    snakeCanvas.line(position1.x, position1.y, position2.x, position2.y);
-                    //position2.isDrawn = true;
-                }
+                d += "L" + this.trace[i + 1].x + "," + this.trace[i + 1].y;
             }
         }
     }
-    */
-
-    /*
-    noStroke();
-    fill(127 , 127, 255);
-    ellipse(this.headPosition.x, this.headPosition.y, this.radius * 2);
-    fill(127 , 255, 127);
-    ellipse(this.tailPosition.x, this.tailPosition.y, this.radius * 2);
-
-    /*
-    // debug start
-    stroke(255, 0, 0);
-    strokeWeight(4);
-    line(this.headPosition.x, this.headPosition.y, this.trace[0].x, this.trace[0].y);
-    for (let i = 0; i < this.trace.length - 1; i++) {
-        line(this.trace[i].x, this.trace[i].y, this.trace[i + 1].x, this.trace[i + 1].y);
-    }
-    // debug end
-    */
-
-    //snakeCanvas.pop();
-
-    //return this.tailTraceIndex; // debug
+    this.$snake.attr("d", d);
 };
 
 Snake.prototype.headDegreeChangeByKeyCode = function(scene) {

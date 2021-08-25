@@ -1,8 +1,7 @@
 
-function Position(x, y, _isDrawn) {
+function Position(x, y) {
     this.x = x;
     this.y = y;
-    this.isDrawn = (_isDrawn === undefined) ? false : _isDrawn;
 }
 
 Position.prototype.equals = function(position) {
@@ -16,5 +15,5 @@ Position.prototype.distance = function(position) {
 };
 
 Position.prototype.clone = function() {
-    return new Position(this.x, this.y, this.isDrawn);
+    return new Position(this.x, this.y);
 };
