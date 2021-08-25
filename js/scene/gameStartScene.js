@@ -33,7 +33,7 @@ GmaeStartScene.prototype.start = function() {
     $text2.text("press any key");
 };
 
-GmaeStartScene.prototype.keyPressed = function(keyCode) {
+GmaeStartScene.prototype.keyReleased = function(keyCode) {
     if (keyCode === KEY_CODE.F12) return;
 
     SceneManager.start(new GamePlayScene());

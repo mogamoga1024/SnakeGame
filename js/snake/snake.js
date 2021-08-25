@@ -95,8 +95,6 @@ Snake.prototype.findRotationDirection = function(startDegree, endDegree) {
 };
 
 Snake.prototype.isHittingWall = function() {
-    return false;
-
     if (
         this.headPosition.x - this.radius <= 0 ||
         this.headPosition.y - this.radius <= 0 ||

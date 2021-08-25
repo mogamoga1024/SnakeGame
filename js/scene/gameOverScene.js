@@ -8,34 +8,38 @@ GmaeOverScene.prototype = Object.create(Scene.prototype);
 GmaeOverScene.prototype.constructor = GmaeOverScene;
 
 GmaeOverScene.prototype.start = function() {
-    noLoop();
-    this.update();
-};
+    const width = $svg.width();
+    const height = $svg.height();
 
-GmaeOverScene.prototype.update = function() {
-    background(128);
+    const text1 = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    const $text1 = $(text1);
+    $svg.append(text1);
+    $text1.attr({
+        "text-anchor": "middle",
+        "x": width / 2,
+        "y": height * 2 / 5,
+        "font-size": 50
+    });
+    $text1.text("ゲームオーバー");
 
-    const feedList = this.prevScene.feedList;
-    for (let i = 0; i < feedList.length; i++) {
-        feedList[i].draw();
-    }
-    this.prevScene.snake.draw();
-
-    fill(255);
-    textAlign(CENTER, CENTER);
-    textSize(50);
-    text("ゲームオーバー", width / 2, height * 2 / 5);
-
-    textSize(30);
-    text("スコア：" + this.prevScene.snake.bodyCount, width / 2, height * 3 / 5);
+    const text2 = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    const $text2 = $(text2);
+    $svg.append(text2);
+    $text2.attr({
+        "text-anchor": "middle",
+        "x": width / 2,
+        "y": height * 3 / 5,
+        "font-size": 30
+    });
+    $text2.text("スコア：" + this.prevScene.snake.bodyCount);
 
     const self = this;
     setTimeout(function() {
         self.canPressKey = true;
-    }, 250);
+    }, 500);
 };
 
-GmaeOverScene.prototype.keyPressed = function(keyCode) {
+GmaeOverScene.prototype.keyReleased = function(keyCode) {
     if (keyCode === KEY_CODE.F12) return;
 
     if (this.canPressKey) {
