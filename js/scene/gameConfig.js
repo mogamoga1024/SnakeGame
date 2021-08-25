@@ -4,11 +4,11 @@ function GameConfig(snakeType, feedType) {
     this.feedType = feedType;
 }
 
-GameConfig.findByKeyCode = function(_keyCode) {
+GameConfig.findByKeyCode = function(keyCode) {
     let snakeType = SnakeFactory.NORMAL;
     let feedType = FeedFactory.NORMAL;
 
-    switch (_keyCode) {
+    switch (keyCode) {
         case KEY_CODE.D:
             snakeType = SnakeFactory.DEBUG;
             break;

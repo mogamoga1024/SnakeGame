@@ -1,6 +1,6 @@
 
-function FeedManager() {
-    this.$feed = $(".feed");
+function FeedManager($feed) {
+    this.$feed = $feed;
 }
 
 FeedManager.prototype.sowFeed = function(snake) {

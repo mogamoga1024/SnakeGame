@@ -1,7 +1,7 @@
 
-function Feed(_radius, x, y, $feed) {
+function Feed(radius, x, y, $feed) {
     this.position = new Position(x, y);
-    this.radius = _radius;
+    this.radius = radius;
 
     $feed.attr({
         "cx": this.position.x,
@@ -25,6 +25,7 @@ Feed.UNTIL_NOURISH_COUNT = 10;
 
 Feed.prototype.nourish = function(snake) {
     snake.bodyCount++;
+    snake.speed += 0.1;
 
     /*
     if (snake.bodyCount % Feed.UNTIL_NOURISH_COUNT === 0) {

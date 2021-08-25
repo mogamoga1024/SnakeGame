@@ -1,5 +1,5 @@
 
-function Snake() {
+function Snake($snake) {
     this.headPosition = new Position(100, 100);
     this.tailPosition = this.headPosition.clone();
     this.tailTraceIndex = -1;
@@ -13,7 +13,7 @@ function Snake() {
 
     this.trace.push(this.headPosition.clone());
 
-    this.$snake = $("#snake");
+    this.$snake = $snake;
     this.$snake.attr("stroke-width", this.radius * 2);
 }
 

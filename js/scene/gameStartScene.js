@@ -5,8 +5,9 @@ GmaeStartScene.prototype = Object.create(Scene.prototype);
 GmaeStartScene.prototype.constructor = GmaeStartScene;
 
 GmaeStartScene.prototype.start = function() {
-    noLoop();
-    this.update();
+    $svg.empty();
+
+    $svg.append("<b>a</b>");
 };
 
 GmaeStartScene.prototype.update = function() {
@@ -24,7 +25,6 @@ GmaeStartScene.prototype.update = function() {
 GmaeStartScene.prototype.keyPressed = function(keyCode) {
     if (keyCode === KEY_CODE.F12) return;
 
-    const gameMode = GameConfig.findByKeyCode(keyCode);
-    SceneManager.start(new GamePlayScene(gameMode));
+    SceneManager.start(new GamePlayScene());
 };
 
