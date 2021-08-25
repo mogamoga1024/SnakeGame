@@ -1,17 +1,14 @@
 
 function Regular4nPolygon(n) {
-    if (n % 4 !== 0) {
-        throw new Error("引数のnは4の倍数であること。");
-    }
 
     this.DEGREE_0 = 0;
-    this.DEGREE_90 = n / 4;
-    this.DEGREE_180 = n / 2;
-    this.DEGREE_270 = n * 3 / 4;
+    this.DEGREE_90 = n;
+    this.DEGREE_180 = n * 2;
+    this.DEGREE_270 = n * 3;
 
-    this.N = n;
+    this.N = n * 4;
     this.index = 0;
-    this.centralAngle = 2 * Math.PI / n;
+    this.centralAngle = Math.PI / (n * 2);
 }
 
 Regular4nPolygon.prototype.shift = function(direction) {

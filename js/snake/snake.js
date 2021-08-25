@@ -4,9 +4,9 @@ function Snake($snake) {
     this.tailPosition = this.headPosition.clone();
     this.tailTraceIndex = -1;
     this.radius = 25;
-    this.bodyCount = 0;
-    this.headAngle = new Regular4nPolygon(25 * 4);
-    this.speed = 3;
+    this.bodyCount = 100;
+    this.headAngle = new Regular4nPolygon(25);
+    this.speed = 5;
     this.canvasWidth = $svg.width();
     this.canvasHeight = $svg.height();
     this.trace = [];
