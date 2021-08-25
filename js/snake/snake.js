@@ -4,34 +4,23 @@ function Snake() {
     this.tailPosition = this.headPosition.clone();
     this.tailTraceIndex = -1;
     this.radius = 25;
-    this.bodyCount = 10;
-    //this.headAngle = new Regular4nPolygon(25 * 4);
-    this.headAngle = new Regular4nPolygon(30 * 4);
+    this.bodyCount = 0;
+    this.headAngle = new Regular4nPolygon(25 * 4);
     this.speed = 3;
-    //this.drawer = SnakeDrawer;
     this.canvasWidth = $svg.width();
     this.canvasHeight = $svg.height();
     this.trace = [];
 
     this.trace.push(this.headPosition.clone());
 
-    // const debug = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-    // $svg.append(debug);
-    // this.$debug = $(debug);
-    // this.$debug.attr("cx", this.headPosition.x + 10);
-    // this.$debug.attr("cy", this.headPosition.y);
-    // this.$debug.attr("r", this.radius);
-    // this.$debug.attr("fill", "blue");
-    // this.$debug.attr("fill-opacity", 0.1);
-    
     this.$snake = $("#snake");
-    //this.$snake.attr("stroke", "green");
     this.$snake.attr("stroke-width", this.radius * 2);
-    //this.$snake.attr("stroke-opacity", 0.1);
 }
 
 Snake.prototype.draw = function() {
     this.updateTailPosition();
+
+    // todo リファ
 
     let d = "M" + this.headPosition.x + "," + this.headPosition.y;
     if (this.bodyCount === 0) {
@@ -131,7 +120,6 @@ Snake.prototype.isHittingBody = function() {
 };
 
 Snake.prototype.canEatFeed = function(feed) {
-    return false;
     return this.headPosition.distance(feed.position) <= this.radius + feed.radius;
 };
 
@@ -139,8 +127,6 @@ Snake.prototype.move = function() {
     this.headPosition.x += this.speed * Math.cos(this.headAngle.toRadian());
     this.headPosition.y += this.speed * Math.sin(this.headAngle.toRadian());
 };
-
-//let hoge = 0;
 
 Snake.prototype.updateTailPosition = function() {
     if (this.bodyCount === 0) return;
@@ -154,18 +140,12 @@ Snake.prototype.updateTailPosition = function() {
         const preTmpSnakeLength = tmpSnakeLength;
         tmpSnakeLength += joint.distance(nextJoint);
         if (tmpSnakeLength === snakeLength) {
-            //console.log(hoge++ + " a: " + tmpSnakeLength);
             this.tailPosition.x = nextJoint.x;
             this.tailPosition.y = nextJoint.y;
             break;
         }
         else if (tmpSnakeLength > snakeLength) {
             const remainingSnakeLenght = snakeLength - preTmpSnakeLength;
-            /*console.log(
-                hoge++ + " b: " + (remainingSnakeLenght + preTmpSnakeLength),
-                "remain: " + remainingSnakeLenght,
-                "pre: " + preTmpSnakeLength
-            );*/
 
             if (joint.x === nextJoint.x) {
                 this.tailPosition.x = joint.x;
@@ -188,7 +168,6 @@ Snake.prototype.updateTailPosition = function() {
         }
 
         if (index === this.trace.length - 1) {
-            //console.log(hoge++ + " c");
             break;
         }
 
@@ -198,17 +177,9 @@ Snake.prototype.updateTailPosition = function() {
 
     if (index < this.trace.length - 1) {
         this.trace.splice(index + 1);
-        //console.log(index + 1);
-        //console.log(this.trace.concat());
     }
 
     this.tailTraceIndex = index - 1;
-
-    /*
-    if (this.tailTraceIndex >= 0) {
-        this.trace[this.tailTraceIndex] = this.tailPosition.clone();
-    }
-    */
 };
 
 Snake.prototype.eatFeed = function(feed) {

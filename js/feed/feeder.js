@@ -1,5 +1,7 @@
 
-function FeedManager() {}
+function FeedManager() {
+    this.$feed = $(".feed");
+}
 
 FeedManager.prototype.sowFeed = function(snake) {
     const feedRadius = 20;
@@ -19,6 +21,6 @@ FeedManager.prototype.sowFeed = function(snake) {
         y > -x + width  + height - snakeRotationRadius
     );
 
-    return new Feed(feedRadius, x, y);
+    return new Feed(feedRadius, x, y, this.$feed);
 };
 

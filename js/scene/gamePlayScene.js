@@ -2,7 +2,8 @@
 function GamePlayScene() {
     this.snake = new Snake();
     this.feedManager = new FeedManager();
-    this.feedMaxCount = Feed.UNTIL_NOURISH_COUNT;
+    //this.feedMaxCount = Feed.UNTIL_NOURISH_COUNT;
+    this.feedMaxCount = 1;
     this.feedList = [];
 
     this.firstKeyCode = null;
@@ -44,9 +45,9 @@ GamePlayScene.prototype.update = function() {
         }
     }
 
-    for (let i = 0; i < this.feedList.length; i++) {
-        this.feedList[i].draw();
-    }
+    // for (let i = 0; i < this.feedList.length; i++) {
+    //     this.feedList[i].draw();
+    // }
     this.snake.draw();
 };
 
