@@ -7,19 +7,30 @@ GmaeStartScene.prototype.constructor = GmaeStartScene;
 GmaeStartScene.prototype.start = function() {
     $svg.empty();
 
-    $svg.append("<b>a</b>");
-};
+    const width = $svg.width();
+    const height = $svg.height();
 
-GmaeStartScene.prototype.update = function() {
-    background(128);
+    const text1 = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    const $text1 = $(text1);
+    $svg.append(text1);
+    $text1.attr({
+        "text-anchor": "middle",
+        "x": width / 2,
+        "y": height * 2 / 5,
+        "font-size": 50
+    });
+    $text1.text("SVG de スネークゲーム");
 
-    fill(255);
-    textAlign(CENTER, CENTER);
-    textSize(50);
-    text("ゲーミングスネークゲーム", width / 2, height * 2 / 5);
-
-    textSize(30);
-    text("press any key", width / 2, height * 3 / 5);
+    const text2 = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    const $text2 = $(text2);
+    $svg.append(text2);
+    $text2.attr({
+        "text-anchor": "middle",
+        "x": width / 2,
+        "y": height * 3 / 5,
+        "font-size": 30
+    });
+    $text2.text("press any key");
 };
 
 GmaeStartScene.prototype.keyPressed = function(keyCode) {
