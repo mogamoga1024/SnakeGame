@@ -32,7 +32,8 @@ GamePlayScene.prototype.setupCanvas = function() {
         "stroke": "green",
         "stroke-linecap": "round",
         "stroke-linejoin": "round",
-        "fill": "none"
+        "fill": "none",
+        "stroke-opacity": 0.8
     });
 }
 

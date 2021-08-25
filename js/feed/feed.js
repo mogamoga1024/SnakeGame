@@ -25,7 +25,7 @@ Feed.UNTIL_NOURISH_COUNT = 10;
 
 Feed.prototype.nourish = function(snake) {
     snake.bodyCount++;
-    snake.speed += 0.1;
+    //snake.speed += 0.1;
 
     /*
     if (snake.bodyCount % Feed.UNTIL_NOURISH_COUNT === 0) {
