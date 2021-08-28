@@ -41,7 +41,7 @@ GmaeOverScene.prototype.setupCanvas = function() {
     }, 500);
 };
 
-GmaeOverScene.prototype.keyReleased = function(keyCode) {
+GmaeOverScene.prototype.keyup = function(keyCode) {
     if (keyCode === KEY_CODE.F12) return;
 
     if (this.canPressKey) {

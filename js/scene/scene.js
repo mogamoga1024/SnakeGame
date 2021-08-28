@@ -2,7 +2,7 @@
 function Scene() {}
 
 Scene.prototype.update = function() {};
-Scene.prototype.keyPressed = function(keyCode) {};
-Scene.prototype.keyReleased = function(keyCode) {};
+Scene.prototype.keydown = function(keyCode) {};
+Scene.prototype.keyup = function(keyCode) {};
 
 

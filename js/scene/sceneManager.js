@@ -5,13 +5,13 @@ const SceneManager = (function() {
 
     $window.keydown(
 		function(e) {
-			currentScene.keyPressed(e.keyCode);
+			currentScene.keydown(e.keyCode);
 		}
 	);
 	
 	$window.keyup(
 		function(e) {
-			currentScene.keyReleased(e.keyCode);
+			currentScene.keyup(e.keyCode);
 		}
 	);
 

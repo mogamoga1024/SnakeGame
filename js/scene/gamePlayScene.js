@@ -75,7 +75,7 @@ GamePlayScene.prototype.update = function() {
     this.snake.draw();
 };
 
-GamePlayScene.prototype.keyPressed = function(keyCode) {
+GamePlayScene.prototype.keydown = function(keyCode) {
     /*if (keyCode === KEY_CODE.SPACE) {
         if (isLooping()) {
             noLoop();
@@ -92,7 +92,7 @@ GamePlayScene.prototype.keyPressed = function(keyCode) {
     this.firstKeyCode = keyCode;
 };
 
-GamePlayScene.prototype.keyReleased = function(keyCode) {
+GamePlayScene.prototype.keyup = function(keyCode) {
     if (keyCode === KEY_CODE.SPACE) return;
 
     if (keyCode === this.firstKeyCode) {
