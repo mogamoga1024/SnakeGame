@@ -2,7 +2,6 @@
 function Snake($snake) {
     this.headPosition = new Position(100, 100);
     this.tailPosition = this.headPosition.clone();
-    this.tailTraceIndex = -1;
     this.radius = 25;
     this.bodyCount = 0;
     this.headAngle = new Regular4nPolygon(25);
@@ -28,14 +27,14 @@ Snake.prototype.draw = function() {
     }
     else {
         const lastTraceIndex = this.trace.length - 1;
-        if (this.tailTraceIndex === -1) {
+        if (this.trace.length === 1) {
             d += "L" + this.tailPosition.x + "," + this.tailPosition.y;
         }
         else {
             d += "L" + this.trace[0].x + "," + this.trace[0].y;
         }
         for (let i = 0; i < lastTraceIndex; i++) {
-            if (i === this.tailTraceIndex) {
+            if (i === lastTraceIndex - 1) {
                 d += "L" + this.tailPosition.x + "," + this.tailPosition.y;
                 break;
             }
@@ -166,6 +165,8 @@ Snake.prototype.updateTailPosition = function() {
         }
 
         if (index === this.trace.length - 1) {
+            this.tailPosition.x = nextJoint.x;
+            this.tailPosition.y = nextJoint.y;
             break;
         }
 
@@ -176,8 +177,6 @@ Snake.prototype.updateTailPosition = function() {
     if (index < this.trace.length - 1) {
         this.trace.splice(index + 1);
     }
-
-    this.tailTraceIndex = index - 1;
 };
 
 Snake.prototype.eatFeed = function(feed) {
