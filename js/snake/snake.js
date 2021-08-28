@@ -165,8 +165,6 @@ Snake.prototype.updateTailPosition = function() {
         }
 
         if (index === this.trace.length - 1) {
-            this.tailPosition.x = nextJoint.x;
-            this.tailPosition.y = nextJoint.y;
             break;
         }
 
