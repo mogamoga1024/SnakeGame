@@ -46,28 +46,28 @@ Snake.prototype.draw = function() {
     this.$snake.attr("d", d);
 };
 
-Snake.prototype.headDegreeChangeByKeyCode = function(scene) {
+Snake.prototype.headDegreeChangeByKeyCode = function(keyCode) {
     let rotationDirection;
 
-    if (scene.firstKeyCode === KEY_CODE.UP_ARROW) {
+    if (keyCode === KEY_CODE.UP_ARROW) {
         rotationDirection = this.findRotationDirection(
             this.headAngle.DEGREE_90,
             this.headAngle.DEGREE_270
         );
     }
-    else if (scene.firstKeyCode === KEY_CODE.DOWN_ARROW) {
+    else if (keyCode === KEY_CODE.DOWN_ARROW) {
         rotationDirection = this.findRotationDirection(
             this.headAngle.DEGREE_270,
             this.headAngle.DEGREE_90
         );
     }
-    else if (scene.firstKeyCode === KEY_CODE.LEFT_ARROW) {
+    else if (keyCode === KEY_CODE.LEFT_ARROW) {
         rotationDirection = this.findRotationDirection(
             this.headAngle.DEGREE_0,
             this.headAngle.DEGREE_180
         );
     }
-    else if (scene.firstKeyCode === KEY_CODE.RIGHT_ARROW) {
+    else if (keyCode === KEY_CODE.RIGHT_ARROW) {
         rotationDirection = this.findRotationDirection(
             this.headAngle.DEGREE_180,
             this.headAngle.DEGREE_0

@@ -45,11 +45,9 @@ GamePlayScene.prototype.start = function() {
 
 GamePlayScene.prototype.update = function() {
     if (this.firstKeyCode !== null) {
-        this.snake.headDegreeChangeByKeyCode(this);
+        this.snake.headDegreeChangeByKeyCode(this.firstKeyCode);
     }
     
-    this.snake.move();
-
     if (this.snake.isHittingWall() || this.snake.isHittingBody()) {
         SceneManager.start(new GmaeOverScene(this), false);
         return;
@@ -68,6 +66,8 @@ GamePlayScene.prototype.update = function() {
             this.feedList.splice(i, 1);
         }
     }
+
+    this.snake.move();
 
     // for (let i = 0; i < this.feedList.length; i++) {
     //     this.feedList[i].draw();
