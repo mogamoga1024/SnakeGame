@@ -41,4 +41,9 @@ Feed.prototype.nourish = function(snake) {
         }
     }
     */
+
+    if (snake.trace.length > 0) {
+        snake.trace[snake.trace.length - 1].x = snake.tailPosition.x;
+        snake.trace[snake.trace.length - 1].y = snake.tailPosition.y;
+    }
 };
