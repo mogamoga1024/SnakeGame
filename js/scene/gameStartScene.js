@@ -1,10 +1,12 @@
 
-function GmaeStartScene() {};
+function GmaeStartScene() {
+    this.setupCanvas();
+};
 
 GmaeStartScene.prototype = Object.create(Scene.prototype);
 GmaeStartScene.prototype.constructor = GmaeStartScene;
 
-GmaeStartScene.prototype.start = function() {
+GmaeStartScene.prototype.setupCanvas = function() {
     $svg.empty();
 
     const width = $svg.width();

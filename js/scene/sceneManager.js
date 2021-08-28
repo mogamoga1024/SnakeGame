@@ -20,7 +20,6 @@ const SceneManager = (function() {
             const shouldUpdate = (_shouldUpdate === undefined) ? true : _shouldUpdate;
             currentScene = scene;
             clearInterval(timer);
-            currentScene.start();
             if (shouldUpdate) {
                 timer = setInterval(function() {
                     currentScene.update();

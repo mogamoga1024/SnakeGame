@@ -2,12 +2,14 @@
 function GmaeOverScene(prevScene) {
     this.prevScene = prevScene;
     this.canPressKey = false;
+
+    this.setupCanvas();
 };
 
 GmaeOverScene.prototype = Object.create(Scene.prototype);
 GmaeOverScene.prototype.constructor = GmaeOverScene;
 
-GmaeOverScene.prototype.start = function() {
+GmaeOverScene.prototype.setupCanvas = function() {
     const width = $svg.width();
     const height = $svg.height();
 
