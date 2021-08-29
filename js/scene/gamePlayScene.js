@@ -56,7 +56,7 @@ GamePlayScene.prototype.update = function() {
     }
     
     if (this.snake.isHittingWall() || this.snake.isHittingBody()) {
-        SceneManager.start(new GmaeOverScene(this), false);
+        SceneManager.start(new GmaeOverScene(this.snake.eatCount), false);
         return;
     }
 

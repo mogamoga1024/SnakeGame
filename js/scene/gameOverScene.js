@@ -1,6 +1,6 @@
 
-function GmaeOverScene(prevScene) {
-    this.prevScene = prevScene;
+function GmaeOverScene(score) {
+    this.score = score;
     this.canPressKey = false;
 
     this.setupCanvas();
@@ -33,7 +33,7 @@ GmaeOverScene.prototype.setupCanvas = function() {
         "y": height * 3 / 5,
         "font-size": 30
     });
-    $text2.text("スコア：" + this.prevScene.snake.eatCount);
+    $text2.text("スコア：" + this.score);
 
     const self = this;
     setTimeout(function() {
