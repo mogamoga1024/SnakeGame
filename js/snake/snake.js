@@ -13,7 +13,14 @@ function Snake($snake) {
     this.trace.push(this.headPosition.clone());
 
     this.$snake = $snake;
-    this.$snake.attr("stroke-width", this.radius * 2);
+    this.$snake.attr({
+        "stroke": "green",
+        "stroke-width": this.radius * 2,
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round",
+        "fill": "none",
+        "stroke-opacity": 0.8
+    });
 }
 
 Snake.prototype.draw = function() {

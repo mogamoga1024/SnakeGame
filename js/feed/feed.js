@@ -6,7 +6,8 @@ function Feed(radius, x, y, $feed) {
     $feed.attr({
         "cx": this.position.x,
         "cy": this.position.y,
-        "r": this.radius
+        "r": this.radius,
+        "fill": "brown"
     });
 }
 

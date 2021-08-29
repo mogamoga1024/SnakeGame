@@ -22,19 +22,11 @@ GamePlayScene.prototype.setupCanvas = function() {
     const $feed = $(feed);
     $svg.append(feed);
     $feed.addClass("feed");
-    $feed.attr("fill", "brown");
     
     const snake = document.createElementNS("http://www.w3.org/2000/svg", "path");
     const $snake = $(snake);
     $svg.append(snake);
-    $snake.attr({
-        "id": "snake",
-        "stroke": "green",
-        "stroke-linecap": "round",
-        "stroke-linejoin": "round",
-        "fill": "none",
-        "stroke-opacity": 0.8
-    });
+    $snake.attr("id", "snake");
 }
 
 GamePlayScene.prototype.start = function() {
