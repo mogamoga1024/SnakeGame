@@ -3,7 +3,7 @@ function Snake($snake) {
     this.headPosition = new Position(100, 100);
     this.tailPosition = this.headPosition.clone();
     this.radius = 25;
-    this.bodyCount = 0;
+    this.eatCount = 0;
     this.headAngle = new Regular4nPolygon(25);
     this.speed = 5;
     this.canvasWidth = $svg.width();
@@ -29,7 +29,7 @@ Snake.prototype.draw = function() {
     // todo リファ
 
     let d = "M" + this.headPosition.x + "," + this.headPosition.y;
-    if (this.bodyCount === 0) {
+    if (this.eatCount === 0) {
         d += "L" + this.headPosition.x + "," + this.headPosition.y;
     }
     else {
@@ -126,9 +126,9 @@ Snake.prototype.move = function() {
 };
 
 Snake.prototype.updateTailPosition = function() {
-    if (this.bodyCount === 0) return;
+    if (this.eatCount === 0) return;
 
-    const snakeLength = 2 * this.radius * this.bodyCount;
+    const snakeLength = 2 * this.radius * this.eatCount;
     let tmpSnakeLength =  0;
     let joint = this.headPosition;
     let index = 0;

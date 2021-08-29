@@ -18,7 +18,7 @@ const SnakeDrawer = {
 const SmoothSnakeDrawer = {
     draw: function(snake) {
         push();
-        if (snake.bodyCount === 0) {
+        if (snake.eatCount === 0) {
             noStroke();
             fill(127 , 255, 127);
             ellipse(snake.headPotision.x, snake.headPotision.y, snake.radius * 2);

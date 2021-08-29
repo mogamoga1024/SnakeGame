@@ -1,7 +1,8 @@
 
-function Feed($feed, radius, x, y) {
+function Feed($feed, feeder, x, y) {
     this.position = new Position(x, y);
-    this.radius = radius;
+    this.feeder = feeder;
+    this.radius = this.feeder.feedRadius;
 
     this.$feed = $feed;
     this.$feed.attr({
@@ -18,9 +19,9 @@ Feed.UNTIL_NOURISH_COUNT = 10;
 Feed.prototype.eaten = function(snake) {
     this.$feed.attr("opacity", 0);
 
-    snake.bodyCount++;
+    snake.eatCount++;
 
-    if (snake.bodyCount % Feed.UNTIL_NOURISH_COUNT === 0) {
+    if (snake.eatCount % Feed.UNTIL_NOURISH_COUNT === 0) {
         if (snake.speed < 10) {
             snake.speed += 1;
             const n = snake.headAngle.N / 4;
@@ -29,11 +30,10 @@ Feed.prototype.eaten = function(snake) {
             }
         }
         if (snake.radius > 15) {
-            snake.radius *= 0.95;
-            this.radius *= 0.95;
+            snake.radius *= 0.975;
+            this.feeder.feedRadius *= 0.975;
 
             snake.$snake.attr("stroke-width", snake.radius * 2);
-            this.$feed.attr("r", this.radius);
         }
     }
 

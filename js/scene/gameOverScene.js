@@ -33,7 +33,7 @@ GmaeOverScene.prototype.setupCanvas = function() {
         "y": height * 3 / 5,
         "font-size": 30
     });
-    $text2.text("スコア：" + this.prevScene.snake.bodyCount);
+    $text2.text("スコア：" + this.prevScene.snake.eatCount);
 
     const self = this;
     setTimeout(function() {
