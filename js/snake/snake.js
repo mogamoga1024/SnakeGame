@@ -33,8 +33,6 @@ function Snake($snake, $leftEye, $rightEye) {
 Snake.prototype.draw = function() {
     this.updateTailPosition();
 
-    // todo リファ
-
     let d = "M" + this.headPosition.x + "," + this.headPosition.y;
     if (this.eatCount === 0) {
         d += "L" + this.headPosition.x + "," + this.headPosition.y;
