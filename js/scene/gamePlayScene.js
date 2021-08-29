@@ -1,5 +1,6 @@
 
 function GamePlayScene() {
+    this.canLoop = true;
     this.feedMaxCount = Feed.UNTIL_NOURISH_COUNT;
 
     this.setupCanvas();
@@ -11,6 +12,11 @@ function GamePlayScene() {
 
     this.firstKeyCode = null;
     this.secondeKeyCode = null;
+
+    // const feed = this.feedManager.sowFeed(this.$feedList.eq(0), this.snake)
+    // for (let i = 0; i < 300; i++) {
+    //     this.snake.eatFeed(feed);
+    // }
 };
 
 GamePlayScene.prototype = Object.create(Scene.prototype);
@@ -32,13 +38,9 @@ GamePlayScene.prototype.setupCanvas = function() {
     $snake.attr("id", "snake");
 }
 
-GamePlayScene.prototype.start = function() {
-    /*for (let i = 0; i < 300; i++) {
-        this.snake.eatFeed(new Feed());
-    }*/
-};
-
 GamePlayScene.prototype.update = function() {
+    if (this.canLoop === false) return;
+
     if (this.firstKeyCode !== null) {
         this.snake.headDegreeChangeByKeyCode(this.firstKeyCode);
     }
@@ -63,23 +65,18 @@ GamePlayScene.prototype.update = function() {
     }
 
     this.snake.move();
-
-    // for (let i = 0; i < this.feedList.length; i++) {
-    //     this.feedList[i].draw();
-    // }
-    this.snake.draw();
 };
 
 GamePlayScene.prototype.keydown = function(keyCode) {
-    /*if (keyCode === KEY_CODE.SPACE) {
-        if (isLooping()) {
-            noLoop();
+    if (keyCode === KEY_CODE.SPACE) {
+        if (this.canLoop) {
+            this.canLoop = false;
         }
         else {
-            loop();
+            this.canLoop = true;
         }
         return;
-    }*/
+    }
     
     if (keyCode !== this.firstKeyCode) {
         this.secondeKeyCode = this.firstKeyCode;

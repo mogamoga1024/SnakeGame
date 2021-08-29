@@ -21,9 +21,10 @@ function Snake($snake) {
         "fill": "none",
         "stroke-opacity": 0.8
     });
+    this.updateDrawAttribute();
 }
 
-Snake.prototype.draw = function() {
+Snake.prototype.updateDrawAttribute = function() {
     this.updateTailPosition();
 
     // todo リファ
@@ -123,6 +124,8 @@ Snake.prototype.canEatFeed = function(feed) {
 Snake.prototype.move = function() {
     this.headPosition.x += this.speed * Math.cos(this.headAngle.toRadian());
     this.headPosition.y += this.speed * Math.sin(this.headAngle.toRadian());
+
+    this.updateDrawAttribute();
 };
 
 Snake.prototype.updateTailPosition = function() {

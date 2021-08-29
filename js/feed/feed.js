@@ -23,15 +23,15 @@ Feed.prototype.eaten = function(snake) {
 
     if (snake.eatCount % Feed.UNTIL_NOURISH_COUNT === 0) {
         if (snake.speed < 10) {
-            snake.speed += 1;
-            const n = snake.headAngle.N / 4;
-            if (n > 3) {
-                snake.headAngle.convertRegular4nPolygon(n - 3);
+            snake.speed += 0.5;
+            const n = snake.headAngle.N / 4 - 2;
+            if (n > 0) {
+                snake.headAngle.convertRegular4nPolygon(n);
             }
         }
         if (snake.radius > 15) {
-            snake.radius *= 0.975;
-            this.feeder.feedRadius *= 0.975;
+            snake.radius *= 0.99;
+            this.feeder.feedRadius *= 0.99;
 
             snake.$snake.attr("stroke-width", snake.radius * 2);
         }
