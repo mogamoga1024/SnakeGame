@@ -1,6 +1,5 @@
 
 function Regular4nPolygon(n) {
-
     this.DEGREE_0 = 0;
     this.DEGREE_90 = n;
     this.DEGREE_180 = n * 2;

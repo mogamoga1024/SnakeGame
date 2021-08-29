@@ -4,10 +4,6 @@ function Position(x, y) {
     this.y = y;
 }
 
-Position.prototype.equals = function(position) {
-    return this.x === position.x && this.y === position.y;
-};
-
 Position.prototype.distance = function(position) {
     const dx = this.x - position.x;
     const dy = this.y - position.y;
