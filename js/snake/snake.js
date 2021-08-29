@@ -1,8 +1,9 @@
 
-function Snake($snake) {
+function Snake($snake, $leftEye, $rightEye) {
     this.headPosition = new Position(100, 100);
     this.tailPosition = this.headPosition.clone();
     this.radius = 25;
+    this.eyeRadius = 5;
     this.eatCount = 0;
     this.headAngle = new Regular4nPolygon(25);
     this.speed = 5;
@@ -12,19 +13,24 @@ function Snake($snake) {
 
     this.trace.push(this.headPosition.clone());
 
+    this.scale = 1;
     this.$snake = $snake;
+    this.$leftEye = $leftEye;
+    this.$rightEye = $rightEye;
     this.$snake.attr({
         "stroke": "green",
-        "stroke-width": this.radius * 2,
         "stroke-linecap": "round",
         "stroke-linejoin": "round",
         "fill": "none",
         "stroke-opacity": 0.8
     });
-    this.updateDrawAttribute();
+    this.$leftEye.attr("fill", "black");
+    this.$rightEye.attr("fill", "black");
+
+    this.draw();
 }
 
-Snake.prototype.updateDrawAttribute = function() {
+Snake.prototype.draw = function() {
     this.updateTailPosition();
 
     // todo リファ
@@ -51,7 +57,28 @@ Snake.prototype.updateDrawAttribute = function() {
             }
         }
     }
-    this.$snake.attr("d", d);
+    this.$snake.attr({
+        "stroke-width": this.radius * this.scale * 2,
+        "d": d
+    });
+
+    const eyeCenterDistance = (this.radius - this.eyeRadius) * this.scale * 0.9;
+    const headRadian = this.headAngle.toRadian();
+    const leftEyeX = this.headPosition.x + eyeCenterDistance * Math.cos(headRadian + Math.PI / 6);
+    const leftEyeY = this.headPosition.y + eyeCenterDistance * Math.sin(headRadian + Math.PI / 6);
+    this.$leftEye.attr({
+        "cx": leftEyeX,
+        "cy": leftEyeY,
+        "r": this.eyeRadius * this.scale
+    });
+
+    const rightEyeX = this.headPosition.x + eyeCenterDistance * Math.cos(headRadian - Math.PI / 6);
+    const rightEyeY = this.headPosition.y + eyeCenterDistance * Math.sin(headRadian - Math.PI / 6);
+    this.$rightEye.attr({
+        "cx": rightEyeX,
+        "cy": rightEyeY,
+        "r": this.eyeRadius * this.scale
+    });
 };
 
 Snake.prototype.headDegreeChangeByKeyCode = function(keyCode) {
@@ -122,10 +149,11 @@ Snake.prototype.canEatFeed = function(feed) {
 };
 
 Snake.prototype.move = function() {
-    this.headPosition.x += this.speed * Math.cos(this.headAngle.toRadian());
-    this.headPosition.y += this.speed * Math.sin(this.headAngle.toRadian());
+    const headRadian = this.headAngle.toRadian();
+    this.headPosition.x += this.speed * Math.cos(headRadian);
+    this.headPosition.y += this.speed * Math.sin(headRadian);
 
-    this.updateDrawAttribute();
+    this.draw();
 };
 
 Snake.prototype.updateTailPosition = function() {

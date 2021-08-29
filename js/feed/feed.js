@@ -30,10 +30,8 @@ Feed.prototype.eaten = function(snake) {
             }
         }
         if (snake.radius > 15) {
-            snake.radius *= 0.99;
+            snake.scale *= 0.99;
             this.feeder.feedRadius *= 0.99;
-
-            snake.$snake.attr("stroke-width", snake.radius * 2);
         }
     }
 
