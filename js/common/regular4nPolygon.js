@@ -57,6 +57,6 @@ Regular4nPolygon.prototype.toRadian = function() {
 Regular4nPolygon.prototype.convertRegular4nPolygon = function(n) {
     const radian = this.toRadian();
     Regular4nPolygon.call(this, n);
-    this.index = round(radian / this.centralAngle) % this.N;
+    this.index = Math.round(radian / this.centralAngle) % this.N;
 };
 

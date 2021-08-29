@@ -113,13 +113,6 @@ Snake.prototype.isHittingWall = function() {
 };
 
 Snake.prototype.isHittingBody = function() {
-    /*for (let i = 1; i < this.bodyPotisionArray.length; i++) {
-        const bodyPotision = this.bodyPotisionArray[i];
-        if (this.headPosition.distance(bodyPotision) <= this.radius * 2) {
-            return true;
-        }
-    }
-    */
     return false;
 };
 
@@ -185,5 +178,5 @@ Snake.prototype.updateTailPosition = function() {
 };
 
 Snake.prototype.eatFeed = function(feed) {
-    feed.nourish(this);
+    feed.eaten(this);
 };

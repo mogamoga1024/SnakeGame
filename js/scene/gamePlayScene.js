@@ -1,11 +1,12 @@
 
 function GamePlayScene() {
+    this.feedMaxCount = Feed.UNTIL_NOURISH_COUNT;
+
     this.setupCanvas();
 
     this.snake = new Snake($("#snake"));
-    this.feedManager = new FeedManager($(".feed"));
-    //this.feedMaxCount = Feed.UNTIL_NOURISH_COUNT;
-    this.feedMaxCount = 1;
+    this.$feedList = $(".feed");
+    this.feedManager = new Feeder();
     this.feedList = [];
 
     this.firstKeyCode = null;
@@ -18,10 +19,12 @@ GamePlayScene.prototype.constructor = GamePlayScene;
 GamePlayScene.prototype.setupCanvas = function() {
     $svg.empty();
 
-    const feed = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-    const $feed = $(feed);
-    $svg.append(feed);
-    $feed.addClass("feed");
+    for (let i = 0; i < this.feedMaxCount; i++) {
+        const feed = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+        const $feed = $(feed);
+        $svg.append(feed);
+        $feed.addClass("feed");
+    }
     
     const snake = document.createElementNS("http://www.w3.org/2000/svg", "path");
     const $snake = $(snake);
@@ -47,7 +50,7 @@ GamePlayScene.prototype.update = function() {
 
     if (this.feedList.length === 0) {
         for (let i = 0; i < this.feedMaxCount; i++) {
-            this.feedList.push(this.feedManager.sowFeed(this.snake));
+            this.feedList.push(this.feedManager.sowFeed(this.$feedList.eq(i), this.snake));
         }
     }
 

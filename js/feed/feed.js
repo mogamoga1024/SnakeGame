@@ -1,47 +1,41 @@
 
-function Feed(radius, x, y, $feed) {
+function Feed($feed, radius, x, y) {
     this.position = new Position(x, y);
     this.radius = radius;
 
-    $feed.attr({
+    this.$feed = $feed;
+    this.$feed.attr({
         "cx": this.position.x,
         "cy": this.position.y,
         "r": this.radius,
-        "fill": "brown"
+        "fill": "brown",
+        "opacity": 1
     });
 }
 
 Feed.UNTIL_NOURISH_COUNT = 10;
 
-// Feed.prototype.draw = function() {
-//     //this.drawer.draw(this);
-//     /*
-//     feedCanvas.push();
-//     feedCanvas.noStroke();
-//     feedCanvas.fill(103, 43, 67);
-//     feedCanvas.ellipse(this.position.x, this.position.y, this.radius * 2);
-//     feedCanvas.pop();
-//     */
-// };
+Feed.prototype.eaten = function(snake) {
+    this.$feed.attr("opacity", 0);
 
-Feed.prototype.nourish = function(snake) {
     snake.bodyCount++;
-    //snake.speed += 0.1;
 
-    /*
     if (snake.bodyCount % Feed.UNTIL_NOURISH_COUNT === 0) {
         if (snake.speed < 10) {
             snake.speed += 1;
-            if (snake.headAngle.N > 12) {
-                snake.headAngle.convertRegular4nPolygon(snake.headAngle.N - 12);
+            const n = snake.headAngle.N / 4;
+            if (n > 3) {
+                snake.headAngle.convertRegular4nPolygon(n - 3);
             }
         }
         if (snake.radius > 15) {
             snake.radius *= 0.95;
             this.radius *= 0.95;
+
+            snake.$snake.attr("stroke-width", snake.radius * 2);
+            this.$feed.attr("r", this.radius);
         }
     }
-    */
 
     if (snake.trace.length > 0) {
         snake.trace[snake.trace.length - 1].x = snake.tailPosition.x;
