@@ -1,11 +1,11 @@
 
-function Feed(feeder, x, y) {
+function Feed($canvas, feeder, x, y) {
     this.position = new Position(x, y);
     this.feeder = feeder;
     this.radius = this.feeder.feedRadius;
 
     const feed = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-    $svg.append(feed);
+    $canvas.append(feed);
 
     this.$feed = $(feed);
     this.$feed.attr({

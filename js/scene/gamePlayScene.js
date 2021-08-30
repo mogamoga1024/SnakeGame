@@ -5,8 +5,8 @@ function GamePlayScene() {
 
     this.setupCanvas();
 
-    this.snake = new Snake();
-    this.feeder = new Feeder();
+    this.snake = new Snake($("#snakeCanvas"));
+    this.feeder = new Feeder($("#feedCanvas"));
     this.feedList = [];
 
     this.firstKeyCode = null;
@@ -24,27 +24,13 @@ GamePlayScene.prototype.constructor = GamePlayScene;
 GamePlayScene.prototype.setupCanvas = function() {
     $svg.empty();
 
-    // for (let i = 0; i < this.feedMaxCount; i++) {
-    //     const feed = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-    //     const $feed = $(feed);
-    //     $svg.append(feed);
-    //     $feed.addClass("feed");
-    // }
-    
-    // const snake = document.createElementNS("http://www.w3.org/2000/svg", "path");
-    // const $snake = $(snake);
-    // $svg.append(snake);
-    // $snake.attr("id", "snake");
+    const feedCanvas = document.createElementNS("http://www.w3.org/2000/svg", "g");
+    $svg.append(feedCanvas);
+    $(feedCanvas).attr("id", "feedCanvas");
 
-    // const snakeLeftEye = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-    // const $snakeLeftEye = $(snakeLeftEye);
-    // $svg.append(snakeLeftEye);
-    // $snakeLeftEye.attr("id", "snake-left-eye");
-
-    // const snakeRightEye = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-    // const $snakeRightEye = $(snakeRightEye);
-    // $svg.append(snakeRightEye);
-    // $snakeRightEye.attr("id", "snake-right-eye");
+    const snakeCanvas = document.createElementNS("http://www.w3.org/2000/svg", "g");
+    $svg.append(snakeCanvas);
+    $(snakeCanvas).attr("id", "snakeCanvas");
 }
 
 GamePlayScene.prototype.update = function() {

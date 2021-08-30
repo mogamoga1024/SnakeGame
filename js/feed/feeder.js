@@ -1,5 +1,6 @@
 
-function Feeder() {
+function Feeder($canvas) {
+    this.$canvas = $canvas;
     this.feedRadius = 20;
 }
 
@@ -20,6 +21,6 @@ Feeder.prototype.sowFeed = function(snake) {
         y > -x + width  + height - snakeRotationRadius
     );
 
-    return new Feed(this, x, y);
+    return new Feed(this.$canvas, this, x, y);
 };
 

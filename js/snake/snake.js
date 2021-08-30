@@ -1,5 +1,5 @@
 
-function Snake() {
+function Snake($canvas) {
     this.headPosition = new Position(100, 100);
     this.tailPosition = this.headPosition.clone();
     this.radius = 25;
@@ -16,15 +16,15 @@ function Snake() {
     this.scale = 1;
 
     const snake = document.createElementNS("http://www.w3.org/2000/svg", "path");
-    $svg.append(snake);
+    $canvas.append(snake);
     this.$snake = $(snake);
     
     const leftEye = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-    $svg.append(leftEye);
+    $canvas.append(leftEye);
     this.$leftEye = $(leftEye);
 
     const rightEye = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-    $svg.append(rightEye);
+    $canvas.append(rightEye);
     this.$rightEye = $(rightEye);
 
     this.$snake.attr({
