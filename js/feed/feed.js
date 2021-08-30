@@ -1,23 +1,25 @@
 
-function Feed($feed, feeder, x, y) {
+function Feed(feeder, x, y) {
     this.position = new Position(x, y);
     this.feeder = feeder;
     this.radius = this.feeder.feedRadius;
 
-    this.$feed = $feed;
+    const feed = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+    $svg.append(feed);
+
+    this.$feed = $(feed);
     this.$feed.attr({
         "cx": this.position.x,
         "cy": this.position.y,
         "r": this.radius,
-        "fill": "brown",
-        "opacity": 1
+        "fill": "brown"
     });
 }
 
 Feed.UNTIL_NOURISH_COUNT = 10;
 
 Feed.prototype.eaten = function(snake) {
-    this.$feed.attr("opacity", 0);
+    this.$feed.remove();
 
     snake.eatCount++;
 

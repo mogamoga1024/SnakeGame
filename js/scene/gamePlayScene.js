@@ -5,15 +5,14 @@ function GamePlayScene() {
 
     this.setupCanvas();
 
-    this.snake = new Snake($("#snake"), $("#snake-left-eye"), $("#snake-right-eye"));
-    this.$feedList = $(".feed");
+    this.snake = new Snake();
     this.feeder = new Feeder();
     this.feedList = [];
 
     this.firstKeyCode = null;
     this.secondeKeyCode = null;
 
-    // const feed = this.feeder.sowFeed(this.$feedList.eq(0), this.snake)
+    // const feed = this.feeder.sowFeed(this.snake)
     // for (let i = 0; i < 300; i++) {
     //     this.snake.eatFeed(feed);
     // }
@@ -25,27 +24,27 @@ GamePlayScene.prototype.constructor = GamePlayScene;
 GamePlayScene.prototype.setupCanvas = function() {
     $svg.empty();
 
-    for (let i = 0; i < this.feedMaxCount; i++) {
-        const feed = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-        const $feed = $(feed);
-        $svg.append(feed);
-        $feed.addClass("feed");
-    }
+    // for (let i = 0; i < this.feedMaxCount; i++) {
+    //     const feed = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+    //     const $feed = $(feed);
+    //     $svg.append(feed);
+    //     $feed.addClass("feed");
+    // }
     
-    const snake = document.createElementNS("http://www.w3.org/2000/svg", "path");
-    const $snake = $(snake);
-    $svg.append(snake);
-    $snake.attr("id", "snake");
+    // const snake = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    // const $snake = $(snake);
+    // $svg.append(snake);
+    // $snake.attr("id", "snake");
 
-    const snakeLeftEye = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-    const $snakeLeftEye = $(snakeLeftEye);
-    $svg.append(snakeLeftEye);
-    $snakeLeftEye.attr("id", "snake-left-eye");
+    // const snakeLeftEye = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+    // const $snakeLeftEye = $(snakeLeftEye);
+    // $svg.append(snakeLeftEye);
+    // $snakeLeftEye.attr("id", "snake-left-eye");
 
-    const snakeRightEye = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-    const $snakeRightEye = $(snakeRightEye);
-    $svg.append(snakeRightEye);
-    $snakeRightEye.attr("id", "snake-right-eye");
+    // const snakeRightEye = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+    // const $snakeRightEye = $(snakeRightEye);
+    // $svg.append(snakeRightEye);
+    // $snakeRightEye.attr("id", "snake-right-eye");
 }
 
 GamePlayScene.prototype.update = function() {
@@ -62,7 +61,7 @@ GamePlayScene.prototype.update = function() {
 
     if (this.feedList.length === 0) {
         for (let i = 0; i < this.feedMaxCount; i++) {
-            this.feedList.push(this.feeder.sowFeed(this.$feedList.eq(i), this.snake));
+            this.feedList.push(this.feeder.sowFeed(this.snake));
         }
     }
 

@@ -3,7 +3,7 @@ function Feeder() {
     this.feedRadius = 20;
 }
 
-Feeder.prototype.sowFeed = function($feed, snake) {
+Feeder.prototype.sowFeed = function(snake) {
     let x, y, snakeRotationRadius;
     const width = $svg.width();
     const height = $svg.height();
@@ -20,6 +20,6 @@ Feeder.prototype.sowFeed = function($feed, snake) {
         y > -x + width  + height - snakeRotationRadius
     );
 
-    return new Feed($feed, this, x, y);
+    return new Feed(this, x, y);
 };
 
