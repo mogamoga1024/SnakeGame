@@ -1,14 +1,13 @@
 
 function GamePlayScene() {
-    this.canLoop = true;
-    this.feedMaxCount = Feed.UNTIL_NOURISH_COUNT;
-
     this.setupCanvas();
 
     this.snake = new Snake($("#snakeCanvas"));
     this.feeder = new Feeder($("#feedCanvas"));
     this.feedList = [];
 
+    this.canLoop = true;
+    this.feedMaxCount = Feed.UNTIL_NOURISH_COUNT;
     this.firstKeyCode = null;
     this.secondeKeyCode = null;
 
