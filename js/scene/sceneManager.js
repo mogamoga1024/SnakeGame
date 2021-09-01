@@ -3,17 +3,13 @@ const SceneManager = (function() {
     let timer = null;
     let currentScene = new Scene();
 
-    $window.keydown(
-		function(e) {
-			currentScene.keydown(e.keyCode);
-		}
-	);
+    $window.keydown(function(e) {
+        currentScene.keydown(e.keyCode);
+    });
 	
-	$window.keyup(
-		function(e) {
-			currentScene.keyup(e.keyCode);
-		}
-	);
+	$window.keyup(function(e) {
+        currentScene.keyup(e.keyCode);
+    });
 
     return {
         start: function(scene, _shouldUpdate) {
