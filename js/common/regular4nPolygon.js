@@ -20,10 +20,7 @@ Regular4nPolygon.prototype.shift = function(direction) {
 };
 
 Regular4nPolygon.prototype.equals90nDegree = function(degree) {
-    if (
-        degree !== this.DEGREE_0   && degree !== this.DEGREE_90  &&
-        degree !== this.DEGREE_180 && degree !== this.DEGREE_270
-    ) {
+    if (this.isDEGREE_XX(degree) === false) {
         throw new Error("オブジェクトで定義されているDEGREE_XXを引数を利用すること。");
     }
 
@@ -31,12 +28,7 @@ Regular4nPolygon.prototype.equals90nDegree = function(degree) {
 };
 
 Regular4nPolygon.prototype.existIn90nDegreeRange = function(startDegree, endDegree) {
-    if (
-        startDegree !== this.DEGREE_0   && startDegree !== this.DEGREE_90  &&
-        startDegree !== this.DEGREE_180 && startDegree !== this.DEGREE_270 &&
-        endDegree   !== this.DEGREE_0   && endDegree   !== this.DEGREE_90  &&
-        endDegree   !== this.DEGREE_180 && endDegree   !== this.DEGREE_270
-    ) {
+    if (this.isDEGREE_XX(startDegree) === false || this.isDEGREE_XX(endDegree) === false) {
         throw new Error("オブジェクトで定義されているDEGREE_XXを引数を利用すること。");
     }
 
@@ -45,6 +37,16 @@ Regular4nPolygon.prototype.existIn90nDegreeRange = function(startDegree, endDegr
     }
     else if (startDegree > endDegree) {
         return startDegree < this.index || this.index < endDegree;
+    }
+    return false;
+};
+
+Regular4nPolygon.prototype.isDEGREE_XX = function(degree) {
+    if (
+        degree === this.DEGREE_0   || degree === this.DEGREE_90  ||
+        degree === this.DEGREE_180 || degree === this.DEGREE_270
+    ) {
+        return true;
     }
     return false;
 };

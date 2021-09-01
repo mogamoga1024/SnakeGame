@@ -89,7 +89,7 @@ Snake.prototype.draw = function() {
     });
 };
 
-Snake.prototype.headDegreeChangeByKeyCode = function(keyCode) {
+Snake.prototype.headAngleChangeByKeyCode = function(keyCode) {
     let rotationDirection;
 
     if (keyCode === KEY_CODE.UP_ARROW) {
