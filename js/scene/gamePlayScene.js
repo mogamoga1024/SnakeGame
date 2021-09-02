@@ -1,9 +1,7 @@
 
 function GamePlayScene() {
-    this.setupCanvas();
-
-    this.snake = new Snake($("#snakeCanvas"));
-    this.feeder = new Feeder($("#feedCanvas"));
+    this.snake = null;
+    this.feeder = null;
     this.feedList = [];
 
     this.canLoop = true;
@@ -20,16 +18,16 @@ function GamePlayScene() {
 GamePlayScene.prototype = Object.create(Scene.prototype);
 GamePlayScene.prototype.constructor = GamePlayScene;
 
-GamePlayScene.prototype.setupCanvas = function() {
-    $svg.empty();
+GamePlayScene.prototype.start = function($canvas) {
+    $canvas.empty();
 
     const feedCanvas = document.createElementNS("http://www.w3.org/2000/svg", "g");
-    $svg.append(feedCanvas);
-    $(feedCanvas).attr("id", "feedCanvas");
+    $canvas.append(feedCanvas);
+    this.feeder = new Feeder($(feedCanvas));
 
     const snakeCanvas = document.createElementNS("http://www.w3.org/2000/svg", "g");
-    $svg.append(snakeCanvas);
-    $(snakeCanvas).attr("id", "snakeCanvas");
+    $canvas.append(snakeCanvas);
+    this.snake = new Snake($(snakeCanvas));
 }
 
 GamePlayScene.prototype.update = function() {

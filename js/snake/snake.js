@@ -7,8 +7,6 @@ function Snake($canvas) {
     this.eatCount = 0;
     this.headAngle = new Regular4nPolygon(25);
     this.speed = 5;
-    this.canvasWidth = $svg.width();
-    this.canvasHeight = $svg.height();
     this.trace = [];
 
     this.trace.push(this.headPosition.clone());
@@ -140,8 +138,8 @@ Snake.prototype.isHittingWall = function() {
     if (
         this.headPosition.x - this.radius <= 0 ||
         this.headPosition.y - this.radius <= 0 ||
-        this.headPosition.x + this.radius >= this.canvasWidth ||
-        this.headPosition.y + this.radius >= this.canvasHeight
+        this.headPosition.x + this.radius >= GAME_FIELD_WIDTH ||
+        this.headPosition.y + this.radius >= GAME_FIELD_HEIGHT
     ) {
         return true;
     }

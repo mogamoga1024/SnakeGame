@@ -6,19 +6,17 @@ function Feeder($canvas) {
 
 Feeder.prototype.sowFeed = function(snake) {
     let x, y, snakeRotationRadius;
-    const width = $svg.width();
-    const height = $svg.height();
 
     do {
-        x = Math.floor(Math.randomInt(width + 1 - this.feedRadius * 2) + this.feedRadius);
-        y = Math.floor(Math.randomInt(height + 1 - this.feedRadius * 2) + this.feedRadius);
+        x = Math.floor(Math.randomInt(GAME_FIELD_WIDTH + 1 - this.feedRadius * 2) + this.feedRadius);
+        y = Math.floor(Math.randomInt(GAME_FIELD_HEIGHT + 1 - this.feedRadius * 2) + this.feedRadius);
         snakeRotationRadius = snake.speed / Math.sqrt(2 * (1 - Math.cos(snake.headAngle.centralAngle))) + snake.radius;
     }
     while (
-        y < -x + snakeRotationRadius          || 
-        y <  x - width  + snakeRotationRadius ||
-        y >  x + height - snakeRotationRadius ||
-        y > -x + width  + height - snakeRotationRadius
+        y < -x + snakeRotationRadius ||
+        y <  x - GAME_FIELD_WIDTH  + snakeRotationRadius ||
+        y >  x + GAME_FIELD_HEIGHT - snakeRotationRadius ||
+        y > -x + GAME_FIELD_WIDTH  + GAME_FIELD_HEIGHT - snakeRotationRadius
     );
 
     return new Feed(this.$canvas, this, x, y);
