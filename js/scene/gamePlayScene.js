@@ -61,12 +61,7 @@ GamePlayScene.prototype.update = function() {
 
 GamePlayScene.prototype.keydown = function(keyCode) {
     if (keyCode === KEY_CODE.SPACE) {
-        if (this.canLoop) {
-            this.canLoop = false;
-        }
-        else {
-            this.canLoop = true;
-        }
+        this.canLoop = !this.canLoop;
         return;
     }
     
