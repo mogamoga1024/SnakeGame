@@ -8,11 +8,6 @@ function GamePlayScene() {
     this.feedMaxCount = Feed.UNTIL_NOURISH_COUNT;
     this.firstKeyCode = null;
     this.secondeKeyCode = null;
-
-    // const feed = this.feeder.sowFeed(this.snake)
-    // for (let i = 0; i < 300; i++) {
-    //     this.snake.eatFeed(feed);
-    // }
 };
 
 GamePlayScene.prototype = Object.create(Scene.prototype);
@@ -37,7 +32,7 @@ GamePlayScene.prototype.update = function() {
         this.snake.headAngleChangeByKeyCode(this.firstKeyCode);
     }
     
-    if (this.snake.isHittingWall() || this.snake.isHittingBody()) {
+    if (this.snake.isHittingWall()) {
         SceneManager.start(new GameOverScene(this.snake.eatCount), false);
         return;
     }

@@ -146,10 +146,6 @@ Snake.prototype.isHittingWall = function() {
     return false;
 };
 
-Snake.prototype.isHittingBody = function() {
-    return false;
-};
-
 Snake.prototype.canEatFeed = function(feed) {
     return this.headPosition.distance(feed.position) <= this.radius + feed.radius;
 };
