@@ -1,10 +1,10 @@
 
-function GmaeStartScene() {};
+function GameStartScene() {};
 
-GmaeStartScene.prototype = Object.create(Scene.prototype);
-GmaeStartScene.prototype.constructor = GmaeStartScene;
+GameStartScene.prototype = Object.create(Scene.prototype);
+GameStartScene.prototype.constructor = GameStartScene;
 
-GmaeStartScene.prototype.start = function($canvas) {
+GameStartScene.prototype.start = function($canvas) {
     $canvas.empty();
 
     const text1 = document.createElementNS("http://www.w3.org/2000/svg", "text");
@@ -30,7 +30,7 @@ GmaeStartScene.prototype.start = function($canvas) {
     $text2.text("press any key");
 };
 
-GmaeStartScene.prototype.keyup = function(keyCode) {
+GameStartScene.prototype.keyup = function(keyCode) {
     if (keyCode === KEY_CODE.F12) return;
 
     SceneManager.start(new GamePlayScene());

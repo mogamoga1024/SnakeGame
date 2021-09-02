@@ -1,13 +1,13 @@
 
-function GmaeOverScene(score) {
+function GameOverScene(score) {
     this.score = score;
     this.canPressKey = false;
 };
 
-GmaeOverScene.prototype = Object.create(Scene.prototype);
-GmaeOverScene.prototype.constructor = GmaeOverScene;
+GameOverScene.prototype = Object.create(Scene.prototype);
+GameOverScene.prototype.constructor = GameOverScene;
 
-GmaeOverScene.prototype.start = function($canvas) {
+GameOverScene.prototype.start = function($canvas) {
     const text1 = document.createElementNS("http://www.w3.org/2000/svg", "text");
     const $text1 = $(text1);
     $canvas.append(text1);
@@ -36,10 +36,10 @@ GmaeOverScene.prototype.start = function($canvas) {
     }, 500);
 };
 
-GmaeOverScene.prototype.keyup = function(keyCode) {
+GameOverScene.prototype.keyup = function(keyCode) {
     if (keyCode === KEY_CODE.F12) return;
 
     if (this.canPressKey) {
-        SceneManager.start(new GmaeStartScene());
+        SceneManager.start(new GameStartScene());
     }
 };

@@ -1,2 +1,2 @@
 
-SceneManager.start(new GmaeStartScene(), false);
+SceneManager.start(new GameStartScene(), false);
