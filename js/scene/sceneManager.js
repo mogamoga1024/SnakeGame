@@ -9,11 +9,11 @@ const SceneManager = (function() {
     window.GAME_FIELD_HEIGHT = $svg.height();
 
     $window.keydown(function(e) {
-        currentScene.keydown(e.keyCode);
+        return currentScene.keydown(e.keyCode);
     });
 	
 	$window.keyup(function(e) {
-        currentScene.keyup(e.keyCode);
+        return currentScene.keyup(e.keyCode);
     });
 
     function canvasToCenter() {
