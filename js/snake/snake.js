@@ -5,7 +5,7 @@ function Snake($canvas) {
     this.radius = 25;
     this.eyeRadius = 5;
     this.eatCount = 0;
-    this.headAngle = new Regular4nPolygon(25);
+    this.headDegree = new Regular4nPolygonDegree(25);
     this.speed = 5;
     this.trace = [];
 
@@ -69,7 +69,7 @@ Snake.prototype.draw = function() {
     });
 
     const eyeCenterDistance = (this.radius - this.eyeRadius) * this.scale * 0.9;
-    const headRadian = this.headAngle.toRadian();
+    const headRadian = this.headDegree.toRadian();
     const leftEyeX = this.headPosition.x + eyeCenterDistance * Math.cos(headRadian + Math.PI / 6);
     const leftEyeY = this.headPosition.y + eyeCenterDistance * Math.sin(headRadian + Math.PI / 6);
     this.$leftEye.attr({
@@ -92,26 +92,26 @@ Snake.prototype.headAngleChangeByKeyCode = function(keyCode) {
 
     if (keyCode === KEY_CODE.UP_ARROW) {
         rotationDirection = this.findRotationDirection(
-            this.headAngle.DEGREE_90,
-            this.headAngle.DEGREE_270
+            this.headDegree.DEGREE_90,
+            this.headDegree.DEGREE_270
         );
     }
     else if (keyCode === KEY_CODE.DOWN_ARROW) {
         rotationDirection = this.findRotationDirection(
-            this.headAngle.DEGREE_270,
-            this.headAngle.DEGREE_90
+            this.headDegree.DEGREE_270,
+            this.headDegree.DEGREE_90
         );
     }
     else if (keyCode === KEY_CODE.LEFT_ARROW) {
         rotationDirection = this.findRotationDirection(
-            this.headAngle.DEGREE_0,
-            this.headAngle.DEGREE_180
+            this.headDegree.DEGREE_0,
+            this.headDegree.DEGREE_180
         );
     }
     else if (keyCode === KEY_CODE.RIGHT_ARROW) {
         rotationDirection = this.findRotationDirection(
-            this.headAngle.DEGREE_180,
-            this.headAngle.DEGREE_0
+            this.headDegree.DEGREE_180,
+            this.headDegree.DEGREE_0
         );
     }
     else {
@@ -119,16 +119,16 @@ Snake.prototype.headAngleChangeByKeyCode = function(keyCode) {
     }
 
     if (rotationDirection !== 0) {
-        this.headAngle.shift(rotationDirection);
+        this.headDegree.shift(rotationDirection);
         this.trace.unshift(this.headPosition.clone());
     }
 };
 
-Snake.prototype.findRotationDirection = function(startDegree, endDegree) {
-    if (this.headAngle.equals90nDegree(startDegree) || this.headAngle.equals90nDegree(endDegree)) {
+Snake.prototype.findRotationDirection = function(start90nDegree, end90nDegree) {
+    if (this.headDegree.equals90nDegree(start90nDegree) || this.headDegree.equals90nDegree(end90nDegree)) {
         return 0;
     }
-    if (this.headAngle.existIn90nDegreeRange(startDegree, endDegree)) {
+    if (this.headDegree.existIn90nDegreeRange(start90nDegree, end90nDegree)) {
         return 1;
     }
     return -1;
@@ -151,7 +151,7 @@ Snake.prototype.canEatFeed = function(feed) {
 };
 
 Snake.prototype.move = function() {
-    const headRadian = this.headAngle.toRadian();
+    const headRadian = this.headDegree.toRadian();
     this.headPosition.x += this.speed * Math.cos(headRadian);
     this.headPosition.y += this.speed * Math.sin(headRadian);
 

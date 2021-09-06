@@ -1,5 +1,5 @@
 
-function Regular4nPolygon(n) {
+function Regular4nPolygonDegree(n) {
     this.DEGREE_0 = 0;
     this.DEGREE_90 = n;
     this.DEGREE_180 = n * 2;
@@ -10,7 +10,7 @@ function Regular4nPolygon(n) {
     this.centralAngle = Math.PI / (n * 2);
 }
 
-Regular4nPolygon.prototype.shift = function(direction) {
+Regular4nPolygonDegree.prototype.shift = function(direction) {
     if (direction > 0) {
         this.index = (this.index + 1) % this.N;
     }
@@ -19,7 +19,7 @@ Regular4nPolygon.prototype.shift = function(direction) {
     }
 };
 
-Regular4nPolygon.prototype.equals90nDegree = function(degree) {
+Regular4nPolygonDegree.prototype.equals90nDegree = function(degree) {
     if (this.isDEGREE_XX(degree) === false) {
         throw new Error("オブジェクトで定義されているDEGREE_XXを引数を利用すること。");
     }
@@ -27,7 +27,7 @@ Regular4nPolygon.prototype.equals90nDegree = function(degree) {
     return this.index === degree;
 };
 
-Regular4nPolygon.prototype.existIn90nDegreeRange = function(startDegree, endDegree) {
+Regular4nPolygonDegree.prototype.existIn90nDegreeRange = function(startDegree, endDegree) {
     if (this.isDEGREE_XX(startDegree) === false || this.isDEGREE_XX(endDegree) === false) {
         throw new Error("オブジェクトで定義されているDEGREE_XXを引数を利用すること。");
     }
@@ -41,7 +41,7 @@ Regular4nPolygon.prototype.existIn90nDegreeRange = function(startDegree, endDegr
     return false;
 };
 
-Regular4nPolygon.prototype.isDEGREE_XX = function(degree) {
+Regular4nPolygonDegree.prototype.isDEGREE_XX = function(degree) {
     if (
         degree === this.DEGREE_0   || degree === this.DEGREE_90  ||
         degree === this.DEGREE_180 || degree === this.DEGREE_270
@@ -51,13 +51,13 @@ Regular4nPolygon.prototype.isDEGREE_XX = function(degree) {
     return false;
 };
 
-Regular4nPolygon.prototype.toRadian = function() {
+Regular4nPolygonDegree.prototype.toRadian = function() {
     return this.index * 2 * Math.PI / this.N;
 };
 
-Regular4nPolygon.prototype.convertRegular4nPolygon = function(n) {
+Regular4nPolygonDegree.prototype.convertRegular4nPolygon = function(n) {
     const radian = this.toRadian();
-    Regular4nPolygon.call(this, n);
+    Regular4nPolygonDegree.call(this, n);
     this.index = Math.round(radian / this.centralAngle) % this.N;
 };
 

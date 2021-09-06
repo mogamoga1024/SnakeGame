@@ -26,9 +26,9 @@ Feed.prototype.eaten = function(snake) {
     if (snake.eatCount % Feed.UNTIL_NOURISH_COUNT === 0) {
         if (snake.speed < 10) {
             snake.speed += 0.5;
-            const n = snake.headAngle.N / 4 - 2;
+            const n = snake.headDegree.N / 4 - 2;
             if (n > 0) {
-                snake.headAngle.convertRegular4nPolygon(n);
+                snake.headDegree.convertRegular4nPolygon(n);
             }
         }
         if (snake.radius > 15) {
