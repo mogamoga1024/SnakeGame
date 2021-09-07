@@ -29,7 +29,7 @@ GamePlayScene.prototype.update = function() {
     if (this.canLoop === false) return;
 
     if (this.firstKeyCode !== null) {
-        this.snake.headAngleChangeByKeyCode(this.firstKeyCode);
+        this.snake.headDegreeChangeByKeyCode(this.firstKeyCode);
     }
     
     if (this.snake.isHittingWall()) {
