@@ -31,7 +31,7 @@ Feed.prototype.eaten = function(snake) {
                 snake.headDegree.convertRegular4nPolygon(n);
             }
         }
-        if (snake.radius > 15) {
+        if (snake.radius * snake.scale > 15) {
             snake.scale *= 0.99;
             this.feeder.feedRadius *= 0.99;
         }
