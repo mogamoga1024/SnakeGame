@@ -31,6 +31,7 @@ GameStartScene.prototype.start = function($canvas) {
 };
 
 GameStartScene.prototype.keyup = function(keyCode) {
+    if (keyCode === KEY_CODE.F5) return;
     if (keyCode === KEY_CODE.F12) return;
 
     SceneManager.start(new GamePlayScene());

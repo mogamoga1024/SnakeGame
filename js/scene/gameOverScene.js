@@ -37,6 +37,7 @@ GameOverScene.prototype.start = function($canvas) {
 };
 
 GameOverScene.prototype.keyup = function(keyCode) {
+    if (keyCode === KEY_CODE.F5) return;
     if (keyCode === KEY_CODE.F12) return;
 
     if (this.canPressKey) {
