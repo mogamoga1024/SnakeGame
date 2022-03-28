@@ -12,7 +12,7 @@ const SceneManager = (function() {
         return currentScene.keydown(e.keyCode);
     });
 	
-	$window.keyup(function(e) {
+    $window.keyup(function(e) {
         return currentScene.keyup(e.keyCode);
     });
 
